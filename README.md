@@ -77,15 +77,20 @@ Each answer follows a fixed shape: restated goal → recommended approach with p
 
 ## How the MCP server slots in
 
-ObservePoint is building an official [Model Context Protocol](https://modelcontextprotocol.io/) server. It is **not yet generally available**.
+The ObservePoint [MCP](https://modelcontextprotocol.io/) server is currently in active development. A small group of internal users has access today; broader release is expected in the coming months.
 
-When the server ships:
+**For everyone:** the skill works in knowledge-only mode without the MCP server. Answers come from the bundled reference docs, with REST API recipes for operational tasks. This is the default experience.
 
-- Tools prefixed `mcp__ObservePoint__` will appear in your Claude session.
-- This skill auto-detects them at runtime and prefers them over raw REST calls.
-- Until then, the skill answers operational questions using the REST API and explicitly says MCP is coming.
+**For ObservePoint internal users with access:** once the MCP server is registered in your Claude environment, the skill auto-detects `mcp__ObservePoint__*` tools at runtime and prefers them over the REST recipes. **No additional setup in this plugin is needed** — MCP registration happens at the Claude environment level, not per-plugin. This is why this repo does **not** ship a `.mcp.json`: it would either duplicate your existing registration or hard-code a non-portable local path.
 
-The skill **never invents an MCP tool name.** See `skills/observepoint-consultant/references/mcp-tools.md` for the extension pattern.
+Two real install paths today (refer to the MCP server's own README for the authoritative steps):
+
+- **Claude Desktop**: install the `.dxt` extension and enter your API key when prompted. Restart Claude Desktop, start a new conversation.
+- **Claude Code CLI**: register via `claude mcp add --scope user observepoint -- node /path/to/observepoint-mcp/build/index.js` with `-e OP_API_KEY=...` (required) and optionally `-e OP_BASE_URL=...` for non-default environments. Restart Claude Code.
+
+The skill **never invents an MCP tool name.** When the tools aren't loaded in your session, the skill behaves as the knowledge-only advisor. See [`skills/observepoint-consultant/references/mcp-tools.md`](./skills/observepoint-consultant/references/mcp-tools.md) for the full tool catalog and the safety gates the wrappers enforce (selector evidence, journey-shape, watch-usage, two-step CMP import).
+
+When the MCP server reaches general availability, this section will be updated with the public install path — likely a `.mcp.json` bundled in the plugin so installing this plugin alone is enough to set up both the skill and the MCP server.
 
 ## Versioning
 
