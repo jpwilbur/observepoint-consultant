@@ -1,0 +1,22 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "observepoint-consultant",
+  "description": "Community-built Claude Code marketplace for the ObservePoint Consultant skill — a world-class ObservePoint and web-governance advisor.",
+  "owner": {
+    "name": "Jarrod Wilbur",
+    "email": "jarrod.wilbur@observepoint.com"
+  },
+  "plugins": [
+    {
+      "name": "observepoint-consultant",
+      "description": "World-class ObservePoint and web-governance advisor for Claude Code. Products, Rules, REST API, regulation coverage, consulting deliverables, and MCP-ready.",
+      "author": {
+        "name": "Jarrod Wilbur",
+        "email": "jarrod.wilbur@observepoint.com"
+      },
+      "category": "monitoring",
+      "source": "./",
+      "homepage": "https://github.com/jpwilbur/observepoint-consultant"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "name": "observepoint-consultant",
+  "description": "World-class ObservePoint and web-governance advisor for Claude Code. Knows ObservePoint's products, Rules engine, REST API, integrations, limitations, and approved verbiage. Maps privacy and accessibility regulations to ObservePoint coverage, drafts governance deliverables, and is ready to use the ObservePoint MCP server when it reaches GA.",
+  "author": {
+    "name": "Jarrod Wilbur",
+    "email": "jarrod.wilbur@observepoint.com"
+  }
+}

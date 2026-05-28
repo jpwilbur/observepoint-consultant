@@ -1,0 +1,30 @@
+# macOS
+.DS_Store
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local Claude Code state
+.claude/settings.local.json
+
+# Node (in case any tooling shows up later)
+node_modules/
+
+# Python (if scripts/ is added)
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Environment & secrets
+.env
+.env.local
+*.pem
+*.key
+
+# OS thumbnails
+Thumbs.db
