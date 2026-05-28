@@ -81,7 +81,7 @@ ObservePoint is building an official [Model Context Protocol](https://modelconte
 
 When the server ships:
 
-- Tools named `mcp__observepoint__*` will appear in your Claude session.
+- Tools prefixed `mcp__ObservePoint__` will appear in your Claude session.
 - This skill auto-detects them at runtime and prefers them over raw REST calls.
 - Until then, the skill answers operational questions using the REST API and explicitly says MCP is coming.
 

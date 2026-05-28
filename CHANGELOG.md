@@ -17,7 +17,7 @@ Initial release.
 
 ### Notes
 
-- The ObservePoint MCP server is not yet generally available. The skill detects `mcp__observepoint__*` tools at runtime and prefers them when present; otherwise it falls back to REST API recipes documented in `references/api-reference.md`. The skill never invents MCP tool names.
+- The ObservePoint MCP server is not yet generally available. The skill detects `mcp__ObservePoint__*` tools at runtime and prefers them when present; otherwise it falls back to REST API recipes documented in `references/api-reference.md`. The skill never invents MCP tool names.
 - This is a community-built, MIT-licensed plugin. It is not an official ObservePoint product.
 
 [0.1.0]: https://github.com/jpwilbur/observepoint-consultant/releases/tag/v0.1.0

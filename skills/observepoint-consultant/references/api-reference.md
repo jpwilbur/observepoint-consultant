@@ -243,7 +243,7 @@ Always read the response body on errors — the message field usually tells you 
 
 ## Picking up MCP later
 
-When the ObservePoint MCP server reaches GA and exposes tools named `mcp__observepoint__*`, prefer those over raw REST for the same operations. The REST recipes here remain valid as the fallback and as the contract the MCP server wraps. See `references/mcp-tools.md`.
+When the ObservePoint MCP server is loaded in your session, prefer its tools (`mcp__ObservePoint__*`) over raw REST for the same operations — the wrappers encode safety gates the raw API does not enforce. The REST recipes here remain valid as the fallback and as the contract the MCP server wraps. See `references/mcp-tools.md`.
 
 ---
 

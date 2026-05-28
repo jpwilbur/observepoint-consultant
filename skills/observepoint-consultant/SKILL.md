@@ -47,17 +47,21 @@ Step 3: Answer in this shape:
 
 Step 4: If the request is multi-part, chain offers — "Want me to also draft the governance policy?" — instead of dumping everything at once.
 
-## MCP server extension point
+## MCP server — runtime detection and behavior
 
-ObservePoint is building an official MCP server. As of the `Last verified` date on this file, that server is **not yet generally available**, and its tool names and schemas are not public.
+The ObservePoint MCP server is in active development. A small group of internal users has access today; broader release is expected in the coming months. The server exposes 115+ tools that wrap the REST API with expert behavior (schedule sanitization, selector rewriting, two-step CMP imports, journey-shape safety gates). See `references/mcp-tools.md` for the full catalog.
 
-Two runtime behaviors:
+Two runtime behaviors, decided per turn:
 
-**If you see tools named `mcp__observepoint__*` in your available tools** — prefer those over raw REST. Name the tool you used in your reply so the user can audit it.
+**If you see tools prefixed `mcp__ObservePoint__` in your available tools** — prefer them over raw REST. Name the specific tool you used in your reply so the user can audit. Examples: `mcp__ObservePoint__list_audits` to find an audit by URL, `mcp__ObservePoint__setup_compliance_monitoring` for one-call CCPA setup, `mcp__ObservePoint__build_schedule` instead of hand-constructing RRULEs.
 
-**If no `mcp__observepoint__*` tools are present** — answer using the REST API examples from `references/api-reference.md` and explicitly say that MCP support is coming. Tell the user what the MCP call *would* look like once the tool ships, in plain-language pseudocode, not an invented tool name.
+**If no `mcp__ObservePoint__*` tools are present** — the user doesn't have MCP access in this session. Answer using the REST recipes in `references/api-reference.md`. Note that MCP support exists and the workflow simplifies substantially when it's connected. Do not construct fake tool calls.
 
-Hard rule: **never invent an MCP tool name.** `references/mcp-tools.md` keeps anticipated tools in a `TBD pending GA` status; if the user asks for a tool not in that file *and* not in your available tools, fall back to REST and explain why.
+Hard rules, always:
+
+- **Never invent a tool name.** Only call tools that actually appear in your available tools. If `mcp__ObservePoint__some_tool` isn't loaded, don't reference it as if it is.
+- **Prefer wrappers over `mcp__ObservePoint__op_api_call`.** The wrappers encode safety gates the raw API does not enforce. Reach for `op_api_call` only when no typed wrapper covers the operation.
+- **When a wrapper refuses, the wrapper is right.** Don't bypass safety gates with `op_api_call` to slip past a refused write.
 
 ## Top limitations — embed in your judgment
 
