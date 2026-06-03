@@ -53,7 +53,26 @@ This skill follows [Anthropic's first-party skill-creator patterns](https://gith
 
 - **Public sources only** for facts about ObservePoint, its competitors, or its customers. The competitive doc has explicit rules of engagement at the top.
 - **No internal pricing**, no roadmap inference, no claims sourced from confidential material.
-- **No fabricated MCP tool names.** The MCP reference uses a `TBD pending GA` pattern; only add real tool names once they're verified against the published MCP server.
+- **No fabricated MCP tool names.** `references/mcp-tools.md` is curated against the live MCP server's `get_api_docs`. Only add or modify a tool entry if you can verify the tool exists on the live server — see [MCP catalog refresh cadence](#mcp-catalog-refresh-cadence) below.
+
+## MCP catalog refresh cadence
+
+The ObservePoint MCP server is in active development. New wrappers ship, some get removed, behavior gets refined. `references/mcp-tools.md` is hand-curated and drifts over time.
+
+**Refresh cadence: quarterly, or per-MCP-server-release, whichever is sooner.**
+
+To refresh:
+
+1. In a Claude session with the MCP server loaded, call `mcp__ObservePoint__get_api_docs`. That's the authoritative endpoint reference.
+2. Cross-check the system reminder's available-tools list (or `claude mcp list`) for the actual loaded wrapper names. Tool names prefixed `mcp__ObservePoint__` are what's loaded.
+3. Diff against `references/mcp-tools.md`:
+   - Tools in the runtime but not the file → add them with family + use-case + REST equivalent.
+   - Tools in the file but not the runtime → mark them removed (and update cross-references in `SKILL.md`, `api-reference.md`, `solution-playbooks.md`, and any other reference doc).
+   - Behavior changes (new safety gates, new defaults, two-step → three-step patterns) → update the relevant section.
+4. Bump the `Last verified` date.
+5. Open a PR with `docs/refresh-mcp-catalog` (or similar) and the diff.
+
+The same cadence applies to the privacy regulation references — privacy law moves fast enough that a 6-month review window is the realistic upper bound.
 
 ## PR review
 
