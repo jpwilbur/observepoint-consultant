@@ -50,10 +50,16 @@ Load this file whenever the user asks how ObservePoint helps with a specific pri
   - [KOSA](#kosa-federal-kids-online-safety-act)
   - [State student data privacy laws](#state-student-data-privacy-laws)
 - [International privacy laws](#international-privacy-laws)
-  - [GDPR (EU)](#gdpr-european-union)
-  - [LGPD (Brazil)](#lgpd-brazil)
-  - [PIPEDA (Canada)](#pipeda-canada)
-  - [India DPDP Act](#indias-dpdp-act-and-rules)
+  - [EU and UK](#eu-and-uk)
+    - [GDPR](#gdpr-european-union), [ePrivacy](#eprivacy-directive-european-union), [EU AI Act](#eu-ai-act), [DSA](#digital-services-act-dsa), [DMA](#digital-markets-act-dma), [Data Act](#data-act-eu), [NIS2](#nis2-directive), [UK GDPR + DPA 2018](#uk-gdpr--dpa-2018), [PECR](#pecr-privacy-and-electronic-communications-regulations-uk)
+  - [Latin America](#latin-america)
+    - [LGPD (Brazil)](#lgpd-brazil), [Argentina](#argentina-personal-data-protection-law), [Mexico LFPDPPP](#mexico-lfpdppp), [Chile](#chile), [Colombia](#colombia)
+  - [APAC](#apac)
+    - [India DPDP](#india-dpdp-act-and-rules), [China PIPL](#china-pipl), [Singapore PDPA](#singapore-pdpa), [Japan APPI](#japan-appi), [South Korea PIPA](#south-korea-pipa), [Thailand PDPA](#thailand-pdpa), [Philippines DPA](#philippines-dpa), [Indonesia PDP](#indonesia-pdp), [Vietnam PDPL](#vietnam-pdpl), [Australia](#australia-privacy-act), [New Zealand](#new-zealand-privacy-act)
+  - [Canada](#canada)
+    - [PIPEDA](#pipeda-federal-canada), [Quebec Law 25](#quebec-law-25), [Proposed CPPA](#proposed-cppa-federal-canada)
+  - [Middle East and Africa](#middle-east-and-africa)
+    - [UAE PDPL](#uae-pdpl), [Saudi PDPL](#saudi-pdpl), [Bahrain PDPL](#bahrain-pdpl), [Israel](#israel-privacy-protection-law), [South Africa POPIA](#south-africa-popia), [Kenya](#kenya-data-protection-act), [Nigeria NDPA](#nigeria-ndpa)
 - [Privacy signals and frameworks](#privacy-signals-and-frameworks)
 - [Accessibility](#accessibility-not-technically-privacy-but-the-same-audit-motion)
 - [Coverage matrix](#coverage-matrix)
@@ -441,38 +447,337 @@ A new category of laws regulating AI use, with implications for marketing and an
 
 ## International privacy laws
 
-International coverage expands in PR #3. The current state (PR #2 baseline):
+Organized by region. Each region opens with the most-asked-about regulations (Tier 2 — full entry) followed by shorter Tier 3 entries for completeness.
+
+## EU and UK
 
 ### GDPR (European Union)
+
+**Status.** In force since May 2018. Enforcement by national Data Protection Authorities (DPAs); coordinated cases via the European Data Protection Board. Recent context: the EU's Digital Omnibus Package (late 2025) proposed targeted simplifications to GDPR, particularly around AI-era data uses; final adoptions are landing through 2026.
 
 **What it requires.** Lawful basis for processing personal data, transparent disclosure of vendors and purposes, the ability to refuse non-essential processing, and demonstrable accountability.
 
 **ObservePoint coverage.**
 
-- Run separate Web Audits for "Accept All," "Reject All," and the GPC signal, all on the same set of pages.
-- Attach a Rule that asserts no advertising or analytics tags fire under "Reject All" or under GPC.
+- Run separate Web Audits for "Accept All," "Reject All," and the GPC signal, all on the same set of pages. `mcp__ObservePoint__setup_compliance_monitoring(regulation="ccpa", domain=...)` produces the right three-audit shape; rename them for the EU context.
+- Attach Rules that assert no advertising or analytics tags fire under "Reject All" or under GPC.
+- Use `compare_consent_states` to surface the actual delta between consent variants.
 - Use the Cookies Privacy Compliance Report to inventory every cookie, classify it (essential, analytics, marketing), and flag anything set before consent.
-- Use the Domains & Geo Privacy Report to enumerate every vendor receiving data and the country it's routed to.
+- Use the Domains & Geo Privacy Report to enumerate every vendor receiving data and the country it's routed to — Article 44 cross-border-transfer questions live here.
 
 **Doesn't cover.** Lawful-basis documentation, Data Protection Impact Assessments, Article 30 records of processing, Data Subject Access Request workflows. Those live in your privacy program, not in a scanner.
 
+### ePrivacy Directive (European Union)
+
+**Status.** In force since 2002, last amended 2009 ("Cookie Law"). Predates GDPR and remains independently enforceable. The long-promised ePrivacy *Regulation* (which would replace it) is still in negotiation as of mid-2026.
+
+**What it requires.** Prior informed consent for any non-essential cookie or tracking technology — irrespective of GDPR. Member states transpose into national law (UK's PECR, Germany's TTDSG, Italy's Cookie Guidelines, etc.).
+
+**ObservePoint coverage.** The "Reject All" baseline audit doubles as ePrivacy evidence — if no non-essential tag fires before consent, the ePrivacy bar is met. Pair with a CMP banner inspection to confirm the banner explicitly asks for cookie consent (ePrivacy) rather than just GDPR consent (broader notion).
+
+### EU AI Act
+
+**Status.** Adopted 2024. Prohibited practices (Article 5) in force from February 2 2025; general-purpose AI provisions from August 2 2025; **Article 50 transparency obligations from August 2 2026**; high-risk AI obligations from August 2 2027. Enforcement by national AI authorities and the European AI Office.
+
+**What it requires.**
+
+- **Article 5 (prohibited practices):** social scoring by public authorities, certain emotion-recognition uses, untargeted face-image scraping.
+- **Article 50 (transparency, August 2026):** mandatory labels for AI-generated content used in marketing; disclosure that users are interacting with an AI chatbot; deepfake labeling.
+- **High-risk AI (Annex III):** impact assessments, human oversight, technical documentation. Marketing/advertising AI generally not high-risk unless used for credit scoring, employment, or essential-services decisions.
+
+**ObservePoint coverage.**
+
+- Article 50: validate that marketing pages containing AI-generated copy or imagery carry the required disclosure. Build a Rule that asserts a specific data-layer flag (`page.ai_generated = true`) is paired with a visible disclosure element in the DOM. Audit at scale across the marketing site.
+- Article 5 prohibited practices: out of scope for a website scanner. That's a use-case review, not a deployment check.
+
+**Caveat.** ObservePoint validates the *disclosure*; it cannot determine whether content actually was AI-generated. That classification is upstream.
+
+### Digital Services Act (DSA)
+
+**Status.** In force since February 17 2024 for all online platforms in the EU. Enforcement by national Digital Services Coordinators + the European Commission directly for Very Large Online Platforms (VLOPs).
+
+**What it requires (for most websites).** Mandatory notice-and-action mechanisms for illegal content, transparency in advertising (mandatory ad-library disclosures), restrictions on targeted advertising to minors and on sensitive-data-based targeting, mandatory recommender-system transparency.
+
+**ObservePoint coverage — narrow.**
+
+- Validate that the website's "report illegal content" / notice-and-action UI is present and reachable from the relevant pages.
+- Audit advertising-related pages with Rules asserting no targeted-advertising tag fires on URLs likely associated with minors (often the same audit setup as COPPA / state student data laws).
+- Check that the website surfaces the required ad-transparency disclosures and recommender-system explanations where applicable.
+
+**Doesn't cover.** Internal moderation processes, transparency reports, vetted-researcher access to data. Those are program work.
+
+### Digital Markets Act (DMA)
+
+**Status.** In force since 2023, enforcement against designated gatekeepers from March 7 2024.
+
+**What it requires.** Targets a small number of designated gatekeepers (Alphabet, Amazon, Apple, Meta, Microsoft, ByteDance, Booking.com as of 2026). Restricts self-preferencing, combining data across services without consent, sideloading restrictions, and ad-tech tying.
+
+**ObservePoint coverage — very narrow.** Most ObservePoint customers are not gatekeepers. If you ARE a designated gatekeeper, web auditing helps validate the technical consent flows the DMA requires for cross-service data combination — but the bulk of DMA compliance is product/architecture work, not website tracking.
+
+### Data Act (EU)
+
+**Status.** Adopted 2023, fully applicable from **September 12 2025**.
+
+**What it requires.** Primarily B2B — manufacturers of connected products and providers of related services must allow users to access and share data generated by those products. Also adds protections against switching-fees in cloud service contracts.
+
+**ObservePoint coverage — minimal.** The Data Act is largely outside website-tracking scope. For consumer-facing pages explaining data-portability rights under the Act, validate the disclosure UI exists.
+
+### NIS2 Directive
+
+**Status.** Transposition deadline October 17 2024; most member states' national laws in force by 2025-2026 (Germany's NIS2UmsuCG, Italy's NIS2 decree, etc.).
+
+**What it requires.** Cybersecurity requirements for "essential" and "important" entities across 18 sectors (energy, transport, finance, healthcare, etc.). Includes incident reporting, supply-chain security, and management accountability.
+
+**ObservePoint coverage — narrow but real.** For NIS2-covered entities, the supply-chain-security obligation includes vendor inventories. ObservePoint's Domains & Geo Privacy Report enumerates every third-party domain on the website — that's part of the digital supply chain. Use it as the technical inventory feeding into NIS2 risk assessments.
+
+### UK GDPR + DPA 2018
+
+**Status.** UK GDPR is the post-Brexit retained version of GDPR (in force since January 1 2021). Paired with the Data Protection Act 2018 (DPA 2018), which adds UK-specific provisions. The Data Protection and Digital Information Act 2024 (DPDI Act) made targeted amendments to both — including narrower consent requirements for some analytics cookies and an updated regime for international transfers.
+
+**What it requires.** Substantively very similar to EU GDPR. Where it differs in 2026: the DPDI Act's "low-risk research" carve-outs, the UK's separate adequacy regime for international transfers, and the Information Commissioner's Office (ICO) approach (often more pragmatic than continental DPAs).
+
+**ObservePoint coverage.** Same audit pattern as EU GDPR. The reports that satisfy a continental DPA will satisfy the ICO. Watch the DPDI Act's evolving analytics-cookie guidance — if some categories shift to a legitimate-interest basis, the consent-state audits remain useful but the Rules around what may fire pre-consent change.
+
+### PECR (Privacy and Electronic Communications Regulations, UK)
+
+**Status.** UK's ePrivacy transposition. In force since 2003, amended multiple times.
+
+**What it requires.** Consent before storing or accessing information on a user's device (cookies, beacons, etc.) — except for "strictly necessary" purposes. Stricter than UK GDPR's broader consent rules for the specific cookie-tracking context.
+
+**ObservePoint coverage.** Reject-All audit is the technical proof. PECR breach is one of the easier ICO enforcement triggers — keep the audit running weekly.
+
+## Latin America
+
 ### LGPD (Brazil)
 
-**What it requires.** Consent and lawful basis for processing, similar in spirit to GDPR but with its own list of data subject rights.
+**Status.** In effect since September 2020; enforcement by ANPD (Autoridade Nacional de Proteção de Dados). Active enforcement through 2025-2026.
 
-**ObservePoint coverage.** Same audit pattern as GDPR. Run Reject-All and Accept-All variants; validate vendors and cookies; inventory data flows. The reports that satisfy a GDPR auditor will satisfy an ANPD (the Brazilian regulator) auditor too.
+**What it requires.** Consent and lawful basis for processing, similar in spirit to GDPR but with its own list of data subject rights and a Brazilian regulator with growing teeth.
 
-### PIPEDA (Canada)
+**ObservePoint coverage.** Same audit pattern as GDPR. Run Reject-All and Accept-All variants; validate vendors and cookies; inventory data flows. The reports that satisfy a GDPR auditor will satisfy an ANPD auditor too.
 
-**What it requires.** Meaningful consent and accountability for personal information handling.
+**Gotcha.** ANPD has been focused on data-processing-agent disclosure — every vendor receiving personal data needs to be documented. Use the Domains & Geo Privacy Report as your living inventory.
 
-**ObservePoint coverage.** Cookie inventory, consent-state audits, vendor disclosure. Lighter regulatory cadence than GDPR; the same audit data is sufficient evidence.
+### Argentina (Personal Data Protection Law)
 
-### India's DPDP Act and Rules
+**Status.** Law 25.326 from 2000; major reform under discussion through 2025-2026 to align with GDPR. Enforcement by the AAIP (Agencia de Acceso a la Información Pública).
 
-**What it requires.** Notice and consent for personal data processing, with explicit rights for data principals and obligations for data fiduciaries. The implementing Rules were approved in late 2025 and the regime is moving into active enforcement in 2026.
+**What it requires (current).** Consent-based processing with explicit rights for data subjects; sectoral rules for sensitive categories. Argentina has had EU adequacy status since 2003, kept after Brexit and post-2018 GDPR.
 
-**ObservePoint coverage.** Run audits in the India region (geo-routed if available, or with an India IP via VPN allowlist), validate consent capture and vendor disclosure, and inventory data flows leaving India. Treat the GDPR template as the starting point and adjust for the specific notice and grievance language the DPDP Act requires.
+**ObservePoint coverage.** Standard consent-state audit pattern. Lighter regulatory cadence than Brazil or Chile.
+
+### Mexico (LFPDPPP)
+
+**Status.** Federal Law on Protection of Personal Data Held by Private Parties, in force since 2010. Enforcement by INAI (now restructured under the Anti-Corruption and Government Effectiveness Secretariat as of 2025).
+
+**What it requires.** Privacy notice ("aviso de privacidad") with specific content requirements; consent for sensitive data; data-subject rights.
+
+**ObservePoint coverage.** Validate that the privacy notice link is present on every page (a Rule that asserts the `aviso de privacidad` element exists). Standard consent-state audit for cookie / tracking validation.
+
+### Chile
+
+**Status.** Law 19.628 from 1999, with a comprehensive update (closer to GDPR shape) passed in 2024 — major provisions effective 2026.
+
+**What it requires (after 2026 reform).** Consent for processing, data-subject rights aligned with GDPR, sensitive-data special protections, and a newly empowered Agency for the Protection of Personal Data.
+
+**ObservePoint coverage.** Standard consent-state audit pattern. Treat as GDPR-aligned going forward.
+
+### Colombia
+
+**Status.** Statutory Law 1581 of 2012; enforcement by the SIC (Superintendency of Industry and Commerce).
+
+**What it requires.** Authorization (consent) for data processing; registration of databases; cross-border transfer rules.
+
+**ObservePoint coverage.** Standard consent-state audit pattern. Vendor inventory (Domains & Geo Privacy Report) feeds the cross-border-transfer documentation.
+
+## APAC
+
+### India DPDP Act and Rules
+
+**Status.** Digital Personal Data Protection Act enacted August 2023. Implementing Rules approved November 2025. Phased enforcement is rolling through 2026; the soft-enforcement window ends around late 2026 and full enforcement begins thereafter.
+
+**What it requires.** Notice and consent for personal data processing, with explicit rights for "data principals" and obligations for "data fiduciaries." Cross-border-transfer rules will be issued by the Data Protection Board of India.
+
+**ObservePoint coverage.** Run audits geo-routed from an India location (or with an India IP via VPN allowlist), validate consent capture and vendor disclosure, and inventory data flows leaving India. Treat the GDPR template as the starting point; adjust the consent banner copy for the specific notice and grievance language the DPDP Act and Rules require.
+
+### China PIPL
+
+**Status.** Personal Information Protection Law in force since November 2021. Enforcement by the Cyberspace Administration of China (CAC). Companion laws: Cybersecurity Law (CSL, 2017), Data Security Law (DSL, 2021).
+
+**What it requires.** Consent-based processing (with separate consent for sensitive data); strict cross-border transfer rules (security assessment, standard contractual clauses, or certification); designated representative for foreign processors; data-localization requirements for certain categories.
+
+**ObservePoint coverage.**
+
+- Standard consent-state audit pattern for the consent dimension.
+- Cross-border transfer dimension: use the Domains & Geo Privacy Report to inventory every vendor receiving data from mainland-China visitors. Flag any non-China endpoint as needing a documented transfer mechanism (SCC, security assessment, or certification).
+- Sensitive-data dimension: separate Rules on pages where sensitive personal information may be collected (financial info, health, biometric, location of a precise type, identification documents) asserting no third-party tracker fires before separate consent.
+
+**Gotcha.** PIPL's extraterritorial reach is real — foreign websites processing Chinese-resident data are in scope. Don't assume you can ignore PIPL just because your servers are abroad.
+
+### Singapore PDPA
+
+**Status.** In force since 2014; significant amendments in 2020 (mandatory breach notification, data portability). Enforcement by the Personal Data Protection Commission (PDPC).
+
+**What it requires.** Consent-based processing with several exceptions (legitimate interests, business improvement, research); data-subject rights; specific Do Not Call provisions for marketing.
+
+**ObservePoint coverage.** Standard consent-state audit pattern. The DNC list applies to phone/SMS marketing; for web tracking, the consent dimension is the audit's focus.
+
+### Japan APPI
+
+**Status.** Act on the Protection of Personal Information, last major revision 2022. Enforcement by the Personal Information Protection Commission (PPC).
+
+**What it requires.** Consent for cross-border transfers; sensitive-data special protections; opt-out for non-consensual sharing in some cases; pseudonymized-data category.
+
+**ObservePoint coverage.** Standard consent-state audit pattern. Cross-border transfer dimension covered by the Domains & Geo Privacy Report.
+
+### South Korea PIPA
+
+**Status.** Personal Information Protection Act, last major amendment September 2023. Enforcement by the Personal Information Protection Commission (PIPC).
+
+**What it requires.** Opt-in consent for any personal data processing (one of the strictest consent regimes globally); cross-border transfer rules; data-subject rights; mandatory data protection officer for certain entities.
+
+**ObservePoint coverage.** Korean opt-in regime means the Reject-All audit (proving nothing non-essential fires by default) is especially important. Standard audit pattern; cross-border transfer dimension via the Domains & Geo Privacy Report.
+
+### Thailand PDPA
+
+**Status.** Personal Data Protection Act, fully effective since 2022. Enforcement by the PDPC.
+
+**What it requires.** Consent-based processing aligned with GDPR shape; lawful bases including legitimate interest; data-subject rights.
+
+**ObservePoint coverage.** Standard consent-state audit pattern.
+
+### Philippines DPA
+
+**Status.** Republic Act 10173, in force since 2012. Enforcement by the National Privacy Commission (NPC).
+
+**What it requires.** Consent or lawful basis; data subject rights; mandatory breach notification; Data Protection Officer requirement for many entities.
+
+**ObservePoint coverage.** Standard consent-state audit pattern.
+
+### Indonesia PDP
+
+**Status.** Personal Data Protection Law (UU PDP), passed October 2022; the two-year transition window ended October 2024 — fully enforceable since.
+
+**What it requires.** Consent-based or contract-based processing; data-subject rights; cross-border transfer rules; mandatory DPO; significant criminal penalties (not just administrative).
+
+**ObservePoint coverage.** Standard consent-state audit pattern. Treat the cross-border transfer dimension carefully — Indonesia's regulations are still evolving and the criminal-penalty exposure makes vendor inventory accuracy more critical than usual.
+
+### Vietnam PDPL
+
+**Status.** Personal Data Protection Decree (No. 13/2023) since 2023; comprehensive PDPL adopted 2025, taking effect 2026.
+
+**What it requires (under 2026 PDPL).** Consent-based processing with strict cross-border transfer registration, mandatory data protection officer for processors, breach notification.
+
+**ObservePoint coverage.** Standard consent-state audit pattern. Cross-border-transfer registration means the Domains & Geo Privacy Report becomes a critical input to the regulatory filing.
+
+### Australia Privacy Act
+
+**Status.** Privacy Act 1988, with significant reforms enacted in 2024 and additional reforms in negotiation through 2026 (the "Privacy Act Review" recommendations are being implemented in tranches). Enforcement by the OAIC (Office of the Australian Information Commissioner).
+
+**What it requires.** Australian Privacy Principles (APPs) cover collection, use, disclosure, access. Mandatory breach notification since 2018. 2024-2026 reforms add explicit consent requirements, broader definition of personal information, and a statutory tort for serious invasions of privacy.
+
+**ObservePoint coverage.** Standard consent-state audit pattern. The 2024+ reforms moved Australia closer to GDPR-shape, so the GDPR template fits well. Watch the statutory tort — it creates a private right of action and is a new enforcement vector.
+
+### New Zealand Privacy Act
+
+**Status.** Privacy Act 2020, in force since December 2020. Enforcement by the Office of the Privacy Commissioner.
+
+**What it requires.** Privacy Principles similar to Australian APPs; mandatory breach notification; restrictions on disclosure outside NZ.
+
+**ObservePoint coverage.** Standard consent-state audit pattern. Lighter enforcement than Australia; reuse the Australia setup.
+
+## Canada
+
+### PIPEDA (federal Canada)
+
+**What it requires.** Personal Information Protection and Electronic Documents Act — meaningful consent and accountability for personal information handling in commercial activity.
+
+**Status.** In force since 2001. The long-pending Bill C-27 (which would replace PIPEDA with the Consumer Privacy Protection Act and add an AI and Data Act) is making slow progress through Parliament; as of June 2026, PIPEDA remains the active federal framework with a CPPA replacement not yet in force.
+
+**ObservePoint coverage.** Cookie inventory, consent-state audits, vendor disclosure. Lighter regulatory cadence than GDPR; the same audit data is sufficient evidence for the federal Privacy Commissioner.
+
+### Quebec Law 25
+
+**Status.** Law modernizing privacy in the private sector, fully effective since September 2024. Enforcement by the Commission d'accès à l'information du Québec (CAI). This is the most rigorous Canadian privacy regime — substantially stricter than PIPEDA on consent, transparency, and AI-driven decisions.
+
+**What it requires.** Express, freely given, informed consent for collection beyond essentials; explicit consent for use of personal information for purposes other than the original collection purpose; mandatory privacy impact assessments; explicit notice when automated decision-making is used; cross-border transfer assessment requirements; significant administrative monetary penalties (up to CAD $10M or 2% of worldwide turnover).
+
+**ObservePoint coverage.**
+
+- Standard consent-state audit pattern; Quebec is GPC-friendly in spirit although GPC isn't yet mandated.
+- For automated-decision-making transparency: validate that pages where automated decisions affect users carry the required disclosure (similar pattern to Colorado AI Act).
+- Cross-border transfer dimension: use the Domains & Geo Privacy Report to identify where Quebec residents' data is going. Any non-Quebec endpoint requires a documented transfer assessment.
+
+**Gotcha.** Quebec's "freely given, informed" consent standard is stricter than CCPA's opt-out model. Pre-ticked checkboxes are explicitly invalid. Validate consent banner UX: separate buttons, no dark patterns, clear consequences for each choice.
+
+### Proposed CPPA (federal Canada)
+
+**Status.** Part of Bill C-27. Not in force as of June 2026. If/when enacted, will replace PIPEDA with a GDPR-shape federal framework.
+
+**ObservePoint coverage when in force.** GDPR-shape audit pattern. Watch the bill for finalization.
+
+## Middle East and Africa
+
+### UAE PDPL
+
+**Status.** Federal Decree-Law No. 45 of 2021. Detailed implementing regulations have rolled out through 2024-2025.
+
+**What it requires.** Consent for processing (with several lawful-basis exceptions); data-subject rights aligned with GDPR; cross-border transfer rules; designated Data Protection Office for some entities. UAE PDPL is distinct from the DIFC Data Protection Law (Dubai International Financial Centre, GDPR-aligned) and the ADGM Data Protection Regulations (Abu Dhabi Global Market).
+
+**ObservePoint coverage.** Standard consent-state audit pattern. Watch the multi-jurisdiction wrinkle — companies operating in mainland UAE and DIFC/ADGM may need separate compliance flows.
+
+### Saudi PDPL
+
+**Status.** Personal Data Protection Law, in force March 2023 with full enforcement from September 2024. Enforcement by SDAIA (Saudi Data and Artificial Intelligence Authority).
+
+**What it requires.** Consent-based processing with sensitive-data special handling; data-localization requirements (data of Saudi residents must be processed within the Kingdom unless specifically authorized); mandatory Data Protection Officer; cross-border transfer rules with prior authorization.
+
+**ObservePoint coverage.**
+
+- Standard consent-state audit pattern.
+- Data-localization dimension: use the Domains & Geo Privacy Report to identify where Saudi visitors' data is going. Any non-KSA destination requires a documented authorization or transfer mechanism.
+
+**Gotcha.** The data-localization requirement is the biggest practical hurdle — many Western MarTech stacks route data through US or EU endpoints. Surface this in the audit data so legal can plan.
+
+### Bahrain PDPL
+
+**Status.** In force since 2019. Enforcement by the Personal Data Protection Authority.
+
+**What it requires.** Consent for processing; data-subject rights; cross-border transfer rules.
+
+**ObservePoint coverage.** Standard consent-state audit pattern.
+
+### Israel Privacy Protection Law
+
+**Status.** Privacy Protection Law from 1981. Major amendment (Amendment 13) passed July 2024, fully effective August 2025 — substantially modernizes the regime to GDPR-style requirements. Enforcement by the Privacy Protection Authority (PPA).
+
+**What it requires (after Aug 2025).** Explicit consent for processing; data-subject rights (access, correction, deletion); mandatory breach notification; mandatory Data Protection Officer for many entities; significantly increased enforcement powers.
+
+**ObservePoint coverage.** GDPR-shape audit pattern. Israel had EU adequacy status since 2011; the 2024 amendment preserved that. Treat Israel similarly to a continental EU jurisdiction for audit-setup purposes.
+
+### South Africa POPIA
+
+**Status.** Protection of Personal Information Act, fully effective July 2021. Enforcement by the Information Regulator.
+
+**What it requires.** Consent (or other lawful basis) for processing; data-subject rights; mandatory Information Officer registration; cross-border transfer rules; mandatory breach notification.
+
+**ObservePoint coverage.** Standard consent-state audit pattern.
+
+### Kenya Data Protection Act
+
+**Status.** In force since November 2019. Enforcement by the Office of the Data Protection Commissioner (ODPC).
+
+**What it requires.** Consent or lawful basis; data-subject rights; mandatory data-controller/processor registration; cross-border transfer rules.
+
+**ObservePoint coverage.** Standard consent-state audit pattern. ODPC has been actively enforcing through 2025-2026, with public-facing fines that signal increasing maturity.
+
+### Nigeria NDPA
+
+**Status.** Nigeria Data Protection Act 2023, replaced the earlier Nigeria Data Protection Regulation. Enforcement by the Nigeria Data Protection Commission (NDPC).
+
+**What it requires.** Consent-based processing; data-subject rights; cross-border transfer rules; mandatory Data Protection Officer for some entities.
+
+**ObservePoint coverage.** Standard consent-state audit pattern.
 
 ## Privacy signals and frameworks
 
