@@ -61,8 +61,12 @@ Load this file whenever the user asks how ObservePoint helps with a specific pri
   - [Middle East and Africa](#middle-east-and-africa)
     - [UAE PDPL](#uae-pdpl), [Saudi PDPL](#saudi-pdpl), [Bahrain PDPL](#bahrain-pdpl), [Israel](#israel-privacy-protection-law), [South Africa POPIA](#south-africa-popia), [Kenya](#kenya-data-protection-act), [Nigeria NDPA](#nigeria-ndpa)
 - [Privacy signals and frameworks](#privacy-signals-and-frameworks)
+  - [GPC](#global-privacy-control-gpc), [UOOM](#universal-opt-out-mechanism-uoom), [IAB TCF](#iab-transparency-and-consent-framework-tcf), [IAB GPP](#iab-global-privacy-platform-gpp), [Google Consent Mode v2](#google-consent-mode-v2), [Apple ATT](#apple-app-tracking-transparency-att), [Privacy Sandbox](#privacy-sandbox-chrome)
+- [Voluntary standards and frameworks](#voluntary-standards-and-frameworks)
+  - [PCI DSS 4.0](#pci-dss-40--client-side-script-integrity-requirements-643-and-1161), [NIST Privacy Framework](#nist-privacy-framework), [ISO/IEC 27701](#isoiec-27701)
 - [Accessibility](#accessibility-not-technically-privacy-but-the-same-audit-motion)
 - [Coverage matrix](#coverage-matrix)
+- [Out-of-scope laws](#out-of-scope-laws)
 - [Building a compliance evidence pack](#building-a-compliance-evidence-pack)
 - [What this file deliberately does not do](#what-this-file-deliberately-does-not-do)
 
@@ -781,11 +785,19 @@ Organized by region. Each region opens with the most-asked-about regulations (Ti
 
 ## Privacy signals and frameworks
 
+Standardized signals and industry frameworks that ride on top of (and across) the regulations above. The Rules engine work for these is essentially the same as the regulation-level work — these are the technical primitives that make compliance auditable.
+
 ### Global Privacy Control (GPC)
 
 **What it is.** A browser-level signal that broadcasts "do not sell or share" on every request. Honored by the laws of 12+ U.S. states (see the state matrix above); broader rollout pending.
 
-**ObservePoint coverage.** Toggle "Send GPC Signal" on an audit. The synthetic browser broadcasts the GPC header on every request. Pair with Rules that assert no covered tags fire when GPC is on. This is the cleanest way to prove your site honors GPC end-to-end.
+**ObservePoint coverage.** Toggle "Send GPC Signal" on an audit. The synthetic browser broadcasts the GPC header on every request. Pair with Rules that assert no covered tags fire when GPC is on. This is the cleanest way to prove your site honors GPC end-to-end. `compare_consent_states(domain=..., leftState="default", rightState="gpc")` produces the canonical side-by-side.
+
+### Universal Opt-Out Mechanism (UOOM)
+
+**What it is.** A regulatory concept (rather than a specific signal) for any browser-level opt-out mechanism that a state law honors. Colorado's CPA explicitly requires recognition of "universal opt-out mechanisms"; Connecticut, California, and a growing list of states have similar provisions. GPC is the dominant UOOM today; future signals (e.g., a successor to GPC, or a browser-vendor implementation) would also qualify.
+
+**ObservePoint coverage.** Treat UOOM the same as GPC for now — they're functionally the same audit toggle. Track regulator guidance: if a state authority recognizes a new UOOM signal, the audit needs a fourth consent variant.
 
 ### IAB Transparency and Consent Framework (TCF)
 
@@ -795,19 +807,75 @@ Organized by region. Each region opens with the most-asked-about regulations (Ti
 
 **ObservePoint coverage.** Decode TC strings from cookies, validate they meet the current version requirements, assert correct vendor disclosure. Pair with audits per consent state to validate that the string actually reflects the user's choice.
 
+### IAB Global Privacy Platform (GPP)
+
+**What it is.** A multi-jurisdiction consent-string standard published by the IAB Tech Lab. Designed to carry per-jurisdiction signals (US National, US-CA, US-VA, US-CO, US-CT, US-UT, and more) in one string, so a single integration can satisfy multiple state laws. Current version (mid-2026): GPP 1.x with active per-jurisdiction sections.
+
+**ObservePoint coverage.** Validate GPP string presence in the `usnat`, `usca`, and similar cookie names; decode the per-section flags to confirm they match the user's actual consent state. The TCF audit pattern extends here: per-consent-state Rules assert the GPP section's flags match.
+
 ### Google Consent Mode v2
 
 **What it is.** Google's mechanism for adjusting tag behavior based on consent. Four categories: `ad_storage`, `analytics_storage`, `ad_user_data`, `ad_personalization`.
 
 **ObservePoint coverage.** Validate that Consent Mode v2 signals propagate correctly from the CMP to Google tags. Use Rules to assert that under Reject-All, `ad_storage` is "denied" and the resulting tags use the no-cookie pings instead of standard collection. The Cookies Privacy Compliance Report shows which Google tags set what cookies under each consent state — that's your evidence of correct propagation.
 
-### EU AI Act (Article 50 transparency)
+### Apple App Tracking Transparency (ATT)
 
-**What it requires for marketing.** AI-generated content used in marketing campaigns must be labeled. The transparency obligations under Article 50 take effect **August 2, 2026**. Penalties scale to a percentage of global annual turnover.
+**What it is.** Apple's iOS framework requiring apps to ask users for permission before accessing the IDFA (Identifier for Advertisers) for cross-app tracking. In effect since iOS 14.5 (April 2021).
 
-**ObservePoint coverage.** Validate that marketing pages containing AI-generated copy or imagery carry the required disclosure. Build a Rule that asserts a specific data-layer flag (`page.ai_generated = true`) is paired with a visible disclosure element in the DOM. Audit at scale across the marketing site.
+**ObservePoint coverage — narrow.** ObservePoint is a web platform and does not test native iOS apps directly (see `references/limitations.md` → "Native mobile apps"). What it can do: when a website uses Apple SDKs, Smart App Banner pixels, or similar bridge mechanisms, audit the resulting requests to detect IDFA-related parameters. For native-app testing, capture a HAR from the device and process via HAR Analyzer; for the website-side of an iOS app ecosystem, the standard audit pattern applies.
 
-**Caveat.** ObservePoint can validate the *disclosure*; it cannot determine whether content actually was AI-generated. That classification is upstream.
+### Privacy Sandbox (Chrome)
+
+**What it is.** Google's Chrome initiative replacing third-party cookies and cross-site tracking with privacy-preserving alternatives. Topics API was retired (October 2025). Surviving APIs as of mid-2026: Protected Audience API (FLEDGE successor), Attribution Reporting API, CHIPS (Cookies Having Independent Partitioned State), FedCM (Federated Credential Management), Private State Tokens.
+
+**ObservePoint coverage.**
+
+- Inventory which Privacy Sandbox APIs your site uses (Web Audits surface the script calls).
+- Validate CHIPS-partitioned cookie usage on pages with cross-site embeds.
+- Audit Protected Audience auctions for participation correctness.
+- For sites still relying on third-party cookies (which remain functional in Chrome but are heavily blocked by browser settings and ad-blockers), the Domains & Geo Privacy Report surfaces vendor dependency on legacy tracking.
+
+**Caveat.** Privacy Sandbox is a moving target; verify the API set against current Chromium documentation before claiming coverage of a specific API.
+
+## Voluntary standards and frameworks
+
+These aren't laws — they're voluntary standards organizations and enterprises adopt as governance scaffolding. ObservePoint helps with the website-tracking-relevant slice of each.
+
+### PCI DSS 4.0 — client-side script integrity (requirements 6.4.3 and 11.6.1)
+
+**Status.** PCI DSS v4.0 published 2022; the future-dated requirements (originally targeted March 2025) are now mandatory across the payment industry. Enforcement by acquiring banks and the PCI Security Standards Council via QSAs.
+
+**What it requires (tracking-relevant).**
+
+- **Requirement 6.4.3:** Manage all scripts loaded on payment pages — maintain an inventory, document business justification, ensure authorization of each script.
+- **Requirement 11.6.1:** Detect unauthorized modification of payment-page scripts and HTTP headers; alert on change.
+
+These two requirements turned PCI compliance into a tracking-script governance problem — exactly the problem ObservePoint solves.
+
+**ObservePoint coverage.**
+
+- **6.4.3 — script inventory:** Web Audits on payment pages produce the full script inventory automatically. Pair with the Tag & Cookie Debugger for on-demand inspection. The Domains & Geo Privacy Report enumerates which third-party domains your payment page calls.
+- **6.4.3 — script authorization:** maintain a Rule asserting only approved-vendor scripts fire on `/checkout*`, `/payment*`, `/cart*` URL patterns. New script appearing = Rule failure = investigation trigger.
+- **11.6.1 — change detection:** `find_anomalies(auditId, metric="tags", thresholdPct=10)` and `find_anomalies(auditId, metric="request-domains", thresholdPct=10)` on the payment-page audit. `find_first_observed` tells you when an unauthorized script first appeared in the audit history. Alerts route to security ops.
+
+**Doesn't cover.** Payment terminal or POS-side controls; SAQ documentation; ROC narrative writing.
+
+### NIST Privacy Framework
+
+**Status.** Version 1.0 published 2020 by NIST; voluntary use. Tennessee's TIPA explicitly makes a "documented NIST-aligned privacy program" an affirmative defense to state privacy claims, which has increased real-world adoption.
+
+**What it provides.** A risk-based framework structured into five Functions (Identify-P, Govern-P, Control-P, Communicate-P, Protect-P), with implementation Tiers and Profiles. Aligns with the NIST Cybersecurity Framework.
+
+**ObservePoint coverage — limited but real.** The Framework's data-mapping requirements (Identify-P function) benefit from ObservePoint's vendor / cookie / data-flow inventory. Use the Domains & Geo Privacy Report and Cookies Privacy Compliance Report as the technical inputs to the Framework's data-inventory work.
+
+### ISO/IEC 27701
+
+**Status.** ISO Privacy Information Management standard (extends ISO 27001). Certifiable by accredited bodies.
+
+**What it provides.** Privacy Information Management System (PIMS) requirements — extends ISO 27001 with privacy-specific controls covering PII processing, consent management, data subject rights, vendor management.
+
+**ObservePoint coverage — supports the operational evidence requirements.** A certified PIMS needs operational evidence of consent enforcement, data flow control, and vendor management. The same audit data that satisfies GDPR or CCPA evidence packs feeds ISO 27701 audits. Treat it as the certification-equivalent of the GDPR audit pattern.
 
 ## Accessibility (not technically privacy, but the same audit motion)
 
@@ -821,27 +889,121 @@ Organized by region. Each region opens with the most-asked-about regulations (Ti
 
 ## Coverage matrix
 
-| Regulation | ObservePoint module | Primary report | Schedule |
+Rows = every in-scope regulation / framework. Columns = the ObservePoint setup that produces evidence + the relevant MCP wrapper (where one applies). Use this matrix as the one-page reference when scoping a customer engagement.
+
+### U.S. comprehensive
+
+| Regulation | ObservePoint setup | Primary report | MCP wrapper hint | Schedule |
+|---|---|---|---|---|
+| CCPA / CPRA (California) | Three-audit setup (default + opt-out + GPC) + compare_consent_states + scan_audit_pii | Cookies Privacy Compliance, Rule Summary | `setup_compliance_monitoring(regulation="ccpa")` | Weekly |
+| Colorado CPA | Three-audit setup; GPC required | Cookies Privacy Compliance | Manual (CCPA template + Colorado banner) | Weekly |
+| Connecticut CTDPA | Three-audit setup; GPC required since 2025 | Cookies Privacy Compliance | Manual | Weekly |
+| Virginia VCDPA | Two-audit setup (default + opt-out); no GPC | Cookies Privacy Compliance | Manual | Weekly |
+| Utah UCPA | Two-audit setup; no GPC | Cookies Privacy Compliance | Manual | Weekly |
+| Texas TDPSA | Three-audit setup; GPC required | Cookies Privacy Compliance | Manual | Weekly |
+| Oregon OCPA | Three-audit setup; GPC required | Cookies Privacy Compliance | Manual | Weekly |
+| Montana MCDPA | Three-audit setup; GPC required; no cure period after Oct 2026 | Cookies Privacy Compliance | Manual | Weekly |
+| Delaware DPDPA | Three-audit setup; GPC required | Cookies Privacy Compliance | Manual | Weekly |
+| Iowa ICDPA | Two-audit setup; no GPC | Cookies Privacy Compliance | Manual | Weekly |
+| Nebraska NDPA | Three-audit setup; GPC required | Cookies Privacy Compliance | Manual | Weekly |
+| NH NH-DPA | Three-audit setup; GPC required | Cookies Privacy Compliance | Manual | Weekly |
+| NJ NJDPA | Three-audit setup; GPC required | Cookies Privacy Compliance | Manual | Weekly |
+| Minnesota MCDPA | Three-audit setup + DPIA support via Domains report | Cookies Privacy Compliance | Manual | Weekly |
+| Maryland MODPA | Three-audit setup; minor-targeting Rules | Cookies Privacy Compliance | Manual | Weekly |
+| Tennessee TIPA | Three-audit setup; NIST-aligned evidence pack | Cookies Privacy Compliance | Manual | Weekly |
+| Indiana ICDPA | Two-audit setup; no GPC | Cookies Privacy Compliance | Manual | Weekly |
+| Kentucky KCDPA | Two-audit setup; no GPC | Cookies Privacy Compliance | Manual | Weekly |
+| Rhode Island RIDTPPA | Three-audit setup; GPC required | Cookies Privacy Compliance | Manual | Weekly |
+
+### U.S. sectoral, health, AI, kids
+
+| Regulation | ObservePoint setup | Primary report | MCP wrapper hint | Schedule |
+|---|---|---|---|---|
+| HIPAA | Web Audits on PHI URLs + scan_audit_pii + Rules | Tag & Variable Rules, PII scan output | `scan_audit_pii` | Daily on PHI areas |
+| GLBA | Web Audits on NPI flows + scan with customRegex | Tag & Variable Rules, PII scan output | `scan_audit_pii(customRegex=...)` | Weekly |
+| COPPA / COPPA 2.0 | Age-gate Journey + Rules | Tag & Variable Rules | Manual | Daily on kids' areas |
+| FERPA + state student data | Web Audits on student portal + scan_journey_pii canary | Tag & Variable Rules, PII scan output | `scan_journey_pii` | Weekly |
+| Washington MHMDA | Health-context Web Audits + scan_audit_pii | Tag & Variable Rules, PII scan output | `scan_audit_pii` | Weekly |
+| Nevada SB 370 | Same pattern as MHMDA | Tag & Variable Rules | `scan_audit_pii` | Weekly |
+| CT health adds | Layered onto CTDPA audit | Tag & Variable Rules | Manual | Weekly |
+| Colorado AI Act | AI-disclosure Rules on marketing pages | Tag & Variable Rules | Manual | Weekly |
+| Texas RAIGA | AI-disclosure Rules | Tag & Variable Rules | Manual | Weekly |
+| NYC LL 144 | Careers / apply page Rules | Tag & Variable Rules | Manual | Weekly |
+| California AADC (where in force) | Children-likely-accessed page Rules | Tag & Variable Rules | Manual | Daily |
+| State student data laws | Edtech / school-portal Rules | Tag & Variable Rules | Manual | Weekly |
+
+### International
+
+| Regulation | ObservePoint setup | Primary report | Schedule |
 |---|---|---|---|
-| GDPR | Web Audits + Rules + CMP validation | Cookies Privacy Compliance, Domains & Geo Privacy | Weekly, plus pre-deploy |
-| CCPA / CPRA | Three-audit setup (default + opt-out + GPC) | Cookies Privacy Compliance, Rule Summary | Weekly |
-| U.S. state laws (Colorado, Connecticut, Virginia, Utah, Texas, Oregon, Montana, Delaware, Iowa, Nebraska, NH, NJ, Minnesota, Maryland, Tennessee, Indiana, Kentucky, Rhode Island) | Three-audit setup, GPC variant where required | Cookies Privacy Compliance, Rule Summary | Weekly |
-| LGPD, PIPEDA, DPDP | Web Audits + consent-state variants | Cookies Privacy Compliance | Weekly |
-| HIPAA | Web Audits on PHI-bearing URLs + Rules + PII scan | Tag & Variable Rules Report, PII scan output | Daily on PHI areas |
-| GLBA | Web Audits on logged-in financial flows + PII scan with custom regex | Tag & Variable Rules Report, PII scan output | Weekly |
-| COPPA / COPPA 2.0 | Web Audits with age-gate Journey | Tag & Variable Rules Report | Daily on kids' areas |
-| FERPA + state student data laws | Web Audits on student-portal URLs + PII scan | Tag & Variable Rules Report | Weekly |
-| Washington MHMDA | Web Audits on health-adjacent URLs + PII scan | Tag & Variable Rules Report, PII scan output | Weekly |
-| Nevada SB 370, CT health adds | Same pattern as MHMDA | Tag & Variable Rules Report | Weekly |
-| Colorado AI Act | Web Audits with AI-disclosure Rules | Tag & Variable Rules Report | Weekly |
-| Texas RAIGA | Web Audits with AI-disclosure Rules | Tag & Variable Rules Report | Weekly |
-| NYC LL 144 | Web Audits on careers / apply pages | Tag & Variable Rules Report | Weekly |
-| California AADC | Web Audits on children-likely-accessed pages | Tag & Variable Rules Report | Daily |
-| GPC | Web Audits with "Send GPC Signal" | Tag & Variable Rules Report | Weekly |
-| TCF (current 2.3) | Web Audits + TC string decoding rules | Cookies Privacy Compliance | Weekly |
-| Consent Mode v2 | Web Audits per consent state | Tag & Variable Rules Report | Weekly |
-| EU AI Act Article 50 | Web Audits with disclosure rules | Tag & Variable Rules Report | Weekly |
-| WCAG 2.1 AA | Web Audits + accessibility scanning | Accessibility / Accessibility Highlight | Weekly |
+| GDPR (EU) | Three-audit setup + Domains & Geo for Article 44 | Cookies Privacy Compliance, Domains & Geo | Weekly + pre-deploy |
+| ePrivacy Directive | Reject-All audit | Cookies Privacy Compliance | Weekly |
+| EU AI Act | AI-disclosure Rules on marketing | Tag & Variable Rules | Weekly |
+| DSA | Notice-UI + transparency Rules | Tag & Variable Rules | Weekly |
+| DMA | Gatekeeper-specific (narrow audience) | Domains & Geo | Per release |
+| Data Act | Disclosure UI Rules | Tag & Variable Rules | Per release |
+| NIS2 | Vendor inventory feeding risk assessment | Domains & Geo | Weekly |
+| UK GDPR + DPA 2018 | Same as GDPR | Cookies Privacy Compliance | Weekly |
+| PECR (UK) | Reject-All audit | Cookies Privacy Compliance | Weekly |
+| LGPD (Brazil) | Three-audit setup | Cookies Privacy Compliance | Weekly |
+| Argentina PDPL | Standard consent-state audit | Cookies Privacy Compliance | Monthly |
+| Mexico LFPDPPP | Privacy-notice Rule + consent audit | Tag & Variable Rules | Weekly |
+| Chile (post-2026) | GDPR-aligned audit pattern | Cookies Privacy Compliance | Weekly |
+| Colombia | Consent-state audit + cross-border inventory | Cookies Privacy Compliance | Weekly |
+| India DPDP | Geo-routed consent audit | Cookies Privacy Compliance | Weekly |
+| China PIPL | Consent + cross-border + sensitive-data Rules | Cookies Privacy Compliance, Domains & Geo | Weekly |
+| Singapore PDPA | Consent-state audit | Cookies Privacy Compliance | Weekly |
+| Japan APPI | Consent-state audit + cross-border inventory | Cookies Privacy Compliance | Weekly |
+| South Korea PIPA | Opt-in-strict Reject-All audit | Cookies Privacy Compliance | Weekly |
+| Thailand PDPA | Consent-state audit | Cookies Privacy Compliance | Weekly |
+| Philippines DPA | Consent-state audit | Cookies Privacy Compliance | Weekly |
+| Indonesia PDP | Consent-state + cross-border inventory | Cookies Privacy Compliance | Weekly |
+| Vietnam PDPL | Consent + cross-border registration | Cookies Privacy Compliance | Weekly |
+| Australia Privacy Act | Consent-state audit | Cookies Privacy Compliance | Weekly |
+| New Zealand Privacy Act | Consent-state audit | Cookies Privacy Compliance | Weekly |
+| PIPEDA (Canada) | Consent-state audit | Cookies Privacy Compliance | Weekly |
+| Quebec Law 25 | Consent audit + ADM-disclosure Rules + cross-border inventory | Cookies Privacy Compliance, Domains & Geo | Weekly |
+| UAE PDPL | Consent-state audit (split mainland/DIFC/ADGM) | Cookies Privacy Compliance | Weekly |
+| Saudi PDPL | Consent + data-localization inventory | Cookies Privacy Compliance, Domains & Geo | Weekly |
+| Bahrain PDPL | Consent-state audit | Cookies Privacy Compliance | Weekly |
+| Israel Privacy Law | GDPR-shape audit | Cookies Privacy Compliance | Weekly |
+| South Africa POPIA | Consent-state audit | Cookies Privacy Compliance | Weekly |
+| Kenya DPA | Consent-state audit | Cookies Privacy Compliance | Weekly |
+| Nigeria NDPA | Consent-state audit | Cookies Privacy Compliance | Weekly |
+
+### Signals, frameworks, voluntary standards
+
+| Signal / framework | ObservePoint setup | Primary report | Schedule |
+|---|---|---|---|
+| GPC | Web Audits with "Send GPC Signal" | Tag & Variable Rules | Weekly |
+| UOOM (general) | Same as GPC for now | Tag & Variable Rules | Weekly |
+| IAB TCF (current 2.3) | TC string decoding Rules | Cookies Privacy Compliance | Weekly |
+| IAB GPP | GPP string decoding Rules | Cookies Privacy Compliance | Weekly |
+| Google Consent Mode v2 | Per-consent-state Rules on Google tag payloads | Tag & Variable Rules | Weekly |
+| Apple ATT | HAR Analyzer for native iOS bridges; web audit for Smart App Banner | HAR Analyzer | Per release |
+| Privacy Sandbox | Tag inventory of Sandbox API calls | Tag Inventory | Weekly |
+| PCI DSS 4.0 (6.4.3 / 11.6.1) | Payment-page audit + find_anomalies on tags/domains | Tag & Variable Rules + find_anomalies output | Daily on payment areas |
+| NIST Privacy Framework | Vendor / cookie inventory as Identify-P input | Domains & Geo, Cookies Privacy Compliance | Quarterly review |
+| ISO/IEC 27701 | Same audit data as GDPR feeds the PIMS certification | Cookies Privacy Compliance, Domains & Geo | Per audit cycle |
+| WCAG 2.1 / 2.2 AA | Web Audits + accessibility scanning | Accessibility / Accessibility Highlight | Weekly |
+| European Accessibility Act | Same as WCAG | Accessibility | Weekly |
+
+## Out-of-scope laws
+
+Laws that name websites or web tracking but where ObservePoint genuinely doesn't materially help. Naming them here so a user searching for the term gets a routing answer rather than silence.
+
+| Law / topic | Why it's out of scope | Where to go instead |
+|---|---|---|
+| DSAR fulfillment workflows (right of access, deletion, correction) | These are program / workflow problems, not website-tracking problems. ObservePoint's scanner sees what fires; it doesn't fulfill consumer rights requests. | A privacy management platform (OneTrust DSAR, Securiti, DataGrail). |
+| Employee data privacy laws (e.g., California Privacy Rights Act employee provisions) | The platform audits public-facing websites and customer journeys, not employee HR systems. | HR-system-specific compliance tools. |
+| Marketing email content laws (CAN-SPAM, CASL) | These regulate the email itself — sender identification, opt-out wording, header accuracy. ObservePoint validates that links in marketing emails work and that landing pages track correctly; it doesn't validate the email content. | Email service provider compliance tools (Litmus, Email on Acid for rendering; ESP audit logs for opt-out compliance). |
+| Telephone marketing (TCPA, DNC) | Phone/SMS marketing rules. Not website-tracking. | Outbound dialing compliance tools. |
+| Section 230 / intermediary liability | Substantive law about hosting third-party content, not a tracking-compliance question. | Legal counsel. |
+| Antitrust / competition law | Different specialty entirely. | Competition counsel. |
+| Securities disclosure laws (e.g., SEC tracking-pixel disclosure) | When SEC enforcement touches website tracking, the substantive obligations live in disclosure rules, not in the scanner. ObservePoint can inventory the tracking that's happening; the disclosure obligation lives with legal. | Securities counsel; SEC EDGAR filing tools. |
+| Pure data-broker laws (e.g., California Delete Act) | Regulates registered data brokers' database operations, not website tracking. | Data-broker-specific compliance tools. |
+
+When a user asks about a law in this table, route them clearly. Saying "ObservePoint doesn't materially help with that, here's where to go" is more useful than reaching for an audit pattern that won't fit.
 
 ## Building a compliance evidence pack
 
