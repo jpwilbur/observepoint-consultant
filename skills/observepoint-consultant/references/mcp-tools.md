@@ -4,19 +4,54 @@ The ObservePoint MCP server wraps the platform's REST API with an opinionated, e
 
 This file is the working reference for those tools. When the server reaches GA, this becomes the day-one guide for everyone.
 
+## Contents
+
+- [Rules of engagement](#rules-of-engagement)
+- [What the server is](#what-the-server-is)
+- [How discovery works](#how-discovery-works)
+- [How to verify this catalog against your live server](#how-to-verify-this-catalog-against-your-live-server)
+- [Tool families](#tool-families)
+  - [Discovery and account](#discovery-and-account)
+  - [Audits](#audits--the-bread-and-butter)
+  - [Audit configuration](#audit-configuration)
+  - [Audit run data and reports](#audit-run-data-and-reports)
+  - [Page-level inspection](#page-level-inspection)
+  - [Journeys](#journeys)
+  - [Action-sets](#action-sets--reusable-journey-sequences)
+  - [Rules](#rules)
+  - [Alerts](#alerts)
+  - [Consent categories and CMP integration](#consent-categories-and-cmp-integration)
+  - [Folders, sub-folders, labels](#folders-sub-folders-labels)
+  - [Scheduling](#scheduling)
+  - [Locations and geo](#locations-and-geo)
+  - [Grid reports](#grid-reports)
+  - [Exports](#exports)
+  - [PII scanning](#pii-scanning) *(new)*
+  - [Cross-audit comparison](#cross-audit-comparison) *(new)*
+  - [Anomalies, drift, coverage](#anomalies-drift-coverage) *(new)*
+  - [Analysis primitives](#analysis-primitives) *(new)*
+  - [Inventory and data shape](#inventory-and-data-shape) *(new)*
+  - [Selector verification](#selector-verification) *(new)*
+  - [Escape hatches](#escape-hatches)
+- [Safety gates encoded in the wrappers](#safety-gates-encoded-in-the-wrappers)
+- [Common patterns](#common-patterns)
+- [When to use `op_api_call`](#when-to-use-op_api_call)
+- [Knowledge-only mode](#knowledge-only-mode)
+- [What changes at GA](#what-changes-at-ga)
+
 ## Rules of engagement
 
 Three rules. They are absolute.
 
 1. **Never invent a tool name.** Only call tools that appear in your available-tools list. If you're not certain a tool exists, don't pretend it does. The catalog below is current as of the `Last verified` date, but the server is under active development — your runtime catalog is the source of truth.
 
-2. **Prefer the wrapper over the raw API.** The MCP server's typed tools encode behavior the raw API doesn't: schedule sanitization, selector-type rewriting, safety gates, two-step mutation patterns. When you call `build_schedule` instead of constructing an RRULE by hand, the wrapper validates and normalizes; when you call `update_journey_actions`, the wrapper enforces selector-evidence requirements. Bypassing wrappers with `op_api_call` discards those protections.
+2. **Prefer the wrapper over the raw API.** The MCP server's typed tools encode behavior the raw API doesn't: schedule sanitization, selector-type rewriting, safety gates, two-step mutation patterns, PII masking, scope-aware drift detection. When you call `build_schedule` instead of constructing an RRULE by hand, the wrapper validates and normalizes; when you call `update_journey_actions`, the wrapper enforces selector-evidence requirements. Bypassing wrappers with `op_api_call` discards those protections.
 
 3. **When a wrapper refuses, the wrapper is right.** The safety gates exist because the underlying API will happily accept malformed input. If `update_journey_actions` refuses because a selector lacks evidence, the right answer is to verify the selector — not to switch to `op_api_call` to slip it past.
 
 ## What the server is
 
-- **115+ tools** spanning every ObservePoint product surface — audits, journeys, action-sets, rules, alerts, consent categories, CMP integration, grid reports, scheduling, exports.
+- **130+ tools** spanning every ObservePoint product surface — audits, journeys, action-sets, rules, alerts, consent categories, CMP integration, grid reports, scheduling, exports, plus newer analysis primitives (PII scanning, consent-state comparison, anomaly detection).
 - **Wraps both v2 and v3** of the ObservePoint REST API. v2 for CRUD; v3 for reporting and advanced features.
 - **One escape hatch**: `op_api_call` for endpoints without a typed wrapper. See `get_api_docs` for the full endpoint list.
 - **One self-describing call**: `get_api_docs` returns the entire endpoint reference, including which wrappers exist for which endpoints.
@@ -27,6 +62,16 @@ Each turn, check whether tools prefixed `mcp__ObservePoint__` are in your availa
 
 - **Tools present** — prefer them. Name the specific tool in your reply so the user can audit (`"Calling \`mcp__ObservePoint__list_audits\` to find the audit for example.com..."`).
 - **Tools absent** — fall back to `references/api-reference.md`. Tell the user the MCP server isn't loaded in this session. Don't construct fake tool calls.
+
+## How to verify this catalog against your live server
+
+This file is hand-curated and drifts as the MCP server evolves. To check whether the catalog matches your live server:
+
+1. Call `mcp__ObservePoint__get_api_docs` in any Claude session that has the MCP server loaded. The output is the authoritative endpoint reference.
+2. Look at the system reminder listing your available tools (or run `claude mcp list` in Claude Code). Tool names prefixed `mcp__ObservePoint__` are what's actually loaded.
+3. If you find a tool in your runtime that isn't in this file, or a tool documented here that isn't in your runtime, that's drift — open a PR refreshing this file, or rely on your runtime catalog and ignore the doc for that tool.
+
+A quarterly refresh of this file is the recommended cadence (or per-MCP-server-release, whichever is sooner). See `CONTRIBUTING.md`.
 
 ## Tool families
 
@@ -113,6 +158,7 @@ Multi-step interaction validation.
 |---|---|
 | `list_journeys`, `get_journey` | Discover and inspect |
 | `get_journey_actions` | Read the step sequence |
+| `get_journey_rules` | Rules attached to the journey |
 | `create_journey`, `update_journey`, `update_journey_actions` | Mutate (subject to the safety gates below) |
 | `delete_journey` | Tear down |
 | `design_journey` | The smart-construction wrapper |
@@ -120,6 +166,8 @@ Multi-step interaction validation.
 | `run_journey` | Trigger a run |
 | `get_journey_runs` | Run history |
 | `get_run_action_outcomes` | Diagnostic per-step results (the only sensible way to inspect a journey run — the raw `/results` endpoint is 3+ MB) |
+| `get_journey_console_errors` | Browser-console errors captured during a journey run |
+| `get_journey_run_rule_results` | Rule pass/fail breakdown for a specific journey run |
 
 ### Action-sets — reusable journey sequences
 
@@ -140,8 +188,9 @@ Tag & Variable Rules — the `WHEN/EXPECT` validation primitive.
 |---|---|
 | `list_rules`, `get_rule` | Discover |
 | `create_rule`, `update_rule`, `delete_rule` | Manage |
+| `find_rule_references` | "What audits / journeys use this Rule?" before deleting |
 
-Pair with `update_audit_rules` or the journey equivalent to actually attach the Rule to an audit/journey.
+Pair with `update_audit_rules` or `update_journey` equivalents to actually attach the Rule to an audit/journey.
 
 ### Alerts
 
@@ -167,11 +216,11 @@ The privacy-validation primitive. Consent categories classify cookies / tags / r
 | `add_consent_category_cookies` / `remove_consent_category_cookies` | Membership management |
 | `add_consent_category_tags` / `remove_consent_category_tags` | Membership management |
 | `add_consent_category_request_domains` / `remove_consent_category_request_domains` | Membership management |
-| `add_consent_category_labels` / `remove_consent_category_labels` | Membership management |
-| `get_audit_consent_categories`, `set_audit_consent_categories`, `assign_audit_consent_categories`, `add_audit_consent_categories`, `remove_audit_consent_categories` | Attach / detach from audits |
+| `add_consent_category_label` / `remove_consent_category_label` / `get_consent_category_labels` | Per-category label management |
+| `get_audit_consent_categories`, `set_audit_consent_categories`, `add_audit_consent_categories`, `remove_audit_consent_categories` | Attach / detach from audits |
 | `detect_cmp` | Which CMP is on a given page |
 | `list_supported_cmps` | Which CMPs have native opt-in/out support |
-| `start_onetrust_consent_category_import` → `poll_onetrust_consent_category_import` | Two-step OneTrust import (NEVER one-shot — see safety gates) |
+| `start_onetrust_consent_category_import` → `poll_onetrust_consent_category_import` → `sync_onetrust_consent_categories` | Three-step OneTrust import (see safety gates) |
 | `check_compliance_status` | Status of a compliance setup |
 | `setup_compliance_monitoring` | **One-shot CCPA / privacy setup** — see below |
 | `get_compliance_guide` | The MCP server's own opinionated guidance |
@@ -182,6 +231,8 @@ The privacy-validation primitive. Consent categories classify cookies / tags / r
 
 This is the cleanest CCPA setup path. Don't reinvent it manually.
 
+**`sync_onetrust_consent_categories` is the third step in the OneTrust importer** — and it's idempotent. Earlier versions of the importer created consent categories without the full CMP identity, so re-imports orphaned them. The current `sync_onetrust_consent_categories` always writes the full identity (`cmpVendor`, `oneTrustCookieGroupDomain`, `oneTrustCookieGroupGeo`, `oneTrustCookieGroupId`, `sourceUrl`) so a re-import updates in place. Always run with `dryRun: true` first.
+
 ### Folders, sub-folders, labels
 
 Organization primitives.
@@ -189,8 +240,14 @@ Organization primitives.
 | Tool | Use when |
 |---|---|
 | `list_folders`, `create_folder` | Top-level organization |
+| `delete_folder` | Remove a folder (must be empty) |
+| `get_folder_contents` | What's inside a folder |
 | `list_subfolders`, `create_subfolder`, `delete_subfolder` | Domain-level grouping |
-| `list_labels`, `create_label` | Tagging audits/journeys for filtering |
+| `get_subfolder`, `update_subfolder` | Inspect / rename a sub-folder |
+| `list_labels`, `create_label`, `update_label`, `delete_label` | Tagging audits/journeys for filtering |
+| `get_audit_labels`, `set_audit_labels` | Per-audit label management |
+| `get_journey_labels`, `add_journey_label`, `remove_journey_label` | Per-journey label management |
+| `get_saved_report_labels`, `set_saved_report_labels` | Per-report label management |
 | `list_tags` | The known tag DEFINITIONS (vendor catalog), not user labels |
 
 ### Scheduling
@@ -213,7 +270,7 @@ RRULE composition has fiddly rules (`WKST=SU` first, explicit `INTERVAL=N`, sign
 | Tool | Use when |
 |---|---|
 | `get_geo_locations` | Geo distribution of audit results |
-| `get_audit_locations`, `list_locations` | Available datacenter locations + region grouping |
+| `list_locations` | Available datacenter locations + region grouping |
 
 ### Grid reports
 
@@ -236,8 +293,69 @@ When users say "reports," "grid reports," "custom reports," or "dashboards," the
 | Tool | Use when |
 |---|---|
 | `list_exports` | What exports are running or recent |
-| `export_audit_run`, `export_report` | Create an export |
+| `export_report` | Create an export of a grid report |
 | `get_export_status` | Poll completion |
+
+### PII scanning
+
+Detect PII / personal data being collected on the site. Both wrappers MASK raw values in output — the report tells you the leak path without echoing the literal.
+
+| Tool | Use when |
+|---|---|
+| `scan_audit_pii` | Site-wide PII scan over an audit run. Checks tag-variable values, cookie values, request query strings. Uses three detection modes: REGEX (email + your `customRegex`; numeric patterns off by default to avoid false positives on analytics IDs), OP-STATIC-IP (visitor IP equals ObservePoint's egress IP), and severity weighting by destination (first-party data layer = governance smell; same value to a third-party domain = active leak). |
+| `scan_journey_pii` | Per-journey-run PII scan. Adds a CANARY mode on top of the audit version: any literal typed via the journey's `input` / `maskedinput` steps appearing downstream in tags/cookies/requests/POST-bodies = definitive collection, zero false positives. The strongest signal. |
+
+Healthcare-tracking and CIPA-style litigation defense both lean heavily on these. See `references/privacy-litigation-defense.md` (when present) for the evidence patterns.
+
+### Cross-audit comparison
+
+Diff two runs or two consent-state audits. Privacy / consent-leak work depends on these.
+
+| Tool | Use when |
+|---|---|
+| `compare_consent_states` | **The canonical consent-leak diagnostic.** Diff the tag set between two consent-state audits on the same domain — "what tags fire on Accept-All but not Reject-All?" Auto-discovers audit pairs by domain + state name (`default` / `opt-out` / `gpc`); recognizes the audit-naming patterns from `setup_compliance_monitoring`. Override with explicit audit IDs for finer control. |
+| `compare_cookie_set` | Diff the cookie set between two audit runs (or two audits). |
+| `compare_domain_set` | Diff the request-domain set between two runs / audits. |
+| `compare_tag_set` | Diff the tag set between two runs / audits. |
+| `compare_audit_runs` | Pre-existing higher-level regression diff between two runs of the same audit. |
+
+### Anomalies, drift, coverage
+
+For "what changed?" and "what slipped past?" workflows.
+
+| Tool | Use when |
+|---|---|
+| `find_anomalies` | Detect runs where a metric jumped suddenly vs the prior run. **Scope-aware** — when a run's page count changes ≥20% vs prior, raw deltas aren't comparable, so the wrapper normalizes to a per-page rate and labels the run "scope-change" rather than a hard anomaly. Default threshold is ±25% over a 10-run lookback. Metric taxonomy: tags / cookies / pages / request-domains / broken-pages / pages-with-browser-errors. |
+| `get_metric_trend` | Time-series of a metric across recent runs. Companion to `find_anomalies`. |
+| `find_coverage_gaps` | What's missing — pages without expected tags, domains never seen, etc. |
+| `find_first_observed` | When something was first seen in the audit history. Useful for "when did this vendor appear?" |
+| `find_rare_observations` | Low-frequency findings worth a look. |
+
+### Analysis primitives
+
+Higher-level diagnostics built on the raw `get_*` data tools. Use these when you want the wrapper to do the interpretation rather than pull raw data and analyze yourself.
+
+| Tool | Use when |
+|---|---|
+| `analyze_journey_cookies` | Cookie analysis for a journey run with context — what set them, on which step, at which URL. |
+| `analyze_journey_requests` | Request analysis for a journey run — third-party calls, status codes, payload size patterns. |
+| `analyze_journey_tags` | Tag firing analysis for a journey run. |
+| `analyze_rule_results` | Rule pass/fail interpretation across runs. |
+
+### Inventory and data shape
+
+| Tool | Use when |
+|---|---|
+| `get_inventory` | Cross-audit inventory roll-up. |
+| `correlate_pages` | Cross-page correlation — what loads with what. |
+| `profile_variable` | Profile the values a tag-variable takes across pages. Useful for finding outliers or unexpected data. |
+| `get_pages_without_tag` | Pages where a specific tag doesn't fire. The "should be everywhere but isn't" workflow. |
+
+### Selector verification
+
+| Tool | Use when |
+|---|---|
+| `verify_selectors` | Verify a CSS / XPath / ID selector resolves to exactly one element on a page. Pairs with the selector-evidence gate documented under "Safety gates" below. |
 
 ### Escape hatches
 
@@ -267,7 +385,7 @@ Required evidence shape:
 
 The wrapper diffs incoming selectors against the current saved version per-action; only genuinely new or changed selectors need evidence. Deleting actions, patching `waitDuration`, etc. pass through with no evidence required.
 
-If you can't verify via Claude for Chrome, the wrapper makes you stop and switch sessions. Do not work around this — selectors written without evidence break the moment the page changes.
+If you can't verify via Claude for Chrome, the wrapper makes you stop and switch sessions. Do not work around this — selectors written without evidence break the moment the page changes. `verify_selectors` is the companion tool for sanity-checking that a selector resolves.
 
 ### Journey-shape gate
 
@@ -284,9 +402,9 @@ If you can't verify via Claude for Chrome, the wrapper makes you stop and switch
 
 `create_journey`, `update_journey_actions`, `create_actionset`, and `update_actionset_actions` refuse 2+ `watch` steps. `watch` is for video playback or side-loading content, not generic "wait N seconds." For between-step buffers, use `waitDuration` on the action itself — every action supports it.
 
-### Two-step CMP import
+### Three-step OneTrust import
 
-`start_onetrust_consent_category_import` returns import-request IDs and the list of cookies the CMP detected. `poll_onetrust_consent_category_import` shows what will be committed. The user explicitly confirms before commit. The wrapper deliberately does NOT collapse this into one step — that would mean an LLM commits cookie-to-category mappings without showing the user what's about to happen.
+`start_onetrust_consent_category_import` returns import-request IDs and the list of cookies the CMP detected. `poll_onetrust_consent_category_import` shows what will be committed. `sync_onetrust_consent_categories` performs the create / update / delete commit — idempotently, so re-imports update in place rather than orphaning. Run `sync_onetrust_consent_categories` with `dryRun: true` first to preview the plan, then again with `dryRun: false` after the user confirms. The wrapper deliberately does NOT collapse this into one step — committing cookie-to-category mappings without showing the user what's about to happen is exactly the failure mode the dryRun pattern exists to prevent.
 
 ### Schedule sanitization
 
@@ -295,6 +413,14 @@ The schedule object has read-only computed fields (`description`, `presetType`) 
 ### Selector-type rewriting
 
 The audit/journey backend natively accepts only `selectorType: "css"`, `"id"`, `"xpath"`. The MCP wrappers transparently rewrite `"text"` → xpath `//*[normalize-space()='value']`, `"ariaLabel"` → css `[aria-label='value']`, `"name"` → css `[name='value']`. This normalization is applied to the full merged body, so legacy data is normalized too.
+
+### Scope-aware anomaly detection
+
+`find_anomalies` doesn't flag a run as a hard anomaly when the page count changed ≥20% vs the prior run — a 10-page homepage scan next to a 1,006-page crawl makes raw deltas meaningless. Instead it labels the run "scope-change" and shows the per-page rate so you can decide whether the normalized change is real drift. This prevents the classic false alarm where a scan-size change masquerades as a tag spike.
+
+### PII masking
+
+`scan_audit_pii` and `scan_journey_pii` never echo raw PII. Findings are reported as "leak path X collected a value matching pattern Y" with the value masked. This is deliberate — the report can land in a ticket or evidence pack without leaking the very data the scan was looking for.
 
 ## Common patterns
 
@@ -311,6 +437,34 @@ get_tag_inventory(auditId, runId)  // and/or get_cookie_inventory
 ```
 setup_compliance_monitoring(regulation="ccpa", domain="example.com")
 // One call creates three audits per the wrapper's CCPA pattern.
+```
+
+**"Does our Reject All actually block tracking?"**
+```
+compare_consent_states(domain="example.com", leftState="default", rightState="opt-out")
+// Auto-discovers the audit pair, returns only-on-default tags that should NOT fire on opt-out.
+```
+
+**"Scan for PII leaks on the patient portal"**
+```
+list_audits(search="patient-portal") → pick audit
+scan_audit_pii(auditId, customRegex=[{name: "MRN", pattern: "MRN-\\d{8}"}])
+// PII findings are masked; report tells you what leaked and to which destination domain.
+```
+
+**"What changed since last release?"**
+```
+find_anomalies(auditId, metric="tags", thresholdPct=25, lookbackRuns=10)
+// Returns runs where the tag count jumped beyond the threshold, scope-normalized.
+```
+
+**"Sync OneTrust consent categories"**
+```
+start_onetrust_consent_category_import(cmpProvider="ONE_TRUST", sourceUrl=..., locales=[...])
+poll_onetrust_consent_category_import(importRequestIds=[...])    // shows what was detected
+sync_onetrust_consent_categories(importRequestIds=[...], dryRun=true)   // preview plan
+// User confirms the plan
+sync_onetrust_consent_categories(importRequestIds=[...], dryRun=false)  // commit
 ```
 
 **"Build a release-gate audit"**
@@ -342,6 +496,12 @@ get_journey_runs(journeyId) → get_run_action_outcomes(runId)
 // avoid the raw /results endpoint — it's 3+ MB
 ```
 
+**"Which audits / journeys use this Rule?" (before deleting)**
+```
+find_rule_references(ruleId)
+// Same pattern: find_actionset_references(actionSetId) before deleting an action-set.
+```
+
 ## When to use `op_api_call`
 
 The escape hatch. Use it only when:
@@ -366,12 +526,12 @@ In that mode:
 
 When the MCP server reaches generally available status:
 
-- Distribution path moves into the public README (no NDA required).
-- The plugin's `.mcp.json.example` may become a working `.mcp.json` that auto-bootstraps on install.
+- The README's install section moves from "internal users only" to public install steps.
+- The plugin may ship a `.mcp.json` that auto-bootstraps the server on install (decided in v0.2.0 to NOT ship one pre-GA; the public release revisits this).
 - This file's `Last verified` date updates with whatever wrapper changes shipped.
 
 Watch the changelog and the server's own `get_api_docs` for the source of truth.
 
 ---
 
-*Last verified: 2026-05-28*
+*Last verified: 2026-06-03*
