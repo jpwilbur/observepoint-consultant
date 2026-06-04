@@ -1,6 +1,6 @@
 ---
 name: observepoint-consultant
-description: World-class ObservePoint and web-governance advisor. Use this skill whenever the user mentions ObservePoint, web governance, tag governance, analytics validation, consent management, CMP validation, tag audits, the ObservePoint Rules engine, the ObservePoint REST API, or any ObservePoint product — even if they don't explicitly say "ObservePoint." Also trigger when the user asks about writing tag-firing rules, drafting a web-governance policy or release-gate checklist, mapping privacy regulations to a website-scanning workflow, or detecting issues like unauthorized pixels, consent leakage, data layer drift, or broken tracking.
+description: World-class ObservePoint and web-governance advisor. Use this skill whenever the user mentions ObservePoint, web governance, tag governance, analytics validation, consent management, CMP validation, tag audits, the ObservePoint Rules engine, the ObservePoint REST API, or any ObservePoint product — even if they don't explicitly say "ObservePoint." Also trigger when the user asks about writing tag-firing rules, drafting a web-governance policy or release-gate checklist, mapping privacy or accessibility regulations to a website-scanning workflow (GDPR, CCPA, CIPA, VPPA, BIPA, ECPA, HIPAA, PCI DSS, COPPA, Colorado AI Act, EU AI Act, DSA, DMA, China PIPL, UK GDPR, Quebec Law 25, Washington MHMDA, and 19+ U.S. state privacy laws), defending tracking-pixel or session-replay class-action claims, validating Apple ATT or Privacy Sandbox behavior, or detecting issues like unauthorized pixels, consent leakage, data layer drift, broken tracking, or PII leaks to ad networks.
 ---
 
 # ObservePoint Consultant
@@ -27,7 +27,8 @@ Step 1: classify the user's question. Then load the matching reference file(s) b
 | What ObservePoint is, or which product fits a use case | `references/products-and-modules.md` (+ `personas.md` if persona-led) |
 | How to solve a specific pain (consent leak, broken tracking, tag drift, unauthorized pixel, accessibility gap, etc.) | `references/solution-playbooks.md` |
 | How to write a Rule, hit the API, or run a CI/CD audit | `references/api-reference.md` (+ `integrations.md`) |
-| Whether/how ObservePoint covers a regulation | `references/privacy-and-compliance.md` |
+| Whether/how ObservePoint covers a comprehensive privacy regulation (GDPR, CCPA, Colorado CPA, China PIPL, etc.) | `references/privacy-and-compliance.md` |
+| **Defending a litigation claim or demand letter** (CIPA, VPPA, BIPA, ECPA, state wiretap, healthcare-pixel class action, session-replay claim) | `references/privacy-litigation-defense.md` |
 | How ObservePoint compares to a competitor | `references/competitive-positioning.md` |
 | Building a deliverable (tag-audit report, governance policy, RACI, release-gate checklist) | `references/consulting-deliverables.md` |
 | Whether ObservePoint can do `<X>` where X may not exist | `references/limitations.md` FIRST, then `products-and-modules.md` |
@@ -109,7 +110,8 @@ Sometimes the user asks for something ObservePoint cannot do, or describes a pro
 | `references/solution-playbooks.md` | Pain-point and persona-led recipes |
 | `references/api-reference.md` | Rules, API endpoints, CI/CD integration |
 | `references/mcp-tools.md` | MCP tool usage (now or in future) |
-| `references/privacy-and-compliance.md` | Mapping regulations to coverage |
+| `references/privacy-and-compliance.md` | Mapping comprehensive privacy regulations to coverage — covers 50+ regulations globally, with a TOC up top for jurisdiction navigation |
+| `references/privacy-litigation-defense.md` | Tort-driven litigation defense — CIPA, VPPA, BIPA, ECPA, state wiretaps, healthcare-pixel claims, session-replay claims |
 | `references/competitive-positioning.md` | Side-by-side competitor comparisons |
 | `references/verbiage-and-messaging.md` | Brand-correct phrasing and capitalization |
 | `references/limitations.md` | What ObservePoint cannot do, and the workaround |

@@ -1,6 +1,6 @@
 {
   "name": "observepoint-consultant",
-  "description": "World-class ObservePoint and web-governance advisor for Claude Code. Knows ObservePoint's products, Rules engine, REST API, integrations, limitations, and approved verbiage. Maps privacy and accessibility regulations to ObservePoint coverage, drafts governance deliverables, and is ready to use the ObservePoint MCP server when it reaches GA.",
+  "description": "World-class ObservePoint and web-governance advisor for Claude Code. Knows ObservePoint's products, Rules engine, REST API, MCP server tools, integrations, limitations, and approved verbiage. Comprehensive global privacy coverage: 19+ U.S. state laws, CIPA / VPPA / BIPA / ECPA litigation defense, GDPR + UK GDPR + Quebec Law 25 + China PIPL + Japan APPI + 30+ international regimes, EU AI Act + Colorado AI Act, PCI DSS 4.0, accessibility (WCAG / EAA), browser signals (GPC / UOOM / TCF / Consent Mode v2 / Apple ATT / Privacy Sandbox).",
   "author": {
     "name": "Jarrod Wilbur",
     "email": "jarrod.wilbur@observepoint.com"
