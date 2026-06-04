@@ -16,7 +16,14 @@ REQUIRED = {"id", "area", "prompt", "expected_output_summary", "must_include", "
 
 
 def main():
-    data = json.loads(EVALS.read_text())
+    try:
+        data = json.loads(EVALS.read_text())
+    except FileNotFoundError:
+        print(f"evals file not found: {EVALS}")
+        sys.exit(1)
+    except json.JSONDecodeError as e:
+        print(f"evals file invalid JSON: {e}")
+        sys.exit(1)
     evals = data.get("evals", [])
     errors = []
     seen_ids = set()

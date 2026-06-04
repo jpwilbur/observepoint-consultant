@@ -380,6 +380,59 @@ When a customer has received a demand letter, class-action filing, or discovery 
 
 **Success metric.** A quarterly report to the executive sponsor showing: tag inventory, Rule coverage, incidents detected, incidents resolved, time-to-detect, and time-to-resolve.
 
+## Account health and renewal
+
+For existing customers — reading whether the account is on track and building the value story for renewal. This is value documentation, never prospecting.
+
+### "Account Health Check — what should we focus on?"
+
+**Pain.** A CSM or consultant needs to know where an account actually stands and what to prioritize next — not a feeling, a diagnosis read off the account itself.
+
+**Persona.** Customer Success Manager or consultant.
+
+**ObservePoint approach.** Run the account-health diagnostic from `references/account-health-and-strategy.md`: read breadth and usage (`get_usage_overview`, `get_usage_trends`, `list_audits`), whether what exists is working (`get_audit_health`), what's missing (`find_coverage_gaps`), and whether alerts and saved reports exist (`list_alerts`, `list_saved_reports`). Map the readings to a maturity stage (see `references/lifecycle-and-maturity.md`) and the stuck-pattern it implies.
+
+**Workflow.** Diagnose → identify the single biggest gap (most often "Rules but no alerts" or "program but no exec sponsor") → produce a prioritized action list, highest-leverage first.
+
+**Alert routing.** N/A — this is a diagnostic the CSM runs, not a monitored Rule.
+
+**Success metric.** A prioritized, ranked action list delivered to the customer — the top three moves that advance the account, not an undifferentiated audit of everything.
+
+### "Renewal Prep — build the value story"
+
+**Pain.** Renewal is approaching and the CSM needs to show the budget owner what the program delivered — in their terms, with evidence, not a sales pitch to an existing customer.
+
+**Persona.** Customer Success Manager, for the customer's budget owner / executive sponsor.
+
+**ObservePoint approach.** Assemble the value story from `references/roi-and-renewal-framing.md`: pull the period's incidents-caught, regressions-detected, vendors-inventoried, compliance-evidence, and accessibility-progress numbers (via `query_report`, `get_usage_trends`, run history), then frame them against a metric the budget owner already owns. Package as the Value Snapshot and Renewal Narrative from `references/consulting-deliverables.md`. No pricing.
+
+**Workflow.** Pull the numbers → frame in the budget owner's terms → produce the Value Snapshot (the numbers) and the Renewal Narrative (the before/after arc by maturity stage).
+
+**Alert routing.** N/A — deliverable production, not monitoring.
+
+**Success metric.** A Value Snapshot and Renewal Narrative ready to hand to the budget owner before the renewal conversation — a documented value story, not a feeling.
+
+## Accessibility prioritization
+
+### "Rank our accessibility findings — what do we fix first?"
+
+**Pain.** Thousands of accessibility findings and no way to triage. The team needs a fix-this-first queue and an evidence trail that shows good-faith remediation.
+
+**Persona.** Accessibility Specialist (often with legal in the loop on a demand letter).
+
+**ObservePoint approach.** Run a Web Audit with accessibility scanning across the property, then apply the impact-prioritization model from `references/accessibility-playbooks.md` — rank by impact = severity × traffic × affected population. Pull the ranked findings with `query_report` against the accessibility-issues entity (use `get_report_schema` to confirm the column names first), joined to page-traffic tier.
+
+**Workflow.**
+
+1. Confirm accessibility scanning is enabled on the Web Audit covering the in-scope templates.
+2. `query_report` against the accessibility-issues entity to enumerate violations by WCAG success criterion and severity.
+3. Rank by severity × traffic × affected population — a critical violation on the high-traffic signup flow outranks a minor one on archived pages.
+4. Produce the Accessibility Priority Report (see `references/consulting-deliverables.md`) with the fix-this-first queue and per-item remediation guidance; flag the criteria automation can't fully verify for manual review.
+
+**Alert routing.** Engineering / design ticketing (Jira), assigned to the team that owns the affected templates; legal copied when a demand letter is in play.
+
+**Success metric.** A ranked fix-this-first queue the team works top-down, with a dated remediation trail demonstrating good-faith progress.
+
 ## How to use these playbooks
 
 Don't recite them verbatim. Pattern is:
@@ -392,4 +445,4 @@ The playbooks are scaffolding. The conversation is the deliverable.
 
 ---
 
-*Last verified: 2026-05-28*
+*Last verified: 2026-06-04*
