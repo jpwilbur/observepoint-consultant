@@ -10,6 +10,10 @@
 # Local Claude Code state
 .claude/settings.local.json
 
+# Internal design/planning docs — kept outside this distributable repo
+# (the repo is cloned by everyone who installs the plugin; planning lives in ~/.claude/plans/)
+docs/superpowers/
+
 # Node (in case any tooling shows up later)
 node_modules/
 
