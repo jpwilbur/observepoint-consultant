@@ -1,0 +1,17 @@
+name: staleness-check
+
+on:
+  schedule:
+    - cron: "0 13 * * 1"
+  workflow_dispatch:
+
+jobs:
+  staleness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Flag stale reference files
+        run: python3 scripts/quick_validate.py --staleness-days 90 || true
