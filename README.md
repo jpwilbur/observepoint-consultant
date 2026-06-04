@@ -6,7 +6,7 @@ Type `/observepoint-consultant` in Claude Code (or any Claude Code-compatible cl
 
 ## What it knows
 
-The skill ships **13 reference files** inside one focused `SKILL.md` dispatcher. Topic coverage:
+The skill ships **26 reference files** inside one focused `SKILL.md` dispatcher. Topic coverage:
 
 | Reference | What it covers |
 |---|---|
@@ -21,8 +21,28 @@ The skill ships **13 reference files** inside one focused `SKILL.md` dispatcher.
 | `limitations.md` | What ObservePoint cannot do, with the recommended workaround for each |
 | `integrations.md` | TMS, CMP, ticketing, comms, identity, CI/CD, BI plug-ins |
 | `consulting-deliverables.md` | Hand-back templates: tag audit report, governance policy, RACI, release-gate checklist, evidence pack, QBR |
-| `personas.md` | Tone and content tuning for nine common ObservePoint personas |
-| `glossary.md` | Term reference (~80 terms covering products, regulations, litigation theories, signals, frameworks) |
+| `personas.md` | Tone and content tuning for common ObservePoint personas (incl. CSM and Accessibility Specialist) |
+| `glossary.md` | Term reference (~80 terms covering products, regulations, litigation theories, signals, frameworks, accessibility, ROI) |
+| `industries/` | Directory of **7 vertical playbooks** (retail / e-commerce, financial services & insurance, healthcare & life sciences, travel & hospitality, media & publishing, government & public sector, education) plus an `index.md` router — each maps the vertical's pains, regulations, and seasonal moments to ObservePoint coverage |
+| `lifecycle-and-maturity.md` | Program maturity model and onboarding starter — "where do we go next" sequencing (starter content; fuller treatment lands in v0.5.0) |
+| `martech-adjacency.md` | Adjacent MarTech platforms ObservePoint validates: GA4, Adobe Analytics, GTM (client + server-side), Adobe Launch, Tealium iQ, Consent Mode v2, Meta CAPI / Conversions API ecosystem, CDPs, attribution, Privacy Sandbox — what ObservePoint can prove and what it can't |
+| `account-health-and-strategy.md` | Account diagnostics, common underuse patterns, and biggest-bang-for-buck next actions — "what should I focus on in my account" |
+| `roi-and-renewal-framing.md` | Quantified value framing and renewal narrative for a budget owner (no pricing) |
+| `accessibility-playbooks.md` | Accessibility prioritization, the ADA / Section 508 / WCAG / EAA landscape, and lawsuit-defense evidence |
+
+## Slash commands
+
+The plugin also ships **7 slash commands** — focused entry points that route straight into a workflow. Each takes the argument hint shown:
+
+| Command | Argument hint | What it does |
+|---|---|---|
+| `/op-compliance-quickcheck` | `<url>` | Audit a URL for the privacy regulations applicable to its jurisdiction |
+| `/op-state-of-play` | `<domain>` | Summarize the current state of a domain — recent audits, issues, and changes |
+| `/op-onboarding-checklist` | `<industry> <domain>` | Build a Day-1 onboarding checklist for an industry and domain |
+| `/op-litigation-evidence-pack` | `<statute> <domain>` | Walk through assembling technical evidence for a tracking-pixel class action or demand letter |
+| `/op-account-strategy` | `[focus: privacy\|analytics\|accessibility\|performance]` | Diagnose an account's health and surface the biggest-bang-for-buck next actions |
+| `/op-value-snapshot` | `[period]` | Produce a quantified ObservePoint value summary for a budget owner |
+| `/op-accessibility-priorities` | _(none)_ | Rank accessibility findings by impact and surface the highest-impact fixes first |
 
 ## Who it's for
 
@@ -80,6 +100,14 @@ Invoke with any question. Examples that exercise different parts of the skill:
 /observepoint-consultant Build me a release-gate checklist for our analytics releases.
 /observepoint-consultant Maintain a multi-jurisdiction compliance program across EU, US, APAC.
 /observepoint-consultant Use the ObservePoint MCP to scan a journey for PII leaks.
+/observepoint-consultant What's the ObservePoint playbook for a retail site preparing for Black Friday?
+/observepoint-consultant Map the GLBA Safeguards Rule to ObservePoint coverage for a financial services site.
+/observepoint-consultant Set up the Consent Mode v2 wiring between OneTrust and GTM — what should ObservePoint check?
+/observepoint-consultant Server-side GTM — what can ObservePoint validate and what can't it?
+/observepoint-consultant What should I focus on in my ObservePoint account? Where's the biggest bang for buck?
+/observepoint-consultant Build me a value snapshot to justify our ObservePoint renewal.
+/observepoint-consultant From our accessibility data, what's the highest-impact fix to target first?
+/observepoint-consultant We got an ADA web-accessibility demand letter — what evidence can ObservePoint produce?
 ```
 
 Each answer follows a fixed shape: restated goal → recommended approach with product names → concrete next steps → limitations → which reference file(s) were used.
