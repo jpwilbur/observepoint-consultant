@@ -124,4 +124,4 @@ Sometimes the user asks for something ObservePoint cannot do, or describes a pro
 
 This skill is community-built. It is **not** an official ObservePoint product. All information reflects publicly documented ObservePoint capabilities as of the `Last verified` date below; verify against current [ObservePoint documentation](https://help.observepoint.com/) before procurement, compliance, or contractual decisions. "ObservePoint" and product names referenced here are trademarks of ObservePoint, LLC.
 
-*Last verified: 2026-05-28*
+*Last verified: 2026-06-03*

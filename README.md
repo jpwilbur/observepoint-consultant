@@ -6,22 +6,23 @@ Type `/observepoint-consultant` in Claude Code (or any Claude Code-compatible cl
 
 ## What it knows
 
-The skill ships 12 reference files inside one focused `SKILL.md` dispatcher. Topic coverage:
+The skill ships **13 reference files** inside one focused `SKILL.md` dispatcher. Topic coverage:
 
 | Reference | What it covers |
 |---|---|
 | `products-and-modules.md` | Web Audits, Journeys, Page Insights, Touchpoints / JourneyStream / Prism, Tag & Cookie Debugger, HAR Analyzer, LiveConnect, Rules engine, Alerts, Reports |
-| `solution-playbooks.md` | Recipes for analytics validation, consent enforcement, accessibility, performance, CMP-specific work, campaign launches, healthcare compliance, and program-building |
+| `solution-playbooks.md` | Recipes for analytics validation, consent enforcement, accessibility, performance, CMP-specific work, campaign launches, healthcare compliance, litigation defense, state-specific monitoring, AI-Act disclosure, multi-jurisdiction programs |
 | `api-reference.md` | v3 REST API endpoints, auth, recipes for triggering audits, creating Rules, processing HARs, and wiring CI/CD gates |
-| `mcp-tools.md` | Extension point for the forthcoming ObservePoint MCP server (auto-detected at runtime when GA) |
-| `privacy-and-compliance.md` | Mapping GDPR, CCPA/CPRA, HIPAA, LGPD, PIPEDA, India DPDP, COPPA, GPC, TCF, Consent Mode v2, EU AI Act Article 50, WCAG to ObservePoint coverage |
+| `mcp-tools.md` | 130+ MCP wrapper catalog organized by family (PII scanning, consent-state comparison, anomaly detection, analysis primitives, etc.) with the safety gates documented |
+| `privacy-and-compliance.md` | **Comprehensive global privacy coverage** — 50+ regulations across all 19 U.S. comprehensive state laws (CCPA, CPA, CTDPA, VCDPA, UCPA, TDPSA, OCPA, MCDPA, DPDPA, …), sectoral (HIPAA, GLBA, COPPA, FERPA), U.S. health-data (Washington MHMDA, Nevada SB 370), U.S. AI (Colorado AI Act, Texas RAIGA, NYC LL 144), U.S. kids (CA AADC, KOSA), EU (GDPR, ePrivacy, EU AI Act, DSA, DMA, Data Act, NIS2), UK (UK GDPR, DPA 2018, PECR), Latin America, APAC (China PIPL, Japan APPI, Singapore PDPA, Korea PIPA, India DPDP, Australia, NZ), Canada (PIPEDA, Quebec Law 25), Middle East & Africa, browser signals (GPC, UOOM, TCF, GPP, Consent Mode v2, Apple ATT, Privacy Sandbox), voluntary standards (PCI DSS 4.0, NIST Privacy Framework, ISO/IEC 27701), accessibility (WCAG / EAA) |
+| `privacy-litigation-defense.md` | **Tort / litigation-driven privacy claims** — CIPA pen-register theory, VPPA video-tracking, BIPA biometric, ECPA / federal Wiretap, state wiretap statutes (MA, PA, FL, WA), healthcare-tracking pixel claims, session-replay claims. Evidence-pack assembly for counsel. |
 | `competitive-positioning.md` | Honest, public-source-only comparisons against DataTrue, Tag Inspector, Tealium iQ Validate, OneTrust scanning, Crownpeak, Trackingplan |
 | `verbiage-and-messaging.md` | Brand-correct phrasing, capitalization, do/don't language |
 | `limitations.md` | What ObservePoint cannot do, with the recommended workaround for each |
 | `integrations.md` | TMS, CMP, ticketing, comms, identity, CI/CD, BI plug-ins |
 | `consulting-deliverables.md` | Hand-back templates: tag audit report, governance policy, RACI, release-gate checklist, evidence pack, QBR |
 | `personas.md` | Tone and content tuning for nine common ObservePoint personas |
-| `glossary.md` | Term reference |
+| `glossary.md` | Term reference (~80 terms covering products, regulations, litigation theories, signals, frameworks) |
 
 ## Who it's for
 
@@ -63,6 +64,13 @@ Invoke with any question. Examples that exercise different parts of the skill:
 ```
 /observepoint-consultant How do I validate GA4 purchase events on a single-page app?
 /observepoint-consultant Map CCPA enforcement readiness to ObservePoint coverage.
+/observepoint-consultant What's CIPA and how does ObservePoint help defend a class action?
+/observepoint-consultant Set up Colorado CPA compliance monitoring.
+/observepoint-consultant Do we need to honor GPC in Texas?
+/observepoint-consultant Defend a VPPA class action — what evidence do I produce?
+/observepoint-consultant Map China PIPL to ObservePoint coverage.
+/observepoint-consultant Is PCI DSS 4.0 something ObservePoint helps with?
+/observepoint-consultant What does my privacy program need for Washington My Health My Data?
 /observepoint-consultant Write a Rule that catches OneTrust consent drift.
 /observepoint-consultant What's the difference between an Audit and a Journey?
 /observepoint-consultant Does ObservePoint test mobile apps?
@@ -70,7 +78,8 @@ Invoke with any question. Examples that exercise different parts of the skill:
 /observepoint-consultant How does ObservePoint compare to OneTrust scanning?
 /observepoint-consultant I'm a Privacy Officer at a healthcare company. Where do I start?
 /observepoint-consultant Build me a release-gate checklist for our analytics releases.
-/observepoint-consultant Use the ObservePoint MCP to start an audit.
+/observepoint-consultant Maintain a multi-jurisdiction compliance program across EU, US, APAC.
+/observepoint-consultant Use the ObservePoint MCP to scan a journey for PII leaks.
 ```
 
 Each answer follows a fixed shape: restated goal → recommended approach with product names → concrete next steps → limitations → which reference file(s) were used.
