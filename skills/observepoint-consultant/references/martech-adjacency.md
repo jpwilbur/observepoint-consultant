@@ -21,8 +21,6 @@ This is a large reference. A full table of contents follows so it stays navigabl
 11. [Attribution and measurement](#11-attribution-and-measurement)
 12. [Privacy Sandbox APIs](#12-privacy-sandbox-apis)
 
-> Sections 10-12 are populated in a companion update.
-
 ## 1. GA4 implementation patterns
 
 GA4 is event-based: there is no pageview-vs-event distinction the way Universal Analytics drew one. Everything is an event with parameters.
@@ -394,6 +392,116 @@ Swap the tag and identifier names for Pinterest (`event_id` + `epik`), Google En
 
 - **Can see:** the **client-side trigger and its parameters** for each vendor — the pixel/tag event, the `event_id`/event-identifier dedup key, the click IDs (`ttclid`, `epik`, `gclid`/`wbraid`/`gbraid`, `li_fat_id`), the account/pixel ID, and (where collected client-side) the presence of hashed-identifier fields before send. Whether the browser half of the dedup pair is correctly formed.
 - **Can't see:** the **server-to-server sends** — every vendor's Conversions/Events API call originates from the customer's backend and never reaches the browser, so it is invisible to ObservePoint (per the server-side-execution limitation in `references/limitations.md`). It cannot confirm the server event fired, its contents, the hashed customer data, or whether the vendor deduplicated the pair. Validate the client trigger + dedup parameter with ObservePoint; confirm the server leg in each vendor's events manager / diagnostics.
+
+## 10. Customer Data Platforms (CDPs)
+
+A CDP is the layer that unifies customer data from many sources into persistent profiles and then activates them. Four jobs define one: **ingest** (collect events and traits from web, mobile, server, and batch sources), **identity resolution** (stitch those events into a single profile per person across devices and anonymous/known states), **audience build** (segment profiles by rules or computed traits), and **activation** (push audiences and events out to downstream destinations — ad platforms, email, analytics, the warehouse). The validation angle is narrow but important: ObservePoint sees the *client-side ingest call* into the CDP and nothing past it.
+
+**Implementation patterns (per-vendor notes).**
+
+- **Segment.** The reference client library is `analytics.js`, with the canonical `track` / `identify` / `page` (and `group` / `alias`) call spec. Increasingly **warehouse-first** — events land in the warehouse as the system of record before or alongside activation. Client calls go to `api.segment.io`.
+- **mParticle.** **Mobile-first** heritage (strong native iOS/Android SDKs), with a web SDK alongside. Heavy on **server-side forwarding** — events are received and fanned out to downstream "kits"/outputs server-side, so much of its activity is not browser-visible.
+- **RudderStack.** **Warehouse-native** and **open-source**; an `analytics.js`-compatible client spec (a deliberate Segment-API analog) so the same `track`/`identify` mental model applies, with the warehouse as the primary destination.
+- **Adobe Real-Time CDP.** Collects through the **Web SDK (Alloy)** to the **Adobe Experience Platform Edge Network** — the same `/ee` interaction call described in section 2, carrying an XDM payload. Profile unification and segmentation happen inside AEP; the browser sees the Edge call, not the profile store.
+- **Tealium AudienceStream.** **UDL-driven** — it consumes the same Universal Data Layer that Tealium iQ tags read (section 6), building visitor profiles and audiences server-side in the EventStream/AudienceStream layer. The client-side signal is the `utag`/collect call; the audience logic is server-side.
+- **Treasure Data.** Enterprise CDP with a JavaScript SDK that posts events to a Treasure Data collection endpoint; profile unification and activation run inside the platform.
+
+**Common antipatterns ObservePoint catches.**
+
+- **The CDP client SDK firing before consent** — `analytics.js` (or the Web SDK, or `utag`) loads and sends a `track`/`page` call under a Reject-All / pre-interaction state, when it should have been gated. This is the most common and most consequential CDP finding, because the CDP is often the *first* hop that then fans out to many vendors.
+- **PII in traits** — an `identify` call carrying a raw email, phone, or other identifier in the traits object (or as the `userId`) when the contract called for a hashed or pseudonymous key. Surfaced by `scan_audit_pii` / `scan_journey_pii` (the journey CANARY mode is the strongest signal — a value typed in a journey step reappearing in the CDP call is definitive collection).
+- **The CDP as an invisible fan-out.** The architectural antipattern, not a single bug: one client-side `track` call triggers many *server-side* destination sends the browser never makes. The page looks clean (one tidy call to the CDP) while a dozen vendors receive data downstream. ObservePoint sees the one call; it does not see the fan-out — so a "clean" CDP page is not evidence that downstream sends are clean.
+
+**ObservePoint validation approach.**
+
+Confirm the client-side ingest call with `get_page_requests` / `get_tag_inventory`, then assert it respects consent and carries no PII. The highest-value Rule is the consent gate, run under a Reject-All audit (drive the CMP with a `privacyoptout` pre-audit action), compared against Accept-All with `compare_consent_states`.
+
+```
+WHEN page is crawled under the Reject-All (opt-out) consent state
+EXPECT
+  NO request fires to the CDP collection endpoint (e.g. "api.segment.io")
+  (i.e. the CDP client SDK track/identify/page call does not fire under Reject-All)
+```
+
+For the PII contract, add a Rule on the `identify` call asserting the traits/userId match an allowed (hashed/pseudonymous) shape, and back it with `scan_journey_pii` on a journey that submits a known canary value. Run the consent pair and use `compare_consent_states(domain, leftState="default", rightState="opt-out")` to surface a CDP call that fires identified on Accept-All but should be absent on Reject-All.
+
+**What ObservePoint can / can't see.**
+
+- **Can see:** the **client-side call to the CDP collection endpoint** — `api.segment.io`, the Adobe Edge `/ee` interaction call, the RudderStack/Treasure Data collect call, the `utag` dispatch that feeds AudienceStream. The call type (`track` / `identify` / `page`), its event name and properties/traits, the `userId`/`anonymousId`, the write-key/source ID, and whether it fired before or after consent. Whether PII rides in the payload.
+- **Can't see:** the **CDP's server-side fan-out to downstream destinations** — this is the key blind spot. Once the event reaches the CDP, the server-side sends to ad platforms, email tools, analytics, and the warehouse never touch the browser, so ObservePoint cannot observe them (consistent with the server-side-execution limitation in `references/limitations.md`). It also can't see identity resolution, profile contents, audience membership, or any server-side enrichment. **Pair ObservePoint with the CDP's own delivery/event logs** (Segment's delivery/debugger, mParticle's data-master/livestream, the AEP profile viewer): ObservePoint proves the browser sent the right call under the right consent with no PII; the CDP's logs prove what it did with that call downstream.
+
+## 11. Attribution and measurement
+
+Attribution assigns credit for a conversion to the touchpoints that preceded it. The common models: **first-touch** (all credit to the first interaction), **last-touch** (all to the last), **linear** (evenly across all touches), **position-based / U-shaped** (weighted to first and last, less to the middle), **time-decay** (more credit to touches nearer the conversion), and **data-driven** (algorithmically allocated from observed conversion paths). Beyond touch-based models sit **media mix modeling (MMM)** — a top-down regression of spend against outcomes, increasingly revived as cookie signal degrades — and **incrementality testing** — controlled holdout experiments that measure causal lift rather than correlation.
+
+ObservePoint does not do attribution. It builds no models and assigns no credit. But every one of these models is only as good as the conversion-event data feeding it, and that is exactly what ObservePoint is the truth-source for: that the conversion events fire **correctly, once, with the right values, under the right consent**. A data-driven model trained on double-counted purchases or conversions stripped of their click IDs produces confident, precise, wrong answers. The framing for a customer: attribution is the model; ObservePoint guards the inputs the model can never see are broken.
+
+**Common antipatterns ObservePoint catches.**
+
+- **Double-counted conversions inflating a channel.** A `purchase` (or conversion pixel) firing twice — a confirmation page that double-fires on reload, a tag duplicated across GTM and a hardcoded snippet — so one sale counts as two. Whichever channel the touch resolves to gets over-credited and over-funded. (See the dedup-key and duplicate-firing antipatterns in sections 1, 8, and 9.)
+- **Missing UTM / click-id breaking attribution.** The conversion fires, but the campaign parameters that tie it to a touch are absent or were dropped en route — no `utm_*` on the landing hit, a `gclid` / `fbclid` lost across a redirect — so the conversion lands as direct/unattributed and the channel that earned it gets no credit.
+- **Conversion firing on the wrong page.** The conversion event fires on cart-view, a thank-you page that also renders on back-navigation, or an interstitial — not on the true order-confirmation — so the model is fed conversions that didn't happen (or happened elsewhere).
+
+**ObservePoint validation approach.**
+
+Validate the integrity of the conversion event the attribution model depends on: fires exactly once, on the right page, with the campaign/click parameters intact. Drive a real conversion with a Journey, confirm the event with `get_page_requests` / `get_tag_inventory`, and assert with a Rule.
+
+```
+WHEN page URL matches /order\/confirmation/ AND the conversion event fires
+EXPECT
+  the conversion event fires exactly once (no duplicate on reload / back-nav)
+  the attribution parameters are intact and non-empty when present in the journey:
+    utm_source / utm_medium / utm_campaign carried through to the conversion context
+    gclid (Google) / fbclid (Meta) preserved across any redirect
+  the conversion value and currency are present and well-formed
+```
+
+Pair with `find_anomalies` (metric = tags) to catch a release that suddenly doubles a conversion tag's firing, and `profile_variable` to check that a campaign parameter (e.g. `utm_source`) takes sane values across pages rather than drifting or arriving empty. For the duplicate-conversion case specifically, the "fires exactly once" assertion is the load-bearing clause.
+
+**What ObservePoint can / can't see.**
+
+- **Can see:** the **conversion-event integrity that attribution depends on** — whether the conversion event fires, how many times, on which page/step, with what value/currency, and whether the campaign and click identifiers (`utm_*`, `gclid`, `fbclid`, etc.) are present and intact at the moment of conversion. It catches double-counts, wrong-page fires, and stripped attribution parameters at the source.
+- **Can't see:** it does **not model attribution** — it does not assign credit, does not run first/last/linear/position/time-decay/data-driven allocation, does not build an MMM, and does not execute incrementality holdouts. Those live in the ad platforms, the analytics suite, the warehouse/BI layer, and the data-science models that consume the conversion data. ObservePoint validates the inputs are sound; the attribution platform decides what they mean. Validate the model itself in the tool that owns it (GA4 attribution reports, Google Ads, the MMM/incrementality vendor).
+
+## 12. Privacy Sandbox APIs
+
+Privacy Sandbox is Google's set of Chrome APIs meant to replace third-party cookies and cross-site tracking with privacy-preserving alternatives. For the regulatory framing, cross-reference the **Privacy Sandbox (Chrome)** entry in `references/privacy-and-compliance.md`; this section is the implementation-and-validation companion. The validation angle is consistent with the rest of this reference: ObservePoint can see the **API invocations in the page's script and network activity**, but the privacy-preserving computation those APIs perform (on-device auctions, aggregated reporting) is deliberately *not* observable — that opacity is the point of the design.
+
+**The APIs.**
+
+- **Protected Audience API** (formerly **FLEDGE**). Remarketing and custom-audience bidding without third-party cookies, via **on-device ad auctions**. A site joins a browser into an interest group (`navigator.joinAdInterestGroup(...)`); auctions later run *inside the browser*. The join/leave calls are observable; the auction internals are not.
+- **Attribution Reporting API.** Measures ad-driven conversions without cross-site identifiers, in two flavors: **event-level** reports (coarse, delayed, noised — tying a click to a conversion) and **aggregate** reports (richer dimensions through the Aggregation Service, with added noise). Registered via attribution-source and attribution-trigger headers/calls.
+- **Topics API.** **Retired / deprioritized — reflect current status accurately.** Per the **Privacy Sandbox (Chrome)** entry in `references/privacy-and-compliance.md`, Topics was retired (October 2025). Treat it as a deprecated API: relying on it is itself an antipattern, and a page still calling `document.browsingTopics()` is a finding, not a feature.
+- **CHIPS** (Cookies Having Independent Partitioned State). **Partitioned cookies** — a cookie set with the `Partitioned` attribute is scoped to the top-level site under which it was set, so a cross-site embed can keep state without it becoming a cross-site tracking cookie.
+- **FedCM** (Federated Credential Management). A browser-mediated **federated login** flow (e.g. "Sign in with…") that removes the redirects and third-party cookies federated identity used to rely on.
+- **Private State Tokens** (formerly Trust Tokens). Cryptographic **anti-fraud / "is this a real user"** tokens issued in one context and redeemed in another without revealing identity or enabling cross-site tracking.
+
+**Common antipatterns ObservePoint catches.**
+
+- **Assuming Sandbox APIs need no consent.** Treating "privacy-preserving" as "consent-exempt." These APIs are advertising/measurement mechanisms; in consent regimes they generally still require an appropriate basis, and invoking Protected Audience or Attribution Reporting under a Reject-All state is the same category of leak as firing a pixel under denial. ObservePoint catches the invocation happening under the wrong consent state.
+- **Relying on deprecated Topics.** A page still calling `document.browsingTopics()` (or built around the retired Topics API) is depending on a removed capability — surfaced as a Sandbox API invocation that should no longer exist.
+
+**ObservePoint validation approach.**
+
+Because ObservePoint loads the page in a real Chromium browser, it can detect which Privacy Sandbox APIs a page invokes from the script/network activity. Use `get_page_requests` and `get_browser_logs` to surface the calls, then a Rule to flag presence under the wrong condition.
+
+```
+WHEN page is crawled
+EXPECT
+  detect which Privacy Sandbox APIs the page invokes
+    (e.g. a Protected Audience joinAdInterestGroup call, an Attribution Reporting
+     source/trigger registration, a Topics document.browsingTopics() call)
+  AND under the Reject-All (opt-out) consent state, NO Protected Audience /
+      Attribution Reporting invocation fires
+  AND the retired Topics API (document.browsingTopics) is NOT called on any page
+```
+
+Run an Accept-All / Reject-All pair and use `compare_consent_states` to confirm Sandbox invocations don't survive a Reject-All. Use `find_first_observed` to answer "when did a Sandbox API first appear on the site?" after a vendor or library update.
+
+**What ObservePoint can / can't see.**
+
+- **Can see:** the **API invocations in the page's script and network activity** — that the page called `joinAdInterestGroup` (Protected Audience), registered an Attribution Reporting source/trigger, called `document.browsingTopics()` (a finding, given Topics' retirement), set a `Partitioned` (CHIPS) cookie, initiated a FedCM flow, or issued/redeemed a Private State Token. Which APIs are present, on which pages, and under which consent state.
+- **Can't see:** the **on-device auction internals and the privacy-preserving computation** — the Protected Audience auction logic and outcome, the bids, the interest-group contents, the contents of event-level/aggregate Attribution reports and the noise applied, what Topics would have returned, the cryptographic token verification. Those run inside the browser's protected machinery or the Aggregation Service by design and are not exposed to page script, so they are not observable. ObservePoint tells you which Sandbox APIs a page uses and whether it uses them under the right consent; it cannot tell you what the auction decided or what a report contained.
 
 ---
 
