@@ -279,6 +279,87 @@ EXPECT
 
 **Success metric.** Evidence pack defensible to a regulator audit. Zero ad-tag firings on PHI-bearing URLs for the past 90 days.
 
+## Litigation defense
+
+When a customer has received a demand letter, class-action filing, or discovery request, these playbooks apply. See `references/privacy-litigation-defense.md` for the per-statute deep treatment.
+
+### "Defend a CIPA / VPPA / BIPA / wiretap claim"
+
+**Pain.** A demand letter or class-action complaint alleging unauthorized tracking under CIPA pen-register theory, VPPA video-tracking, BIPA biometric capture, or federal/state wiretap claims. Counsel needs technical evidence quickly.
+
+**Persona.** In-house counsel or litigation-support engineer, often via Privacy / Compliance Officer escalation.
+
+**ObservePoint approach.**
+
+1. Confirm the audit scope covers the URLs / vendors named in the complaint (if not, expand audit coverage and back-date the historical evidence from existing run data).
+2. Pull the audit run history for the alleged period via `mcp__ObservePoint__get_audit_runs` and `query_report` against rule-summary.
+3. Use `compare_consent_states(domain=..., leftState="default", rightState="opt-out")` to surface what fired on default versus opt-out — central evidence for "did the tracker fire before consent?"
+4. Use `find_first_observed` to establish when the named vendor first appeared in the audit history.
+5. Use `scan_audit_pii` or `scan_journey_pii` to demonstrate (a) the masked finding of any PII leak, or (b) absence of leakage to the named third party.
+6. Export the evidence pack via `export_report`. Bundle with audit configurations, Rules library, exception log, and change log.
+
+**Alert routing.** Privacy Officer + General Counsel. Critical severity.
+
+**Success metric.** Counsel has the technical record needed within 48 hours of the demand letter. The "reasonable practices" narrative the customer's counsel constructs is supported by the audit data.
+
+**Limitations.** ObservePoint produces evidence; it does not defeat liability. Coordinate with the customer's counsel; do not promise outcomes.
+
+### "Set up state-specific privacy monitoring (Colorado / Texas / Washington / …)"
+
+**Pain.** "We're already running CCPA audits. Do we need separate audits per state we operate in?"
+
+**Persona.** Privacy / Compliance Officer.
+
+**ObservePoint approach.**
+
+1. Identify which states the customer operates in (where it processes residents' data) — this is a legal question, not a technical one. Ask counsel for the list.
+2. For each state, check the U.S. state matrix in `references/privacy-and-compliance.md` — note whether GPC is required, opt-in vs. opt-out for sensitive data, and any distinctive features (e.g., NIST-aligned-program defense in Tennessee, MHMDA-style strict consent for health data in Washington).
+3. Use `setup_compliance_monitoring(regulation="ccpa", domain=...)` as the starting template — it produces the three-audit (default + opt-out + GPC) shape that fits most state laws. Adjust the consent banner copy and the opt-out path per state.
+4. For states without GPC recognition (Virginia, Utah, Iowa, Indiana, Kentucky), skip the GPC variant — just default + opt-out.
+5. Schedule weekly; route alerts per region to the responsible team.
+
+**Alert routing.** Privacy / Compliance Officer, with per-region routing if the org has regional privacy leads.
+
+**Success metric.** A single dashboard view (custom saved report) showing pass/fail per state per week. Failures route to the right human within the SLA.
+
+### "Validate AI-Act and Colorado AI Act marketing transparency disclosures"
+
+**Pain.** Marketing pages contain AI-generated copy, imagery, or chatbot interactions. Need to prove the required disclosure is present on every page where AI content is used.
+
+**Persona.** Privacy / Compliance Officer + MarTech Ops.
+
+**ObservePoint approach.**
+
+1. Marketing or content tooling marks AI-generated pages with a data-layer flag — `page.ai_generated = true` (or whatever the customer's spec).
+2. Web Audit attaches a Rule that asserts: `WHEN page.ai_generated = true EXPECT visible disclosure element exists in DOM`.
+3. Schedule weekly across the full marketing site.
+4. Routes failures to the content team — they own remediation.
+
+**Alert routing.** Slack `#marketing-compliance` channel + content ops Jira queue.
+
+**Success metric.** Time-to-detect for missing-disclosure pages drops to within one audit cycle. Zero AI-generated pages in production without disclosure for the past 30 days.
+
+**Limitations.** ObservePoint validates the disclosure UI; it cannot determine whether content actually was AI-generated. That classification is upstream — content management or AI-generation tooling owns the flag.
+
+### "Maintain a multi-jurisdiction compliance program"
+
+**Pain.** Organization operates globally. Different audit setups for EU GDPR vs. CCPA vs. Quebec Law 25 vs. China PIPL vs. Australia Privacy Act. Risk of drift between regions, missed updates, inconsistent evidence.
+
+**Persona.** Chief Data Officer or global Privacy / Compliance Officer.
+
+**ObservePoint approach.**
+
+1. Use ObservePoint folders to organize audits by region: `EU`, `US`, `APAC`, `LATAM`, `CA`, `MEA`. Sub-folders per country within each region for the high-volume jurisdictions.
+2. Per-region audit template using the appropriate `setup_compliance_monitoring` regulation (or manual configuration where the wrapper doesn't cover the regulation yet — see `references/mcp-tools.md`).
+3. Apply consistent labels across regions so saved reports can roll up cross-region (e.g., label = "compliance-monitoring").
+4. Schedule per-region audits on cadences that match enforcement risk (daily for high-risk like Washington MHMDA pages, weekly for standard, monthly for low-volume regions).
+5. Build a saved report per region + a global rollup using `create_saved_report` with entity type `web-audit-runs`, filtered by label.
+6. Quarterly evidence-pack generation per region via `export_report`.
+
+**Alert routing.** Per-region Privacy lead via per-region Slack channels; global summary monthly to CDO.
+
+**Success metric.** Quarterly business review for the CDO shows: regions in scope, audits operating, pass rate per region, incidents and time-to-remediate per region, change history. Single source of truth across the program.
+
 ## Cross-functional
 
 ### "Build a Web Governance program from scratch"

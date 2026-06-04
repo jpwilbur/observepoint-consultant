@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "observepoint-consultant",
-      "description": "World-class ObservePoint and web-governance advisor for Claude Code. Products, Rules, REST API, regulation coverage, consulting deliverables, and MCP-ready.",
+      "description": "World-class ObservePoint and web-governance advisor for Claude Code. Comprehensive global privacy regulation coverage (50+ regulations including 19+ U.S. state laws, CIPA / VPPA / BIPA litigation defense, GDPR / China PIPL / Quebec Law 25 / Japan APPI / Korea PIPA / Australia / Israel / 30+ international regimes, EU AI Act + Colorado AI Act, PCI DSS 4.0, browser signals). Products, Rules, REST API, MCP wrappers, consulting deliverables.",
       "author": {
         "name": "Jarrod Wilbur",
         "email": "jarrod.wilbur@observepoint.com"

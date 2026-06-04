@@ -6,11 +6,17 @@ Alphabetical. Cross-references in **bold**.
 
 ## A
 
+**AADC (Age Appropriate Design Code).** California law (2022) requiring default high-privacy settings for users likely under 18. Significant 9th Circuit injunction since 2024 has blocked enforcement of many provisions; partial revival in 2026. See `references/privacy-and-compliance.md`.
+
 **Accessibility Highlight Report.** An ObservePoint report (new in 2026) that surfaces WCAG 2.1 AA violations by severity and type. Companion to the broader Accessibility Report.
 
-**Audit.** In ObservePoint specifically, a **Web Audit** — a configured scan of a defined set of URLs by the synthetic Chromium engine. See `references/products-and-modules.md` → Web Audits.
-
 **Alert.** A notification routed when a Rule fails or a threshold is crossed. Routes to Slack, Microsoft Teams, email, SMS, Jira, or a custom webhook.
+
+**APPI (Act on the Protection of Personal Information).** Japan's national privacy law. Last major amendment 2022. Enforcement by the PPC (Personal Information Protection Commission).
+
+**ATT (App Tracking Transparency).** Apple's iOS framework (in effect since iOS 14.5) requiring apps to obtain permission before accessing the IDFA for cross-app tracking. ObservePoint is web-only — see `references/limitations.md`.
+
+**Audit.** In ObservePoint specifically, a **Web Audit** — a configured scan of a defined set of URLs by the synthetic Chromium engine. See `references/products-and-modules.md` → Web Audits.
 
 ## B
 
@@ -18,47 +24,65 @@ Alphabetical. Cross-references in **bold**.
 
 **Beacon.** A small image or request used to transmit tracking data. Often used synonymously with "pixel."
 
+**BIPA (Biometric Information Privacy Act).** Illinois law (2008) regulating collection, use, and storage of biometric identifiers. Notable for high statutory damages ($1K–5K per violation, no cap) and active class-action litigation. See `references/privacy-litigation-defense.md`.
+
 ## C
 
 **CCPA (California Consumer Privacy Act).** The California privacy law. **CPRA** is its amendment effective from 2023, expanding scope.
 
+**CIPA (California Invasion of Privacy Act).** Cal. Penal Code §§ 631, 632, 638.51. California's wiretap and pen-register statutes. Drives the dominant 2024-2026 tracking-pixel class-action wave (1,000+ filings annually) via the pen-register theory applied to session-replay vendors and chat-pixel handoffs. See `references/privacy-litigation-defense.md`.
+
 **CMP (Consent Management Platform).** The system that captures user consent and signals it to tags. Examples: OneTrust, Cookiebot, TrustArc, Didomi, Sourcepoint.
+
+**Colorado AI Act.** First U.S. state comprehensive AI Act, effective February 1 2026. Requires impact assessments and consumer notice for "high-risk" AI systems. ObservePoint validates marketing-side disclosure requirements; impact assessments are out of scope.
 
 **Consent Mode v2.** Google's consent signaling mechanism. Four categories: `ad_storage`, `analytics_storage`, `ad_user_data`, `ad_personalization`. Used by Google tags to determine how to behave under various consent states.
 
 **Cookie.** A small piece of state stored in the browser. Subject to privacy regulation when used for tracking.
 
+**COPPA (Children's Online Privacy Protection Act).** U.S. federal law requiring parental consent before collecting personal information from children under 13. **COPPA 2.0** Final Rule was published January 2025, tightening definitions (persistent identifiers now in scope) and restrictions.
+
 **CrUX (Chrome User Experience report).** Google's field-data source for Core Web Vitals. Not an ObservePoint product but referenced when discussing performance.
 
 ## D
 
+**Data Act (EU).** EU regulation, fully applicable September 12 2025. Primarily B2B — covers user access to data from connected products and cloud-switching protections. Limited website-tracking applicability.
+
 **Data layer.** A standardized JavaScript object on a page that holds structured information about the user, the page, and events. Tag managers read from it. ObservePoint validates it.
 
-**DPDP (Digital Personal Data Protection) Act.** India's comprehensive privacy law. Rules finalized late 2025, active enforcement entering 2026.
+**DMA (Digital Markets Act).** EU regulation targeting designated gatekeepers (large platform operators). In force March 7 2024 for designated entities. Most ObservePoint customers are not gatekeepers; relevant when one is.
+
+**DPDP (Digital Personal Data Protection) Act.** India's comprehensive privacy law. Rules finalized late 2025, phased enforcement entering 2026.
+
+**DSA (Digital Services Act).** EU regulation for online platforms in force since February 17 2024. Requires notice-and-action mechanisms, advertising transparency, restrictions on minor-targeting and sensitive-data-based targeting.
 
 **DSAR (Data Subject Access Request).** A request from an individual to see, correct, or delete their personal data. Workflow-level, owned by privacy programs — not an ObservePoint feature directly.
 
 ## E
 
-**EAA (European Accessibility Act).** EU directive extending accessibility obligations across member states.
+**EAA (European Accessibility Act).** EU directive extending accessibility obligations across member states. In force June 28 2025.
 
-**EU AI Act.** European regulation governing artificial intelligence systems, with marketing-relevant transparency obligations under Article 50 taking effect 2026.
+**ECPA (Electronic Communications Privacy Act).** Federal U.S. law including the Wiretap Act (18 U.S.C. § 2511). Used in tracking-pixel litigation alongside state wiretap statutes and CIPA. See `references/privacy-litigation-defense.md`.
 
-**ePrivacy Directive.** EU directive covering electronic communications privacy, including the cookie consent requirements that precede GDPR.
+**EU AI Act.** European regulation governing artificial intelligence systems. Prohibited practices (Article 5) in force February 2 2025; Article 50 transparency obligations August 2 2026; high-risk AI obligations August 2 2027.
+
+**ePrivacy Directive.** EU directive (2002, amended 2009) covering electronic communications privacy, including cookie consent requirements that predate and are independent of GDPR.
 
 ## F
 
-**FERPA (Family Educational Rights and Privacy Act).** U.S. law protecting student education records.
+**FERPA (Family Educational Rights and Privacy Act).** U.S. law protecting student education records. Tracking-pixel litigation around student portals is a growing enforcement area.
 
 ## G
 
 **GA4 (Google Analytics 4).** Current generation of Google Analytics. Event-based model. Replaced Universal Analytics.
 
-**GDPR (General Data Protection Regulation).** The European Union's comprehensive privacy regulation.
+**GDPR (General Data Protection Regulation).** The European Union's comprehensive privacy regulation. In force May 2018.
 
-**GLBA (Gramm-Leach-Bliley Act).** U.S. law governing financial institutions and customer data.
+**GLBA (Gramm-Leach-Bliley Act).** U.S. law governing financial institutions and customer data. The FTC's revised Safeguards Rule (2023) is the operational-controls bite.
 
-**GPC (Global Privacy Control).** A browser-level "do not sell or share" signal honored as a valid opt-out under multiple U.S. state privacy laws. Toggle in ObservePoint as "Send GPC Signal" on an audit.
+**GPC (Global Privacy Control).** A browser-level "do not sell or share" signal honored as a valid opt-out under 12+ U.S. state privacy laws as of 2026. Toggle in ObservePoint as "Send GPC Signal" on an audit.
+
+**GPP (Global Privacy Platform).** IAB Tech Lab's multi-jurisdiction consent-string standard. Carries per-jurisdiction signals (US National, US-CA, US-CO, US-VA, etc.) in one string.
 
 **GTM (Google Tag Manager).** Google's tag management system, both client-side and server-side variants.
 
@@ -66,15 +90,17 @@ Alphabetical. Cross-references in **bold**.
 
 **HAR (HTTP Archive).** A standard JSON file format capturing the network requests a browser made on a page. Exportable from Chrome DevTools, Charles, Fiddler, mitmproxy. Processable by ObservePoint's **HAR Analyzer**.
 
-**HIPAA (Health Insurance Portability and Accountability Act).** U.S. law governing health information privacy and security.
+**HIPAA (Health Insurance Portability and Accountability Act).** U.S. law governing health information privacy and security. The 2022 OCR bulletin on tracking technologies on healthcare websites underlies the active healthcare-pixel litigation wave.
 
 **Hydration.** A pattern in modern JS frameworks (React, Vue) where the page is server-rendered then "hydrated" with client-side interactivity. A common cause of tag firing inconsistencies; the **Journey** with **Prevent Navigation** is the workaround.
 
 ## I
 
-**IAB (Interactive Advertising Bureau).** Industry body publishing the **TCF** consent framework.
+**IAB (Interactive Advertising Bureau).** Industry body publishing the **TCF** consent framework and the **GPP** Global Privacy Platform.
 
 **INP (Interaction to Next Paint).** A Core Web Vitals metric. Captures interaction responsiveness.
+
+**ISO/IEC 27701.** ISO Privacy Information Management standard (extends ISO 27001). Certifiable; used by enterprises as a governance framework.
 
 ## J
 
@@ -82,11 +108,15 @@ Alphabetical. Cross-references in **bold**.
 
 **JourneyStream.** One of the Strala-acquired products. Automates campaign tracking and touchpoint management.
 
+## K
+
+**KOSA (Kids Online Safety Act).** U.S. federal bill (passed Senate July 2024; House action pending). **Not in force as of June 2026.** Would impose duty of care on online platforms for harm to minors.
+
 ## L
 
 **LCP (Largest Contentful Paint).** A Core Web Vitals metric. Captures perceived load time.
 
-**LGPD (Lei Geral de Proteção de Dados).** Brazil's comprehensive privacy law. GDPR-style framework.
+**LGPD (Lei Geral de Proteção de Dados).** Brazil's comprehensive privacy law. GDPR-style framework. Enforcement by ANPD.
 
 **LiveConnect.** ObservePoint product for connecting real devices via proxy for live network inspection.
 
@@ -94,25 +124,53 @@ Alphabetical. Cross-references in **bold**.
 
 **MCP (Model Context Protocol).** Anthropic's open protocol for connecting AI systems to external tools. The ObservePoint MCP server is in development. See `references/mcp-tools.md`.
 
+**MHMDA (Washington My Health My Data Act).** Washington state law (effective 2024) covering consumer health data more broadly than HIPAA. Has a private right of action — making it the most plaintiff-friendly U.S. health-data law.
+
+## N
+
+**NIS2.** EU Network and Information Security Directive (2). Cybersecurity directive for "essential" and "important" entities across 18 sectors. Transposition deadline October 2024; national laws in force 2025-2026.
+
+**NIST Privacy Framework.** Voluntary framework (v1.0 2020) for managing privacy risk. Tennessee's TIPA makes a documented NIST-aligned program an affirmative defense.
+
 ## P
 
 **Page Insights.** ObservePoint's real-user telemetry dashboard, fed by a lightweight tag deployed on the customer's site.
+
+**PCI DSS.** Payment Card Industry Data Security Standard. Version 4.0 mandatory across the payment industry as of 2025. Requirements 6.4.3 and 11.6.1 — script inventory and change detection on payment pages — are the tracking-relevant bite.
+
+**Pen-register.** A statutory concept (originally telecommunications) referring to a device that captures dialing or routing information. Pen-register theory under CIPA § 638.51 is the dominant tracking-pixel litigation theory.
 
 **Pixel.** A tag used for ad attribution or analytics, originally implemented as a 1x1 image request. Used loosely to mean any analytics or advertising request.
 
 **PHI (Protected Health Information).** Health information that identifies an individual. Under HIPAA, very strictly regulated.
 
+**PIPA (Personal Information Protection Act).** South Korea's comprehensive privacy law. One of the strictest opt-in regimes globally.
+
 **PIPEDA (Personal Information Protection and Electronic Documents Act).** Canada's federal private-sector privacy law.
 
+**PIPL (Personal Information Protection Law).** China's comprehensive privacy law. In force November 2021. Extraterritorial reach; strict cross-border-transfer requirements.
+
+**POPIA (Protection of Personal Information Act).** South Africa's comprehensive privacy law. Fully effective July 2021.
+
 **Prism.** One of the Strala-acquired products. Attribution and ROI analysis layer.
+
+**Privacy Sandbox.** Google Chrome's initiative replacing third-party cookies with privacy-preserving alternatives. Topics API retired October 2025; surviving APIs include Protected Audience, Attribution Reporting, CHIPS, FedCM, Private State Tokens.
+
+## Q
+
+**Quebec Law 25.** Quebec's modernized private-sector privacy law (fully effective September 2024). Stricter than federal PIPEDA on consent, transparency, and automated decision-making. Up to CAD $10M or 2% global turnover penalties.
 
 ## R
 
 **RACI.** A framework for assigning roles to activities — Responsible, Accountable, Consulted, Informed. Template in `references/consulting-deliverables.md`.
 
+**RAIGA (Texas Responsible AI Governance Act).** Texas AI law (signed 2025, phased through 2026-2027). Transparency disclosures for AI use in consumer-facing contexts.
+
 **Rule.** In ObservePoint specifically, a Tag & Variable Rule — `WHEN` condition + `EXPECT` condition. The mechanism by which audit findings turn into pass/fail signals.
 
 ## S
+
+**Session replay.** A category of vendor that records user interactions (mouse movements, scrolls, keystrokes, form inputs) for product / UX analytics. Central to CIPA pen-register theory and to ECPA wiretap claims. ObservePoint detects via vendor inventory and consent-state diff.
 
 **sGTM (Server-side Google Tag Manager).** A GTM container that runs on the customer's own servers rather than in the browser. ObservePoint observes the client-side request that triggers it, not the server execution. See `references/limitations.md`.
 
@@ -132,9 +190,19 @@ Alphabetical. Cross-references in **bold**.
 
 **Touchpoints.** One of the Strala-acquired products. Standardizes and unifies online and offline customer touchpoint data.
 
+**Trap-and-trace.** Statutory concept paired with **pen-register** under CIPA § 638.51. Refers to a device capturing the source of incoming communications. Used analogously to capture-on-arrival website tracking in current pixel litigation.
+
 ## U
 
+**UK GDPR.** UK's post-Brexit retained version of GDPR. In force since January 1 2021. Paired with the Data Protection Act 2018 and the 2024 Data Protection and Digital Information Act amendments. Substantively very similar to EU GDPR with UK-specific divergences.
+
+**UOOM (Universal Opt-Out Mechanism).** Regulatory concept for a browser-level signal that conveys a user's opt-out across all sites visited. **GPC** is the dominant UOOM today; multiple state laws require its recognition.
+
 **UTM (Urchin Tracking Module) parameters.** Query-string parameters (`utm_source`, `utm_medium`, etc.) used to attribute traffic to campaigns. Predates Google's acquisition of Urchin; the name stuck.
+
+## V
+
+**VPPA (Video Privacy Protection Act).** 18 U.S.C. § 2710. Federal U.S. law originally enacted 1988 (post-Bork-nomination). Currently underlies a substantial pixel-litigation wave against sites with video content. Statutory damages up to $2,500/violation. See `references/privacy-litigation-defense.md`.
 
 ## W
 
@@ -144,6 +212,8 @@ Alphabetical. Cross-references in **bold**.
 
 **Web governance.** The category ObservePoint operates in. Continuous, automated validation that a website behaves correctly for analytics, privacy, accessibility, and operational quality. See `references/verbiage-and-messaging.md`.
 
+**Wiretap Act.** The federal Wiretap Act (18 U.S.C. § 2511), part of the **ECPA**. Prohibits unauthorized "interception" of electronic communications. State equivalents exist (CIPA, Massachusetts § 99, Pennsylvania § 5703, Florida § 934, Washington § 9.73). All used in tracking-pixel litigation. See `references/privacy-litigation-defense.md`.
+
 ---
 
-*Last verified: 2026-05-28*
+*Last verified: 2026-06-03*
