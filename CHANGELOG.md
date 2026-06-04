@@ -4,6 +4,52 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] — 2026-06-04
+
+The "consultant, not just encyclopedia" release. v0.3.0 made the skill know everything about website privacy; v0.4.0 makes it act like a seasoned ObservePoint consultant — talking the language of a specific industry, meeting an account where it is in its lifecycle, validating the adjacent MarTech a customer actually runs, and framing value for the person who signs the renewal. It also brings the repo up to Anthropic's full plugin-standards bar: evals, a CI validation gate, and slash commands. The audience scope is unchanged — customer + internal-consulting/CSM, with **no** sales / pre-sales / prospect-research content.
+
+### Added — Plugin standards
+
+- **`evals/evals.json`** — 21 evals across 10 areas (accessibility, api, compliance, industries, lifecycle, litigation, martech, mcp, out-of-scope, products), runnable via `python3 scripts/run_evals.py`.
+- **`scripts/`** — `quick_validate.py` (the CI validation gate: frontmatter, line-count ceilings, `Last verified` footers, and now broken-reference scanning across `commands/`), `refresh_mcp_catalog.py` (MCP catalog refresh helper), `run_evals.py` (eval lister/runner, hardened against malformed JSON), and `test_quick_validate.py`.
+- **7 slash commands in `commands/`** — `/op-compliance-quickcheck <url>`, `/op-state-of-play <domain>`, `/op-onboarding-checklist <industry> <domain>`, `/op-litigation-evidence-pack <statute> <domain>`, `/op-account-strategy [focus]`, `/op-value-snapshot [period]`, `/op-accessibility-priorities`.
+- **CI** — `.github/workflows/validate.yml` (runs `quick_validate.py` on pushes and PRs) and `.github/workflows/staleness-check.yml` (flags reference files whose `Last verified` date is aging), plus `.github/CODEOWNERS`.
+
+### Added — Industry playbooks
+
+- **`references/industries/`** — a directory of **7 vertical playbooks** plus an `index.md` router: retail / e-commerce, financial services & insurance, healthcare & life sciences, travel & hospitality, media & publishing, government & public sector, and education. Each maps the vertical's pains, applicable regulations, and seasonal / operational moments (e.g., retail's Black Friday) to concrete ObservePoint coverage.
+
+### Added — Lifecycle
+
+- **`references/lifecycle-and-maturity.md`** — a program maturity model and onboarding starter answering "where do we go next." This is **starter content**; the fuller lifecycle treatment is a v0.5.0 follow-up.
+
+### Added — MarTech adjacency
+
+- **`references/martech-adjacency.md`** — covers **12 platforms / topics** ObservePoint sits next to: GA4, Adobe Analytics, GTM, server-side GTM, Adobe Launch, Tealium iQ, Consent Mode v2, Meta CAPI, the broader Conversions API ecosystem, CDPs, attribution, and Privacy Sandbox. Each entry is honest about what ObservePoint can prove versus what it cannot.
+
+### Added — Account / ROI / accessibility
+
+- **`references/account-health-and-strategy.md`** — account diagnostics, common underuse patterns, and biggest-bang-for-buck next actions; powers `/op-account-strategy`.
+- **`references/roi-and-renewal-framing.md`** — quantified value framing and a renewal narrative for a budget owner, **with no pricing**; powers `/op-value-snapshot`.
+- **`references/accessibility-playbooks.md`** — accessibility prioritization, the ADA / Section 508 / WCAG / EAA landscape, and lawsuit-defense evidence; powers `/op-accessibility-priorities`.
+
+### Changed
+
+- **SKILL.md** — decision tree and reference index gained rows routing to the new industries / lifecycle / martech / account / ROI / accessibility content; the frontmatter `description` was expanded with v0.4.0 trigger keywords (industry verticals, program maturity / onboarding, MarTech-adjacency platforms, account focus, ROI / renewal, accessibility prioritization) while staying within Anthropic's 1,536-char cap.
+- **`references/personas.md`** — added Customer Success Manager (CSM) and Accessibility Specialist personas.
+- **`references/consulting-deliverables.md`** — added Value Snapshot, Renewal Narrative, and Accessibility Priority Report deliverables.
+- **`references/glossary.md`** — added accessibility and ROI terms.
+- **`references/solution-playbooks.md`** — added 3 playbooks tied to the new content.
+- **Plugin and marketplace manifests** — both descriptions updated to surface the v0.4.0 surface area for marketplace-search discoverability.
+- **`scripts/quick_validate.py`** — now also scans `commands/` for broken reference links; **`scripts/run_evals.py`** hardened against malformed JSON.
+
+### Notes
+
+- The lifecycle file ships as starter content with a dedicated v0.5.0 follow-up planned for the full treatment.
+- `scripts/run_evals.py` stands in for the spec's `improve_description.py`: this is a clean public repo with no live-model access or secrets, so the full description-optimization loop (which needs a model and an eval harness) lives in Anthropic's `skill-creator`. `run_evals.py` provides the eval-listing / running half locally.
+- Audience scope is unchanged: customer + internal-consulting / CSM. There is intentionally **no** sales, pre-sales, or prospect-research content.
+- File totals: 26 reference files (18 top-level + 8 under `industries/`), 7 slash commands, 21 evals, and the SKILL.md remains well under Anthropic's 500-line ceiling.
+
 ## [0.3.0] — 2026-06-03
 
 The "comprehensive privacy" release. The skill now credibly handles "anything website privacy" — every comprehensive privacy law that affects websites globally, every active litigation theory targeting tracking, every major signal and voluntary framework, with each regulation honestly mapped to what ObservePoint can prove (or can't). The MCP catalog is refreshed against the current live server.
@@ -81,6 +127,7 @@ Initial release.
 - The ObservePoint MCP server is not yet generally available. The skill detects `mcp__ObservePoint__*` tools at runtime and prefers them when present; otherwise it falls back to REST API recipes documented in `references/api-reference.md`. The skill never invents MCP tool names.
 - This is a community-built, MIT-licensed plugin. It is not an official ObservePoint product.
 
+[0.4.0]: https://github.com/jpwilbur/observepoint-consultant/releases/tag/v0.4.0
 [0.3.0]: https://github.com/jpwilbur/observepoint-consultant/releases/tag/v0.3.0
 [0.2.0]: https://github.com/jpwilbur/observepoint-consultant/releases/tag/v0.2.0
 [0.1.0]: https://github.com/jpwilbur/observepoint-consultant/releases/tag/v0.1.0
