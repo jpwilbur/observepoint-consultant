@@ -10,13 +10,21 @@ Alphabetical. Cross-references in **bold**.
 
 **Accessibility Highlight Report.** An ObservePoint report (new in 2026) that surfaces WCAG 2.1 AA violations by severity and type. Companion to the broader Accessibility Report.
 
+**ADA Title II.** The provision of the Americans with Disabilities Act covering state and local government services. The 2024 DOJ rule sets WCAG 2.1 AA as the technical standard for state/local government web content and mobile apps, phased by entity size. The accessibility hook for public-sector properties. See `references/accessibility-playbooks.md`.
+
+**ADA Title III.** The provision of the Americans with Disabilities Act covering "places of public accommodation" — the basis for the dominant wave of private accessibility lawsuits and demand letters against commercial websites. See `references/accessibility-playbooks.md`.
+
 **Alert.** A notification routed when a Rule fails or a threshold is crossed. Routes to Slack, Microsoft Teams, email, SMS, Jira, or a custom webhook.
 
 **APPI (Act on the Protection of Personal Information).** Japan's national privacy law. Last major amendment 2022. Enforcement by the PPC (Personal Information Protection Commission).
 
+**ARIA (Accessible Rich Internet Applications).** A W3C specification of HTML attributes (roles, states, properties) that convey the semantics of interactive UI to assistive technology. Misused ARIA is itself a common WCAG failure. See `references/accessibility-playbooks.md`.
+
 **ATT (App Tracking Transparency).** Apple's iOS framework (in effect since iOS 14.5) requiring apps to obtain permission before accessing the IDFA for cross-app tracking. ObservePoint is web-only — see `references/limitations.md`.
 
 **Audit.** In ObservePoint specifically, a **Web Audit** — a configured scan of a defined set of URLs by the synthetic Chromium engine. See `references/products-and-modules.md` → Web Audits.
+
+**axe-core.** The open-source accessibility-testing rules engine (maintained by Deque) widely used to evaluate pages against **WCAG** success criteria. The de-facto standard for automated accessibility checks; like all automated tooling it covers only the machine-testable subset of WCAG. See `references/accessibility-playbooks.md`.
 
 ## B
 
@@ -32,7 +40,11 @@ Alphabetical. Cross-references in **bold**.
 
 **CIPA (California Invasion of Privacy Act).** Cal. Penal Code §§ 631, 632, 638.51. California's wiretap and pen-register statutes. Drives the dominant 2024-2026 tracking-pixel class-action wave (1,000+ filings annually) via the pen-register theory applied to session-replay vendors and chat-pixel handoffs. See `references/privacy-litigation-defense.md`.
 
+**Churn.** The loss of a customer at or before renewal. In the CSM context, the outcome the account-health and renewal motions exist to prevent. The leading churn signal in a web-governance program is a healthy operation with no executive sponsor to defend it at budget time. See `references/account-health-and-strategy.md`.
+
 **CMP (Consent Management Platform).** The system that captures user consent and signals it to tags. Examples: OneTrust, Cookiebot, TrustArc, Didomi, Sourcepoint.
+
+**Color contrast ratio.** The luminance ratio between text (or a UI component) and its background. WCAG 2.1/2.2 SC 1.4.3 requires at least 4.5:1 for normal text and 3:1 for large text; one of the most common — and most automatable — accessibility violations. See `references/accessibility-playbooks.md`.
 
 **Colorado AI Act.** First U.S. state comprehensive AI Act, effective February 1 2026. Requires impact assessments and consumer notice for "high-risk" AI systems. ObservePoint validates marketing-side disclosure requirements; impact assessments are out of scope.
 
@@ -47,6 +59,8 @@ Alphabetical. Cross-references in **bold**.
 ## D
 
 **Data Act (EU).** EU regulation, fully applicable September 12 2025. Primarily B2B — covers user access to data from connected products and cloud-switching protections. Limited website-tracking applicability.
+
+**Data downtime.** Borrowed from the data-observability field: the periods when data is missing, wrong, or untrustworthy — the analytics equivalent of system downtime. The cost web governance reduces by catching broken or misfiring tracking before it corrupts the reports. A useful framing for Chief Data Officers and in ROI narratives. See `references/roi-and-renewal-framing.md`.
 
 **Data layer.** A standardized JavaScript object on a page that holds structured information about the user, the page, and events. Tag managers read from it. ObservePoint validates it.
 
@@ -158,6 +172,8 @@ Alphabetical. Cross-references in **bold**.
 
 ## Q
 
+**QBR (Quarterly Business Review).** The recurring strategic review between a CSM (or program owner) and the customer's executive sponsor — what the program caught and prevented, how fast it detected and resolved, where coverage expands next. The cadence that keeps a mature program executive-owned and renewal-ready. Template in `references/consulting-deliverables.md`; cadence in `references/lifecycle-and-maturity.md`.
+
 **Quebec Law 25.** Quebec's modernized private-sector privacy law (fully effective September 2024). Stricter than federal PIPEDA on consent, transparency, and automated decision-making. Up to CAD $10M or 2% global turnover penalties.
 
 ## R
@@ -169,6 +185,8 @@ Alphabetical. Cross-references in **bold**.
 **Rule.** In ObservePoint specifically, a Tag & Variable Rule — `WHEN` condition + `EXPECT` condition. The mechanism by which audit findings turn into pass/fail signals.
 
 ## S
+
+**Section 508.** Section 508 of the U.S. Rehabilitation Act, requiring federal agencies' electronic and information technology to be accessible. It incorporates **WCAG** 2.1 AA as the technical standard, so the same automated scan that proves WCAG conformance satisfies 508. The dominant accessibility hook for federal properties. See `references/accessibility-playbooks.md`.
 
 **Session replay.** A category of vendor that records user interactions (mouse movements, scrolls, keystrokes, form inputs) for product / UX analytics. Central to CIPA pen-register theory and to ECPA wiretap claims. ObservePoint detects via vendor inventory and consent-state diff.
 
@@ -186,6 +204,8 @@ Alphabetical. Cross-references in **bold**.
 
 **TCF (Transparency and Consent Framework).** The IAB's standard for encoding consent strings. **TCF 2.3** is the current version; non-compliant strings became invalid February 28, 2026.
 
+**TCO (total cost of ownership).** The full cost of a capability across people, tooling, and incident fallout — not just the line-item price. In a web-governance ROI narrative, the relevant comparison is the TCO of an undetected incident (lost conversion data, a reportable consent leak, an accessibility lawsuit) against the cost of catching it early. Used for value framing only; this skill does not discuss ObservePoint pricing. See `references/roi-and-renewal-framing.md`.
+
 **TMS (Tag Management System).** GTM, Tealium iQ, Adobe Launch, Ensighten, etc. ObservePoint is vendor-neutral across TMS choices.
 
 **Touchpoints.** One of the Strala-acquired products. Standardizes and unifies online and offline customer touchpoint data.
@@ -196,17 +216,21 @@ Alphabetical. Cross-references in **bold**.
 
 **UK GDPR.** UK's post-Brexit retained version of GDPR. In force since January 1 2021. Paired with the Data Protection Act 2018 and the 2024 Data Protection and Digital Information Act amendments. Substantively very similar to EU GDPR with UK-specific divergences.
 
+**Unruh Civil Rights Act.** California's civil-rights statute (Cal. Civ. Code § 51), used as the state-law vehicle for website accessibility suits — often paired with **ADA Title III**. Notable for statutory damages (minimum $4,000 per violation), which makes California a hotspot for accessibility demand letters. See `references/accessibility-playbooks.md`.
+
 **UOOM (Universal Opt-Out Mechanism).** Regulatory concept for a browser-level signal that conveys a user's opt-out across all sites visited. **GPC** is the dominant UOOM today; multiple state laws require its recognition.
 
 **UTM (Urchin Tracking Module) parameters.** Query-string parameters (`utm_source`, `utm_medium`, etc.) used to attribute traffic to campaigns. Predates Google's acquisition of Urchin; the name stuck.
 
 ## V
 
+**VPAT (Voluntary Product Accessibility Template).** A standardized document a vendor publishes to report how its product conforms to accessibility standards (**Section 508**, **WCAG**, EN 301 549). Frequently requested in procurement, especially by public-sector buyers. See `references/accessibility-playbooks.md`.
+
 **VPPA (Video Privacy Protection Act).** 18 U.S.C. § 2710. Federal U.S. law originally enacted 1988 (post-Bork-nomination). Currently underlies a substantial pixel-litigation wave against sites with video content. Statutory damages up to $2,500/violation. See `references/privacy-litigation-defense.md`.
 
 ## W
 
-**WCAG (Web Content Accessibility Guidelines).** The W3C standard for web accessibility. WCAG 2.1 Level AA is the conformance level most commonly enforced.
+**WCAG (Web Content Accessibility Guidelines).** The W3C standard for web accessibility. WCAG 2.1 Level AA is the conformance level most commonly enforced. **WCAG 2.2** (W3C Recommendation, October 2023) adds nine success criteria — focus appearance, dragging-movement alternatives, target size, accessible authentication, and more — and is the level newer obligations increasingly point to; 2.1 AA remains the dominant legal target as of 2026. See `references/accessibility-playbooks.md`.
 
 **Web Audit.** See **Audit**.
 
@@ -216,4 +240,4 @@ Alphabetical. Cross-references in **bold**.
 
 ---
 
-*Last verified: 2026-06-03*
+*Last verified: 2026-06-04*

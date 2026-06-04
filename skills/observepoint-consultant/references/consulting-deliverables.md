@@ -268,6 +268,116 @@ business_justification, retention_period, lawful_basis
 
 The last four columns aren't from ObservePoint directly — they require human input from the privacy or analytics owner. The skeleton invites that input.
 
+## Value Snapshot
+
+The screenshot-ready, one-page artifact a CSM or champion hands to a budget owner. It answers one question — "what did this program do for us this period?" — in numbers, not prose. Built for existing-customer value documentation, not prospecting. No pricing. See `references/roi-and-renewal-framing.md` for the framing logic behind each number.
+
+### Skeleton
+
+```markdown
+# <Company> — Web Governance Value Snapshot
+Period <YYYY-MM-DD to YYYY-MM-DD>
+Prepared by <CSM or program owner>
+
+## At a glance
+- Incidents caught before they reached production: <N>
+- Tagging / tracking regressions detected: <N>
+- Third-party vendors inventoried: <N>  (new this period: <N>)
+- Compliance evidence produced: <N consent-state audit runs / evidence packs>
+- Accessibility progress: <critical violations resolved> of <total> ( <%> )
+
+## What it prevented
+One line per avoided outcome — a consent leak that would have been reportable,
+a broken purchase event caught before the CFO saw the revenue dip, an
+unauthorized vendor flagged on first appearance.
+
+## Coverage
+- Properties / domains under audit: <N>
+- High-traffic pages covered: <%>
+- Revenue- or service-critical pages covered: <%>
+```
+
+### Filled-in example sketch
+
+> **At a glance (Q2):** 14 incidents caught pre-production. 6 tagging regressions detected. 31 vendors inventoried (3 new, all reviewed). 12 weekly consent-state audit runs across Accept All / Reject All / GPC. Accessibility: 18 of 22 critical violations resolved (82%).
+
+Keep it to one page. The budget owner skims; the numbers carry the story. Pair it with the Renewal Narrative when the renewal conversation is near.
+
+## Renewal Narrative
+
+The before/after value story, organized by maturity stage. Where the Value Snapshot is the numbers, this is the arc — where the program started, where it is now, and what the next stage looks like. For an existing customer's renewal conversation, never for prospecting. See `references/roi-and-renewal-framing.md`.
+
+### Skeleton
+
+```markdown
+# <Company> — Web Governance Renewal Narrative
+Prepared by <CSM> for <budget owner / executive sponsor>
+Renewal date <YYYY-MM-DD>
+
+## Where we started (crawl / walk)
+The state of the program at the start of the term — what was unmonitored,
+what broke without warning, what evidence didn't exist.
+
+## Where we are now (walk / run / fly)
+The current maturity stage, with the evidence: scheduled audits, Rule
+coverage, alert routing, the evidence-pack cadence. Reference the maturity
+model in `references/lifecycle-and-maturity.md`.
+
+## The value, in their terms
+Tie the program's output to a metric the budget owner already owns — ad-spend
+efficiency, incident reduction, audit-defense readiness, accessibility-risk
+reduction. Use the period numbers from the Value Snapshot.
+
+## Where we go next term
+The next maturity stage and the coverage it adds. Frame renewal as continuity
+of a program that's been accumulating evidence of its own worth.
+```
+
+### Filled-in example sketch
+
+> **Where we started:** one manual audit, run only after something broke; no consent-state evidence; no inventory anyone trusted. **Where we are now:** at *run* — weekly scheduled audits across three properties, 40+ Rules, alerts routed to the analytics and privacy channels, a quarterly evidence pack the privacy team relies on. **The value:** time-to-detect for a broken purchase event dropped from "the CFO noticed" to under 24 hours; the consent-leak audit has passed 100% for two quarters. **Next term:** add CI/CD release gates and the accessibility conformance program.
+
+## Accessibility Priority Report
+
+The triage artifact for an Accessibility Specialist drowning in findings. It ranks violations so the team knows what to fix first and produces the good-faith-remediation evidence trail counsel needs. See `references/accessibility-playbooks.md` for the prioritization model.
+
+### Skeleton
+
+```markdown
+# <Company> — Accessibility Priority Report
+Period <YYYY-MM-DD>
+Standard <WCAG 2.1 AA / 2.2 AA>  |  Legal hooks <Section 508 / ADA Title II / Title III / EAA>
+Prepared by <accessibility lead>
+
+## Fix-this-first queue (ranked)
+Ranked by impact = severity × traffic × affected population.
+
+| Rank | Violation (WCAG SC) | Severity | Pages affected | Traffic tier | Population impact | Owner |
+|---|---|---|---|---|---|---|
+| 1 | Missing form labels (3.3.2) | Critical | 42 | High | Screen-reader users | Web team |
+| 2 | Color contrast on primary CTA (1.4.3) | Serious | 18 | High | Low-vision users | Design |
+| … | | | | | | |
+
+## Remediation guidance
+Per top-ranked item: the specific WCAG success criterion, what's wrong, and
+the concrete fix. Note where automated scanning is sufficient vs. where manual
+review is required.
+
+## Progress trail
+- Critical violations: <resolved> of <total> ( <%> ), trend vs. last period
+- Evidence that remediation is proceeding in good faith (dated, by item)
+
+## Out of scope for automation
+The success criteria automated scanning cannot fully verify — flag for manual
+audit so the conformance claim is honest.
+```
+
+### Filled-in example sketch
+
+> **Fix-this-first:** 42 pages missing form labels on the account-signup flow (highest traffic, blocks screen-reader users from converting) rank above 200 minor alt-text gaps on archived blog images. **Progress:** 18 of 22 critical violations resolved this quarter (82%), up from 9 of 22 last quarter — a documented, dated trail for counsel.
+
+Rank ruthlessly. A specialist with a backlog of thousands needs the top ten, not the full list. The full enumeration lives in the Accessibility Report; this report is the decision layer on top of it.
+
 ## Style notes for every deliverable
 
 - **Concise over comprehensive.** Two-page documents get read; ten-page documents get filed.
@@ -279,4 +389,4 @@ The last four columns aren't from ObservePoint directly — they require human i
 
 ---
 
-*Last verified: 2026-05-28*
+*Last verified: 2026-06-04*

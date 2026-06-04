@@ -136,6 +136,34 @@ Each persona below has:
 
 **What "good" looks like.** Daily audits on patient-facing pages, Rules that fail loudly if any advertising pixel fires on a PHI URL, an evidence pack that holds up to an OCR audit.
 
+## Customer Success Manager (CSM)
+
+**Job today.** Owns the customer relationship end-to-end — adoption, value realization, and renewal. Sits between the customer's practitioners and the customer's budget owner, and between the customer and ObservePoint. Carries a book of accounts and is measured on retention and expansion.
+
+**Pain.** "I need to prove this program is worth renewing. Adoption is uneven, the champion who bought it went quiet, and renewal is two quarters out. I cannot walk into the budget conversation with a feeling — I need a value story I can show."
+
+**Modules they care about.** The account-health diagnostics (usage trends, audit health, coverage gaps), the value snapshot, and the lifecycle/maturity model that says where the account is and where it goes next.
+
+**Language.** "ROI," "adoption," "outcomes," "value realization," "renewal," "maturity stage," "executive sponsor." Speak the language of business outcomes, not of Rules and endpoints.
+
+**Avoid.** Pure technical depth unless they ask. The CSM doesn't write Rules — they orchestrate the people who do. And avoid anything that reads as a sales pitch to an existing customer; this is value documentation, not prospecting.
+
+**What "good" looks like.** An account advancing maturity stages on a known cadence, with a documented value story — incidents caught, regressions prevented, compliance evidence produced — that the budget owner can see and the CSM can defend at renewal. See `references/account-health-and-strategy.md`, `references/roi-and-renewal-framing.md`, and `references/lifecycle-and-maturity.md`.
+
+## Accessibility Specialist
+
+**Job today.** Owns WCAG conformance and the legal-risk posture around accessibility — Section 508 (federal), ADA Title II (state/local) and Title III (commercial). Often sits in design, engineering, or a dedicated accessibility/UX function; partners with legal when a demand letter lands.
+
+**Pain.** "We have thousands of accessibility findings and no way to triage them. I need to know what to fix first, and I need an evidence trail that shows we're remediating in good faith — because a demand letter is a when, not an if."
+
+**Modules they care about.** The Accessibility Report (and the 2026 Accessibility Highlight Report), impact-prioritization across the findings, and the accessibility playbook that ranks and routes them.
+
+**Language.** "WCAG success criteria," "conformance level (A / AA)," "assistive technology," "screen reader," "color contrast," "Title II / Title III," "good-faith remediation." They know the standard; don't lecture them on what WCAG is.
+
+**Avoid.** Treating accessibility as a one-time scan. It's a continuous-conformance program with a moving target (new pages, CMS regressions). And avoid promising that automated scanning catches everything — name the manual-review gap before they do.
+
+**What "good" looks like.** The highest-impact violations fixed first — ranked by severity × traffic × affected population — with a documented remediation trail that demonstrates good-faith progress to counsel and to a court. See `references/accessibility-playbooks.md`.
+
 ## How to switch persona mid-conversation
 
 People wear multiple hats. An Analytics Manager who suddenly asks a privacy question is not Switching Persona — they're stretching. Match what they need *for this question*, then return to their dominant persona.
@@ -148,4 +176,4 @@ Better to ask than to give an engineer a CMO answer.
 
 ---
 
-*Last verified: 2026-05-28*
+*Last verified: 2026-06-04*

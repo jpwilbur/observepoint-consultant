@@ -79,12 +79,18 @@ def check_tool_prefix_casing():
 
 
 def check_cross_references():
-    ref_re = re.compile(r"references/([A-Za-z0-9_./-]+\.md)")
-    for p in sorted(SKILL_DIR.rglob("*.md")):
-        for ref in ref_re.findall(p.read_text()):
-            target = REFS / ref
-            if not target.exists():
-                errors.append(f"broken cross-reference 'references/{ref}' in {p.relative_to(REPO)}")
+    ref_re = re.compile(r"references/([A-Za-z0-9_./<>-]+\.md)")
+    scan_dirs = [SKILL_DIR, REPO / "commands"]
+    for base in scan_dirs:
+        if not base.exists():
+            continue
+        for p in sorted(base.rglob("*.md")):
+            for ref in ref_re.findall(p.read_text()):
+                if "<" in ref or ">" in ref:
+                    continue  # placeholder like references/industries/<industry>.md
+                target = REFS / ref
+                if not target.exists():
+                    errors.append(f"broken cross-reference 'references/{ref}' in {p.relative_to(REPO)}")
 
 
 def check_staleness(days):

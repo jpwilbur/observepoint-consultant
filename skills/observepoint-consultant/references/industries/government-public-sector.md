@@ -29,7 +29,7 @@ Government's regulatory exposure is dominated by **accessibility**, with a thin 
 - **ADA Title II (state and local government).** The 2024 DOJ rule under ADA Title II sets WCAG 2.1 AA as the standard for state and local government web content and mobile apps, with compliance deadlines phasing in by entity size. This is the dominant exposure for state and local bodies — the same WCAG scan motion, a different legal hook.
 - **U.S. state privacy laws (state/local, where any tracking exists).** A state or local site serving residents of many states sits under the patchwork of comprehensive state laws. See the U.S. state matrix in `references/privacy-and-compliance.md`. In practice the cleanest defense is the zero-tracking baseline below — if nothing non-essential fires, most of the state-law surface never engages.
 
-Both Section 508 and ADA Title II resolve to the same technical target — WCAG 2.1 AA — so the audit is one motion that satisfies two legal regimes. A dedicated accessibility playbook is forthcoming; until then, treat the WCAG/EAA section of `references/privacy-and-compliance.md` as the reference for how the accessibility scan and reports work.
+Both Section 508 and ADA Title II resolve to the same technical target — WCAG 2.1 AA — so the audit is one motion that satisfies two legal regimes. For the impact-prioritization scoring, the violation-remediation catalog, and the MCP-tool workflow that turns a raw scan into a ranked queue, see `references/accessibility-playbooks.md`; the WCAG/EAA section of `references/privacy-and-compliance.md` carries the regulation-to-coverage mapping and effective dates.
 
 ## Common vendor patterns
 
@@ -55,7 +55,7 @@ EXPECT
   no third-party request domains receive data EXCEPT the approved-vendor allowlist
 ```
 
-**2. Accessibility scan passes Section 508 / WCAG 2.1 AA thresholds.** The conformance guard. Attach the accessibility scan to the Web Audit and assert no critical/serious violations on the priority templates (home, primary navigation, the top public-service pages and forms). The accessibility playbook (forthcoming) will carry the full Rule pattern; the scan itself is the WCAG motion from `references/privacy-and-compliance.md`.
+**2. Accessibility scan passes Section 508 / WCAG 2.1 AA thresholds.** The conformance guard. Attach the accessibility scan to the Web Audit and assert no critical/serious violations on the priority templates (home, primary navigation, the top public-service pages and forms). `references/accessibility-playbooks.md` carries the full prioritization and Rule pattern; the scan itself is the WCAG motion from `references/privacy-and-compliance.md`.
 
 ```
 WHEN accessibility scan runs on page templates IN ("home", "service landing", "online form")

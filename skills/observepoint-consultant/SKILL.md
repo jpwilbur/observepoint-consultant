@@ -1,6 +1,6 @@
 ---
 name: observepoint-consultant
-description: World-class ObservePoint and web-governance advisor. Use this skill whenever the user mentions ObservePoint, web governance, tag governance, analytics validation, consent management, CMP validation, tag audits, the ObservePoint Rules engine, the ObservePoint REST API, or any ObservePoint product — even if they don't explicitly say "ObservePoint." Also trigger when the user asks about writing tag-firing rules, drafting a web-governance policy or release-gate checklist, mapping privacy or accessibility regulations to a website-scanning workflow (GDPR, CCPA, CIPA, VPPA, BIPA, ECPA, HIPAA, PCI DSS, COPPA, Colorado AI Act, EU AI Act, DSA, DMA, China PIPL, UK GDPR, Quebec Law 25, Washington MHMDA, and 19+ U.S. state privacy laws), defending tracking-pixel or session-replay class-action claims, validating Apple ATT or Privacy Sandbox behavior, or detecting issues like unauthorized pixels, consent leakage, data layer drift, broken tracking, or PII leaks to ad networks.
+description: World-class ObservePoint and web-governance advisor. Use this skill whenever the user mentions ObservePoint, web governance, tag governance, analytics validation, consent management, CMP validation, tag audits, the ObservePoint Rules engine, the ObservePoint REST API, or any ObservePoint product — even if they don't explicitly say "ObservePoint." Also trigger when the user asks about writing tag-firing rules, drafting a web-governance policy or release-gate checklist, mapping privacy or accessibility regulations to a website-scanning workflow (GDPR, CCPA, CIPA, VPPA, BIPA, ECPA, HIPAA, PCI DSS, COPPA, Colorado AI Act, EU AI Act, DSA, DMA, China PIPL, UK GDPR, Quebec Law 25, Washington MHMDA, and 19+ U.S. state privacy laws), defending tracking-pixel or session-replay class-action claims, validating Apple ATT or Privacy Sandbox behavior, or detecting issues like unauthorized pixels, consent leakage, data layer drift, broken tracking, or PII leaks to ad networks. Also use this skill for industry-specific guidance (retail, financial services, healthcare, travel, media, government, education), program maturity / onboarding / "where do we go next," MarTech-adjacency questions (GA4, Adobe, GTM, server-side GTM, Tealium, Consent Mode v2, CDP, attribution, Privacy Sandbox), account health and "what should I focus on," ROI / renewal / value justification for a budget owner, and accessibility prioritization (ADA, Section 508, WCAG, EAA, highest-impact fix).
 ---
 
 # ObservePoint Consultant
@@ -29,6 +29,12 @@ Step 1: classify the user's question. Then load the matching reference file(s) b
 | How to write a Rule, hit the API, or run a CI/CD audit | `references/api-reference.md` (+ `integrations.md`) |
 | Whether/how ObservePoint covers a comprehensive privacy regulation (GDPR, CCPA, Colorado CPA, China PIPL, etc.) | `references/privacy-and-compliance.md` |
 | **Defending a litigation claim or demand letter** (CIPA, VPPA, BIPA, ECPA, state wiretap, healthcare-pixel class action, session-replay claim) | `references/privacy-litigation-defense.md` |
+| Industry-specific question (retail / financial services / healthcare / travel / media / government / education) | `references/industries/index.md`, then the specific industry file |
+| Program maturity, onboarding, "where do we go next" | `references/lifecycle-and-maturity.md` |
+| Implementing or validating an adjacent MarTech platform (GA4, Adobe, GTM, server-side GTM, Tealium, Consent Mode v2, CAPI, CDP, attribution, Privacy Sandbox) | `references/martech-adjacency.md` |
+| "What should I focus on in my account / biggest bang for buck" | `references/account-health-and-strategy.md` |
+| ROI, renewal, value justification for a budget owner | `references/roi-and-renewal-framing.md` |
+| Accessibility prioritization, ADA / Section 508 / EAA, "highest-impact fix" | `references/accessibility-playbooks.md` |
 | How ObservePoint compares to a competitor | `references/competitive-positioning.md` |
 | Building a deliverable (tag-audit report, governance policy, RACI, release-gate checklist) | `references/consulting-deliverables.md` |
 | Whether ObservePoint can do `<X>` where X may not exist | `references/limitations.md` FIRST, then `products-and-modules.md` |
@@ -119,6 +125,12 @@ Sometimes the user asks for something ObservePoint cannot do, or describes a pro
 | `references/consulting-deliverables.md` | Templated reports, policies, RACIs, checklists |
 | `references/personas.md` | Tuning answers to a specific buyer persona |
 | `references/glossary.md` | Term definitions |
+| `references/industries/index.md` | Industry vertical playbooks (retail, financial services, healthcare, travel, media, government, education) |
+| `references/lifecycle-and-maturity.md` | Maturity model, onboarding workflow, CSM cadences (starter) |
+| `references/martech-adjacency.md` | Adjacent MarTech platforms: GA4, Adobe, GTM, sGTM, Tealium, Consent Mode v2, CAPI, CDPs, attribution, Privacy Sandbox |
+| `references/account-health-and-strategy.md` | Account diagnostics, underuse patterns, biggest-bang-for-buck |
+| `references/roi-and-renewal-framing.md` | ROI framing + renewal narratives for budget owners (no pricing) |
+| `references/accessibility-playbooks.md` | Accessibility prioritization, legal landscape, lawsuit-defense evidence |
 
 ## Status & disclaimer
 
