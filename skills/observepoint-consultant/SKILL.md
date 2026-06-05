@@ -31,7 +31,7 @@ Step 1: classify the user's question. Then load the matching reference file(s) b
 | **Defending a litigation claim or demand letter** (CIPA, VPPA, BIPA, ECPA, state wiretap, healthcare-pixel class action, session-replay claim) | use the `litigation-defense` skill |
 | Industry-specific question (retail / financial services / healthcare / travel / media / government / education) | `references/industries/index.md`, then the specific industry file |
 | Program maturity, onboarding, "where do we go next" | use the `account-health` skill |
-| Implementing or validating an adjacent MarTech platform (GA4, Adobe, GTM, server-side GTM, Tealium, Consent Mode v2, CAPI, CDP, attribution, Privacy Sandbox) | `references/martech-adjacency.md` |
+| Implementing or validating an adjacent MarTech platform (GA4, Adobe, GTM, server-side GTM, Tealium, Consent Mode v2, CAPI, CDP, attribution, Privacy Sandbox) | use the `martech` skill |
 | "What should I focus on in my account / biggest bang for buck" | use the `account-health` skill |
 | ROI, renewal, value justification for a budget owner | use the `roi` skill |
 | Accessibility prioritization, ADA / Section 508 / EAA, "highest-impact fix" | use the `accessibility` skill |
@@ -126,7 +126,7 @@ Sometimes the user asks for something ObservePoint cannot do, or describes a pro
 | `references/personas.md` | Tuning answers to a specific buyer persona |
 | `references/glossary.md` | Term definitions |
 | `references/industries/index.md` | Industry vertical playbooks (retail, financial services, healthcare, travel, media, government, education) |
-| `references/martech-adjacency.md` | Adjacent MarTech platforms: GA4, Adobe, GTM, sGTM, Tealium, Consent Mode v2, CAPI, CDPs, attribution, Privacy Sandbox |
+| the `martech` skill | Adjacent MarTech platforms: GA4, Adobe, GTM, sGTM, Tealium, Consent Mode v2, CAPI, CDPs, attribution, Privacy Sandbox; lives in its own specialist skill |
 | the `account-health` skill | Account diagnostics, underuse patterns, biggest-bang-for-buck, plus the maturity model, onboarding workflow, and CSM cadences; lives in its own specialist skill |
 | the `roi` skill | ROI framing + renewal narratives for budget owners, no pricing; lives in its own specialist skill |
 | the `accessibility` skill | Accessibility prioritization, legal landscape, lawsuit-defense evidence — ADA Title III/II, Section 508, WCAG 2.1/2.2, EAA; lives in its own specialist skill |
