@@ -31,6 +31,7 @@ Step 1: classify the user's question. Then load the matching reference file(s) b
 | Whether the consent setup actually WORKS — does Reject-All block tracking, is Consent Mode v2 propagating, is the OneTrust / Cookiebot / TrustArc / Didomi banner behaving, are tags firing before consent | use the `consent-cmp` skill |
 | **How to SET UP or STRUCTURE the account** — audits, Tag & Variable Rules, consent categories, folders and labels, alerts, schedules — or how to configure ObservePoint for a specific regulation or use case (best-practice blueprints, account structure) | use the `account-config` skill |
 | **What a tag/pixel IS, whether it SHOULD be on a page, whether a vendor is authorized or risky, or classifying a tag inventory** (analytics vs advertising vs social vs fingerprinting vs session-replay, risk tier, should-it-be-here) | use the `tags` skill |
+| **Whether the analytics DATA is firing correctly** — GA4/Adobe events and variables, data-layer correctness, purchase/conversion value integrity, duplicate or missing events, attribution-parameter survival, and the ObservePoint Rules that validate it | use the `analytics-validation` skill |
 | **Defending a litigation claim or demand letter** (CIPA, VPPA, BIPA, ECPA, state wiretap, healthcare-pixel class action, session-replay claim) | use the `litigation-defense` skill |
 | Industry-specific question (retail / financial services / healthcare / travel / media / government / education) | `references/industries/index.md`, then the specific industry file |
 | Program maturity, onboarding, "where do we go next" | use the `account-health` skill |
@@ -123,6 +124,7 @@ Sometimes the user asks for something ObservePoint cannot do, or describes a pro
 | the `consent-cmp` skill | Technical does-consent-work validation — Reject-All blocking, Consent Mode v2 propagation, CMP banner behavior, pre-consent firing; lives in its own specialist skill |
 | the `account-config` skill | How to set up and structure the account — audits, Rules, consent categories, folders/labels, alerts, schedules; regulation→configuration blueprints; lives in its own specialist skill |
 | the `tags` skill | Tag intelligence — what a tag is, classification (analytics/advertising/social/session-replay/fingerprinting/etc.), risk tier, and should-it-be-here judgment against page type, consent state, and the approved-vendor list; lives in its own specialist skill |
+| the `analytics-validation` skill | Is-my-data-right validation — GA4/Adobe events and variables, data-layer correctness, value integrity, dedup, missing events, attribution-parameter survival, and the Tag & Variable Rules that prove it; lives in its own specialist skill |
 | the `litigation-defense` skill | Tort-driven litigation defense — CIPA, VPPA, BIPA, ECPA, state wiretaps, healthcare-pixel claims, session-replay claims; lives in its own specialist skill |
 | `references/competitive-positioning.md` | Side-by-side competitor comparisons |
 | `references/verbiage-and-messaging.md` | Brand-correct phrasing and capitalization |
