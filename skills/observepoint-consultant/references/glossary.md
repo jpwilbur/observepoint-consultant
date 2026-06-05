@@ -60,7 +60,7 @@ Alphabetical. Cross-references in **bold**.
 
 **Data Act (EU).** EU regulation, fully applicable September 12 2025. Primarily B2B — covers user access to data from connected products and cloud-switching protections. Limited website-tracking applicability.
 
-**Data downtime.** Borrowed from the data-observability field: the periods when data is missing, wrong, or untrustworthy — the analytics equivalent of system downtime. The cost web governance reduces by catching broken or misfiring tracking before it corrupts the reports. A useful framing for Chief Data Officers and in ROI narratives. See `references/roi-and-renewal-framing.md`.
+**Data downtime.** Borrowed from the data-observability field: the periods when data is missing, wrong, or untrustworthy — the analytics equivalent of system downtime. The cost web governance reduces by catching broken or misfiring tracking before it corrupts the reports. A useful framing for Chief Data Officers and in ROI narratives. See the `roi` skill.
 
 **Data layer.** A standardized JavaScript object on a page that holds structured information about the user, the page, and events. Tag managers read from it. ObservePoint validates it.
 
@@ -204,7 +204,7 @@ Alphabetical. Cross-references in **bold**.
 
 **TCF (Transparency and Consent Framework).** The IAB's standard for encoding consent strings. **TCF 2.3** is the current version; non-compliant strings became invalid February 28, 2026.
 
-**TCO (total cost of ownership).** The full cost of a capability across people, tooling, and incident fallout — not just the line-item price. In a web-governance ROI narrative, the relevant comparison is the TCO of an undetected incident (lost conversion data, a reportable consent leak, an accessibility lawsuit) against the cost of catching it early. Used for value framing only; this skill does not discuss ObservePoint pricing. See `references/roi-and-renewal-framing.md`.
+**TCO (total cost of ownership).** The full cost of a capability across people, tooling, and incident fallout — not just the line-item price. In a web-governance ROI narrative, the relevant comparison is the TCO of an undetected incident (lost conversion data, a reportable consent leak, an accessibility lawsuit) against the cost of catching it early. Used for value framing only; this skill does not discuss ObservePoint pricing. See the `roi` skill.
 
 **TMS (Tag Management System).** GTM, Tealium iQ, Adobe Launch, Ensighten, etc. ObservePoint is vendor-neutral across TMS choices.
 

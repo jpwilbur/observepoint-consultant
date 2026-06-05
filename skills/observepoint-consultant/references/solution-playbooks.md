@@ -404,7 +404,7 @@ For existing customers — reading whether the account is on track and building 
 
 **Persona.** Customer Success Manager, for the customer's budget owner / executive sponsor.
 
-**ObservePoint approach.** Assemble the value story from `references/roi-and-renewal-framing.md`: pull the period's incidents-caught, regressions-detected, vendors-inventoried, compliance-evidence, and accessibility-progress numbers (via `query_report`, `get_usage_trends`, run history), then frame them against a metric the budget owner already owns. Package as the Value Snapshot and Renewal Narrative from `references/consulting-deliverables.md`. No pricing.
+**ObservePoint approach.** Assemble the value story with the `roi` skill: pull the period's incidents-caught, regressions-detected, vendors-inventoried, compliance-evidence, and accessibility-progress numbers (via `query_report`, `get_usage_trends`, run history), then frame them against a metric the budget owner already owns. Package as the Value Snapshot and Renewal Narrative from `references/consulting-deliverables.md`. No pricing.
 
 **Workflow.** Pull the numbers → frame in the budget owner's terms → produce the Value Snapshot (the numbers) and the Renewal Narrative (the before/after arc by maturity stage).
 

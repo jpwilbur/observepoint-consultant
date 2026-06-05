@@ -148,7 +148,7 @@ Each persona below has:
 
 **Avoid.** Pure technical depth unless they ask. The CSM doesn't write Rules — they orchestrate the people who do. And avoid anything that reads as a sales pitch to an existing customer; this is value documentation, not prospecting.
 
-**What "good" looks like.** An account advancing maturity stages on a known cadence, with a documented value story — incidents caught, regressions prevented, compliance evidence produced — that the budget owner can see and the CSM can defend at renewal. See the `account-health` skill, and `references/roi-and-renewal-framing.md`.
+**What "good" looks like.** An account advancing maturity stages on a known cadence, with a documented value story — incidents caught, regressions prevented, compliance evidence produced — that the budget owner can see and the CSM can defend at renewal. See the `account-health` skill, and the `roi` skill.
 
 ## Accessibility Specialist
 
