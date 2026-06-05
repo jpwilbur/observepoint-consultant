@@ -40,9 +40,15 @@ When `mcp__ObservePoint__*` tools are loaded, these assemble the value story fro
 
 If no `mcp__ObservePoint__*` tools are loaded, the user doesn't have MCP access — the value pull becomes the same read by hand from the UI (run history, Rules tab, Alerts page, saved reports), and the REST recipes live in the **api-strategy** skill plus the shared `references/mcp-tools.md`. Never invent a tool name; only call tools that actually appear.
 
-## A note on the value model
+## The value-model script
 
-A value-model helper script (a structured way to assemble the snapshot's categories into a defensible model from account figures) is planned for a later v0.5.0 task. Until it lands, build the snapshot from the assembly sequence in `references/roi-and-renewal-framing.md` and the templates below — every figure traceable to the account, never a fabricated benchmark.
+`scripts/roi_model.py` assembles the snapshot's categories into a defensible value summary from the customer's own account figures. Feed it JSON on stdin (`incidents_caught`, `avg_incident_cost`, `manual_qa_hours_saved`, `hourly_rate`, `wasted_adspend_reduced`) and it returns the value categories, their sum, and the standing pricing disclaimer:
+
+```bash
+echo '{"incidents_caught": 4, "avg_incident_cost": 50000, "wasted_adspend_reduced": 120000}' | python3 scripts/roi_model.py
+```
+
+It frames value, never cost — it never quotes ObservePoint pricing. Run it after the MCP value pull to turn account figures into the snapshot's numbers; every input must trace to the account or a number the customer owns, never a fabricated benchmark. The full workflow lives in `references/roi-and-renewal-framing.md`.
 
 ## Shared foundation
 
