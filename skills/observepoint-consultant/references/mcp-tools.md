@@ -61,7 +61,7 @@ Three rules. They are absolute.
 Each turn, check whether tools prefixed `mcp__ObservePoint__` are in your available tools.
 
 - **Tools present** — prefer them. Name the specific tool in your reply so the user can audit (`"Calling \`mcp__ObservePoint__list_audits\` to find the audit for example.com..."`).
-- **Tools absent** — fall back to `references/api-reference.md`. Tell the user the MCP server isn't loaded in this session. Don't construct fake tool calls.
+- **Tools absent** — fall back to the REST recipes the `api-strategy` skill owns. Tell the user the MCP server isn't loaded in this session. Don't construct fake tool calls.
 
 ## How to verify this catalog against your live server
 
@@ -519,7 +519,7 @@ If no `mcp__ObservePoint__*` tools are present in your available tools, the user
 
 In that mode:
 
-- Answer from `references/api-reference.md` REST recipes.
+- Answer from the REST recipes the `api-strategy` skill owns.
 - Walk the user through the equivalent REST calls.
 - Mention that the MCP server is in development and will substantially simplify the same workflow when available.
 - Don't invent tool calls. Don't reference `mcp__ObservePoint__*` as if it's loaded.

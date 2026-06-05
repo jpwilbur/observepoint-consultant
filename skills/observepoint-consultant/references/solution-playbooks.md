@@ -62,7 +62,7 @@ EXPECT tag "Google Analytics 4" event "purchase" fires exactly once
 
 **ObservePoint approach.** REST API integration into CI/CD. A targeted audit on staging URLs runs as a release gate.
 
-**Recipe.** See `references/api-reference.md` → "Recipe: CI/CD gate with GitHub Actions."
+**Recipe.** The `api-strategy` skill carries the working CI/CD gate recipe ("Recipe: CI/CD gate with GitHub Actions").
 
 **Alert routing.** Block the release. Fail the build.
 
