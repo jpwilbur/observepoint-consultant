@@ -79,6 +79,46 @@ If you've cloned the repo and want to install from your working copy:
 /plugin install observepoint-consultant@observepoint-consultant
 ```
 
+## Updating
+
+When a new version is pushed to this repo, Claude Code does **not** auto-detect it — it only knows about the copy of this marketplace it pulled when you first added it. To get the latest, run **both** of these in the Claude Code terminal (note the first is `update`, *not* `add` — re-adding or "syncing" reuses the stale cache and is the #1 reason the Update button stays greyed out):
+
+```
+/plugin marketplace update observepoint-consultant
+/plugin update observepoint-consultant@observepoint-consultant
+```
+
+Then restart Claude Code or start a new session. The first command re-pulls this repo so Claude Code can see the new version; the second installs it. After the marketplace is refreshed, the **Update** button in the `/plugin` UI also becomes active and does the same thing as the second command.
+
+**Stuck on an old version (Update button greyed out, "last updated" weeks ago)?** You're on a stale marketplace cache. Clear it and re-pull:
+
+```
+rm -rf ~/.claude/plugins/cache/observepoint-consultant
+```
+
+then run the two commands above again.
+
+### Cowork
+
+Cowork shares the same install state as the Claude Code terminal — both read `~/.claude/plugins/` and `enabledPlugins` from `~/.claude/settings.json`. There is **no separate install/update step for Cowork**, and the `/plugin` command isn't available there. Install or update **once from the Claude Code terminal** (or the Desktop **Code** tab) using the commands above, and Cowork will pick up the same version on its next session.
+
+### Optional: org-wide auto-update (admin)
+
+If your organization deploys [managed settings](https://docs.claude.com/en/docs/claude-code/settings) (e.g. via MDM), an admin can set `autoUpdate` on this marketplace so Claude Code re-pulls it on startup and offers the update without anyone running `marketplace update`. Add to the managed `managed-settings.json`:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "observepoint-consultant": {
+      "source": { "source": "github", "repo": "jpwilbur/observepoint-consultant" },
+      "autoUpdate": true
+    }
+  }
+}
+```
+
+This is the only way to get true "it just updates" behavior — it's an administrator-deployed setting, not something each user can flip in their personal `~/.claude/settings.json`. Without it, the two-command refresh above is the supported path for everyone.
+
 ## Usage
 
 Invoke with any question. Examples that exercise different parts of the skill:
