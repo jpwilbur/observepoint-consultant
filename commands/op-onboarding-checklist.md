@@ -12,8 +12,8 @@ Two values from $ARGUMENTS: the customer's industry (e.g. retail-ecommerce, fina
 
 ## Instructions
 
-1. Load `skills/observepoint-consultant/references/lifecycle-and-maturity.md` and `skills/observepoint-consultant/references/industries/<industry>.md` (resolve `<industry>` to the matching reference file).
-2. Combine the generic Day-1 onboarding milestones from the lifecycle reference with the industry-specific priorities (key audits, Rules, Privacy Reports, and use cases) from the industry reference.
+1. Load the **account-health** skill and its deep lifecycle-and-maturity reference, plus `skills/observepoint-consultant/references/industries/<industry>.md` (resolve `<industry>` to the matching reference file).
+2. Combine the generic Day-1 onboarding milestones from the lifecycle-and-maturity reference with the industry-specific priorities (key audits, Rules, Privacy Reports, and use cases) from the industry reference.
 3. Tailor the checklist to the supplied domain.
 4. Return an ordered Day-1 checklist with each item's owner, the ObservePoint setup it produces, and the success criterion.
 

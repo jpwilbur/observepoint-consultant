@@ -40,7 +40,7 @@ Alphabetical. Cross-references in **bold**.
 
 **CIPA (California Invasion of Privacy Act).** Cal. Penal Code §§ 631, 632, 638.51. California's wiretap and pen-register statutes. Drives the dominant 2024-2026 tracking-pixel class-action wave (1,000+ filings annually) via the pen-register theory applied to session-replay vendors and chat-pixel handoffs. See the `litigation-defense` skill.
 
-**Churn.** The loss of a customer at or before renewal. In the CSM context, the outcome the account-health and renewal motions exist to prevent. The leading churn signal in a web-governance program is a healthy operation with no executive sponsor to defend it at budget time. See `references/account-health-and-strategy.md`.
+**Churn.** The loss of a customer at or before renewal. In the CSM context, the outcome the account-health and renewal motions exist to prevent. The leading churn signal in a web-governance program is a healthy operation with no executive sponsor to defend it at budget time. See the `account-health` skill.
 
 **CMP (Consent Management Platform).** The system that captures user consent and signals it to tags. Examples: OneTrust, Cookiebot, TrustArc, Didomi, Sourcepoint.
 
@@ -172,7 +172,7 @@ Alphabetical. Cross-references in **bold**.
 
 ## Q
 
-**QBR (Quarterly Business Review).** The recurring strategic review between a CSM (or program owner) and the customer's executive sponsor — what the program caught and prevented, how fast it detected and resolved, where coverage expands next. The cadence that keeps a mature program executive-owned and renewal-ready. Template in `references/consulting-deliverables.md`; cadence in `references/lifecycle-and-maturity.md`.
+**QBR (Quarterly Business Review).** The recurring strategic review between a CSM (or program owner) and the customer's executive sponsor — what the program caught and prevented, how fast it detected and resolved, where coverage expands next. The cadence that keeps a mature program executive-owned and renewal-ready. Template in `references/consulting-deliverables.md`; cadence in the `account-health` skill.
 
 **Quebec Law 25.** Quebec's modernized private-sector privacy law (fully effective September 2024). Stricter than federal PIPEDA on consent, transparency, and automated decision-making. Up to CAD $10M or 2% global turnover penalties.
 

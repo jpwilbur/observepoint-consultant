@@ -12,14 +12,14 @@ Optional focus area: $ARGUMENTS (one of privacy, analytics, accessibility, perfo
 
 ## Instructions
 
-1. Load `skills/observepoint-consultant/references/account-health-and-strategy.md`.
+1. Load the **account-health** skill and its deep account-health-and-strategy reference.
 2. If `mcp__ObservePoint__*` tools are present in this session, run the account-health diagnostic workflow from that file: `list_audits` -> `get_audit_health` per audit -> `get_usage_overview` / `get_usage_summary` / `get_usage_trends` -> `find_coverage_gaps` -> `find_anomalies` -> `get_inventory`. Score the account against the underuse-pattern checklist.
 3. If the focus argument is set, scope the diagnostic to that dimension.
 4. Return a prioritized list of next actions using the biggest-bang-for-buck rubric (impact x effort), each with the specific ObservePoint setup that addresses it.
 
 ### If the ObservePoint MCP server is not connected
 
-Do not fabricate account data. Explain that the live diagnostic requires the MCP server, walk through the manual version (which reports to pull in-app), and outline what the diagnostic would surface. Cite `references/account-health-and-strategy.md`.
+Do not fabricate account data. Explain that the live diagnostic requires the MCP server, walk through the manual version (which reports to pull in-app), and outline what the diagnostic would surface. Cite the **account-health** skill.
 
 ## Example Usage
 
