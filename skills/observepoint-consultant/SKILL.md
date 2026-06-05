@@ -34,7 +34,7 @@ Step 1: classify the user's question. Then load the matching reference file(s) b
 | Implementing or validating an adjacent MarTech platform (GA4, Adobe, GTM, server-side GTM, Tealium, Consent Mode v2, CAPI, CDP, attribution, Privacy Sandbox) | `references/martech-adjacency.md` |
 | "What should I focus on in my account / biggest bang for buck" | `references/account-health-and-strategy.md` |
 | ROI, renewal, value justification for a budget owner | `references/roi-and-renewal-framing.md` |
-| Accessibility prioritization, ADA / Section 508 / EAA, "highest-impact fix" | `references/accessibility-playbooks.md` |
+| Accessibility prioritization, ADA / Section 508 / EAA, "highest-impact fix" | use the `accessibility` skill |
 | How ObservePoint compares to a competitor | `references/competitive-positioning.md` |
 | Building a deliverable (tag-audit report, governance policy, RACI, release-gate checklist) | `references/consulting-deliverables.md` |
 | Whether ObservePoint can do `<X>` where X may not exist | `references/limitations.md` FIRST, then `products-and-modules.md` |
@@ -130,7 +130,7 @@ Sometimes the user asks for something ObservePoint cannot do, or describes a pro
 | `references/martech-adjacency.md` | Adjacent MarTech platforms: GA4, Adobe, GTM, sGTM, Tealium, Consent Mode v2, CAPI, CDPs, attribution, Privacy Sandbox |
 | `references/account-health-and-strategy.md` | Account diagnostics, underuse patterns, biggest-bang-for-buck |
 | `references/roi-and-renewal-framing.md` | ROI framing + renewal narratives for budget owners (no pricing) |
-| `references/accessibility-playbooks.md` | Accessibility prioritization, legal landscape, lawsuit-defense evidence |
+| the `accessibility` skill | Accessibility prioritization, legal landscape, lawsuit-defense evidence — ADA Title III/II, Section 508, WCAG 2.1/2.2, EAA; lives in its own specialist skill |
 
 ## Status & disclaimer
 

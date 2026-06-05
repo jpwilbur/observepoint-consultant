@@ -10,21 +10,21 @@ Alphabetical. Cross-references in **bold**.
 
 **Accessibility Highlight Report.** An ObservePoint report (new in 2026) that surfaces WCAG 2.1 AA violations by severity and type. Companion to the broader Accessibility Report.
 
-**ADA Title II.** The provision of the Americans with Disabilities Act covering state and local government services. The 2024 DOJ rule sets WCAG 2.1 AA as the technical standard for state/local government web content and mobile apps, phased by entity size. The accessibility hook for public-sector properties. See `references/accessibility-playbooks.md`.
+**ADA Title II.** The provision of the Americans with Disabilities Act covering state and local government services. The 2024 DOJ rule sets WCAG 2.1 AA as the technical standard for state/local government web content and mobile apps, phased by entity size. The accessibility hook for public-sector properties. See the **accessibility** skill.
 
-**ADA Title III.** The provision of the Americans with Disabilities Act covering "places of public accommodation" — the basis for the dominant wave of private accessibility lawsuits and demand letters against commercial websites. See `references/accessibility-playbooks.md`.
+**ADA Title III.** The provision of the Americans with Disabilities Act covering "places of public accommodation" — the basis for the dominant wave of private accessibility lawsuits and demand letters against commercial websites. See the **accessibility** skill.
 
 **Alert.** A notification routed when a Rule fails or a threshold is crossed. Routes to Slack, Microsoft Teams, email, SMS, Jira, or a custom webhook.
 
 **APPI (Act on the Protection of Personal Information).** Japan's national privacy law. Last major amendment 2022. Enforcement by the PPC (Personal Information Protection Commission).
 
-**ARIA (Accessible Rich Internet Applications).** A W3C specification of HTML attributes (roles, states, properties) that convey the semantics of interactive UI to assistive technology. Misused ARIA is itself a common WCAG failure. See `references/accessibility-playbooks.md`.
+**ARIA (Accessible Rich Internet Applications).** A W3C specification of HTML attributes (roles, states, properties) that convey the semantics of interactive UI to assistive technology. Misused ARIA is itself a common WCAG failure. See the **accessibility** skill.
 
 **ATT (App Tracking Transparency).** Apple's iOS framework (in effect since iOS 14.5) requiring apps to obtain permission before accessing the IDFA for cross-app tracking. ObservePoint is web-only — see `references/limitations.md`.
 
 **Audit.** In ObservePoint specifically, a **Web Audit** — a configured scan of a defined set of URLs by the synthetic Chromium engine. See `references/products-and-modules.md` → Web Audits.
 
-**axe-core.** The open-source accessibility-testing rules engine (maintained by Deque) widely used to evaluate pages against **WCAG** success criteria. The de-facto standard for automated accessibility checks; like all automated tooling it covers only the machine-testable subset of WCAG. See `references/accessibility-playbooks.md`.
+**axe-core.** The open-source accessibility-testing rules engine (maintained by Deque) widely used to evaluate pages against **WCAG** success criteria. The de-facto standard for automated accessibility checks; like all automated tooling it covers only the machine-testable subset of WCAG. See the **accessibility** skill.
 
 ## B
 
@@ -44,7 +44,7 @@ Alphabetical. Cross-references in **bold**.
 
 **CMP (Consent Management Platform).** The system that captures user consent and signals it to tags. Examples: OneTrust, Cookiebot, TrustArc, Didomi, Sourcepoint.
 
-**Color contrast ratio.** The luminance ratio between text (or a UI component) and its background. WCAG 2.1/2.2 SC 1.4.3 requires at least 4.5:1 for normal text and 3:1 for large text; one of the most common — and most automatable — accessibility violations. See `references/accessibility-playbooks.md`.
+**Color contrast ratio.** The luminance ratio between text (or a UI component) and its background. WCAG 2.1/2.2 SC 1.4.3 requires at least 4.5:1 for normal text and 3:1 for large text; one of the most common — and most automatable — accessibility violations. See the **accessibility** skill.
 
 **Colorado AI Act.** First U.S. state comprehensive AI Act, effective February 1 2026. Requires impact assessments and consumer notice for "high-risk" AI systems. ObservePoint validates marketing-side disclosure requirements; impact assessments are out of scope.
 
@@ -186,7 +186,7 @@ Alphabetical. Cross-references in **bold**.
 
 ## S
 
-**Section 508.** Section 508 of the U.S. Rehabilitation Act, requiring federal agencies' electronic and information technology to be accessible. It incorporates **WCAG** 2.1 AA as the technical standard, so the same automated scan that proves WCAG conformance satisfies 508. The dominant accessibility hook for federal properties. See `references/accessibility-playbooks.md`.
+**Section 508.** Section 508 of the U.S. Rehabilitation Act, requiring federal agencies' electronic and information technology to be accessible. It incorporates **WCAG** 2.1 AA as the technical standard, so the same automated scan that proves WCAG conformance satisfies 508. The dominant accessibility hook for federal properties. See the **accessibility** skill.
 
 **Session replay.** A category of vendor that records user interactions (mouse movements, scrolls, keystrokes, form inputs) for product / UX analytics. Central to CIPA pen-register theory and to ECPA wiretap claims. ObservePoint detects via vendor inventory and consent-state diff.
 
@@ -216,7 +216,7 @@ Alphabetical. Cross-references in **bold**.
 
 **UK GDPR.** UK's post-Brexit retained version of GDPR. In force since January 1 2021. Paired with the Data Protection Act 2018 and the 2024 Data Protection and Digital Information Act amendments. Substantively very similar to EU GDPR with UK-specific divergences.
 
-**Unruh Civil Rights Act.** California's civil-rights statute (Cal. Civ. Code § 51), used as the state-law vehicle for website accessibility suits — often paired with **ADA Title III**. Notable for statutory damages (minimum $4,000 per violation), which makes California a hotspot for accessibility demand letters. See `references/accessibility-playbooks.md`.
+**Unruh Civil Rights Act.** California's civil-rights statute (Cal. Civ. Code § 51), used as the state-law vehicle for website accessibility suits — often paired with **ADA Title III**. Notable for statutory damages (minimum $4,000 per violation), which makes California a hotspot for accessibility demand letters. See the **accessibility** skill.
 
 **UOOM (Universal Opt-Out Mechanism).** Regulatory concept for a browser-level signal that conveys a user's opt-out across all sites visited. **GPC** is the dominant UOOM today; multiple state laws require its recognition.
 
@@ -224,13 +224,13 @@ Alphabetical. Cross-references in **bold**.
 
 ## V
 
-**VPAT (Voluntary Product Accessibility Template).** A standardized document a vendor publishes to report how its product conforms to accessibility standards (**Section 508**, **WCAG**, EN 301 549). Frequently requested in procurement, especially by public-sector buyers. See `references/accessibility-playbooks.md`.
+**VPAT (Voluntary Product Accessibility Template).** A standardized document a vendor publishes to report how its product conforms to accessibility standards (**Section 508**, **WCAG**, EN 301 549). Frequently requested in procurement, especially by public-sector buyers. See the **accessibility** skill.
 
 **VPPA (Video Privacy Protection Act).** 18 U.S.C. § 2710. Federal U.S. law originally enacted 1988 (post-Bork-nomination). Currently underlies a substantial pixel-litigation wave against sites with video content. Statutory damages up to $2,500/violation. See the `litigation-defense` skill.
 
 ## W
 
-**WCAG (Web Content Accessibility Guidelines).** The W3C standard for web accessibility. WCAG 2.1 Level AA is the conformance level most commonly enforced. **WCAG 2.2** (W3C Recommendation, October 2023) adds nine success criteria — focus appearance, dragging-movement alternatives, target size, accessible authentication, and more — and is the level newer obligations increasingly point to; 2.1 AA remains the dominant legal target as of 2026. See `references/accessibility-playbooks.md`.
+**WCAG (Web Content Accessibility Guidelines).** The W3C standard for web accessibility. WCAG 2.1 Level AA is the conformance level most commonly enforced. **WCAG 2.2** (W3C Recommendation, October 2023) adds nine success criteria — focus appearance, dragging-movement alternatives, target size, accessible authentication, and more — and is the level newer obligations increasingly point to; 2.1 AA remains the dominant legal target as of 2026. See the **accessibility** skill.
 
 **Web Audit.** See **Audit**.
 

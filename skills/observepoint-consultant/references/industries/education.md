@@ -62,7 +62,7 @@ EXPECT
 Education's exposure layers student-data privacy on top of accessibility. Do not restate effective dates or enforcement detail — those live in the **regulation** skill:
 
 - **FERPA**, **COPPA / COPPA 2.0**, **California AADC**, and **state student data privacy laws** — see the named sections in the **regulation** skill.
-- **Accessibility (WCAG 2.1 AA / EAA)** — the Section 508 / DOJ Title II target is WCAG 2.1 AA; see the **regulation** skill, Accessibility. A dedicated accessibility playbook is forthcoming; until then that section is the reference for how the accessibility scan and reports work.
+- **Accessibility (WCAG 2.1 AA / EAA)** — the Section 508 / DOJ Title II target is WCAG 2.1 AA; see the **regulation** skill, Accessibility, for the regulation-to-coverage mapping and effective dates, and the **accessibility** skill for the impact-prioritization model, the violation-remediation catalog, and how the accessibility scan and reports work.
 
 ## Common vendor patterns
 

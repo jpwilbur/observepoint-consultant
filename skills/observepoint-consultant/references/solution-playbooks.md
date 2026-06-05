@@ -420,7 +420,7 @@ For existing customers — reading whether the account is on track and building 
 
 **Persona.** Accessibility Specialist (often with legal in the loop on a demand letter).
 
-**ObservePoint approach.** Run a Web Audit with accessibility scanning across the property, then apply the impact-prioritization model from `references/accessibility-playbooks.md` — rank by impact = severity × traffic × affected population. Pull the ranked findings with `query_report` against the accessibility-issues entity (use `get_report_schema` to confirm the column names first), joined to page-traffic tier.
+**ObservePoint approach.** Run a Web Audit with accessibility scanning across the property, then apply the impact-prioritization model from the **accessibility** skill — rank by impact = severity × traffic × affected population. Pull the ranked findings with `query_report` against the accessibility-issues entity (use `get_report_schema` to confirm the column names first), joined to page-traffic tier.
 
 **Workflow.**
 

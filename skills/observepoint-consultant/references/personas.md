@@ -162,7 +162,7 @@ Each persona below has:
 
 **Avoid.** Treating accessibility as a one-time scan. It's a continuous-conformance program with a moving target (new pages, CMS regressions). And avoid promising that automated scanning catches everything — name the manual-review gap before they do.
 
-**What "good" looks like.** The highest-impact violations fixed first — ranked by severity × traffic × affected population — with a documented remediation trail that demonstrates good-faith progress to counsel and to a court. See `references/accessibility-playbooks.md`.
+**What "good" looks like.** The highest-impact violations fixed first — ranked by severity × traffic × affected population — with a documented remediation trail that demonstrates good-faith progress to counsel and to a court. See the **accessibility** skill.
 
 ## How to switch persona mid-conversation
 
