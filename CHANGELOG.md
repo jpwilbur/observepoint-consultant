@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.1] — 2026-06-05
+
+A distribution-hygiene release. No skill content changes — this fixes how teammates *receive* updates.
+
+### Added
+
+- **Explicit `version` field** (`0.5.1`) in both `.claude-plugin/plugin.json` and the plugin's `.claude-plugin/marketplace.json` entry. Until now the plugin had no version, so Claude Code identified installed copies by opaque git commit SHA and the `/plugin` Update button compared SHAs. Both sides now resolve to a legible semver, so the Update button shows a real `0.5.0 → 0.5.1`-style diff and future update detection is deterministic.
+- **README "Updating" section** documenting the two-command refresh (`/plugin marketplace update` → `/plugin update`), the stale-cache fix (`rm -rf ~/.claude/plugins/cache/observepoint-consultant`), a **Cowork** note (shares install state with the terminal — no separate step), and an optional **admin auto-update** path via managed-settings `autoUpdate`.
+
+### Notes
+
+- The version field does **not** retroactively unstick anyone already on a stale marketplace cache — Claude Code only learns about new commits/versions when the local marketplace clone is re-pulled (`/plugin marketplace update`), which is never automatic for self-hosted marketplaces. Every already-installed teammate must run that refresh once; the version field makes everything *after* that cleaner.
+
 ## [0.5.0] — 2026-06-05
 
 The "skill-breakout" release. v0.4.0 made the skill act like a consultant; v0.5.0 changes the *shape* of that consultant. The single mega-skill is split into a hybrid multi-skill plugin — a thin `observepoint-consultant` hub that routes (and answers cross-cutting questions itself) plus 14 flat, independently-triggered specialist skills, each owning its lane and its deep reference. Triggering gets sharper because each specialist advertises a narrow `description`, and answers get deeper because each specialist can carry more domain detail without bloating one dispatcher. The audience scope is unchanged — customer + internal-consulting / CSM, with **no** sales / pre-sales / prospect-research content.
