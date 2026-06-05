@@ -6,7 +6,7 @@ Alphabetical. Cross-references in **bold**.
 
 ## A
 
-**AADC (Age Appropriate Design Code).** California law (2022) requiring default high-privacy settings for users likely under 18. Significant 9th Circuit injunction since 2024 has blocked enforcement of many provisions; partial revival in 2026. See `references/privacy-and-compliance.md`.
+**AADC (Age Appropriate Design Code).** California law (2022) requiring default high-privacy settings for users likely under 18. Significant 9th Circuit injunction since 2024 has blocked enforcement of many provisions; partial revival in 2026. See the **regulation** skill.
 
 **Accessibility Highlight Report.** An ObservePoint report (new in 2026) that surfaces WCAG 2.1 AA violations by severity and type. Companion to the broader Accessibility Report.
 

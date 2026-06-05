@@ -33,7 +33,7 @@ Walk the user through:
 3. **How to assemble the evidence pack for counsel.** Audit configurations, Rule history, run history with timestamps, exception log, change log — see the [Producing the evidence pack for litigation](#producing-the-evidence-pack-for-litigation) section at the end.
 4. **What the evidence does and doesn't prove.** Honest framing — ObservePoint can produce strong "we detected and remediated" evidence, but it cannot defeat liability on its own.
 
-Cross-reference `references/privacy-and-compliance.md` for the comprehensive privacy laws that may run parallel to a tort claim (e.g., CCPA / CPRA on top of CIPA), and `references/mcp-tools.md` for the specific MCP wrappers — especially `scan_audit_pii`, `scan_journey_pii`, `compare_consent_states`, `find_anomalies`, and `find_first_observed`.
+Cross-reference the **regulation** skill for the comprehensive privacy laws that may run parallel to a tort claim (e.g., CCPA / CPRA on top of CIPA), and `references/mcp-tools.md` for the specific MCP wrappers — especially `scan_audit_pii`, `scan_journey_pii`, `compare_consent_states`, `find_anomalies`, and `find_first_observed`.
 
 ## CIPA — California Invasion of Privacy Act
 
@@ -165,7 +165,7 @@ EXPECT
 
 **The wave.** Hundreds of class actions filed against hospital systems, healthcare-adjacent retailers, telehealth platforms, and pharmacy chains since 2023. The pattern: Meta Pixel or Google Analytics on a patient-facing page (appointment booking, prescription refill, symptom checker, condition information, find-a-doctor) transmits the URL — which constitutes PHI when paired with an IP address — to the third party. OCR has issued substantial settlements; private litigation has produced multi-million-dollar settlements as well.
 
-**What ObservePoint detects.** This is the strongest current ObservePoint defensive use case. See the HIPAA section in `references/privacy-and-compliance.md` for the audit setup. Additional litigation-specific signals:
+**What ObservePoint detects.** This is the strongest current ObservePoint defensive use case. See the HIPAA section in the **regulation** skill for the audit setup. Additional litigation-specific signals:
 
 - **Historical pixel firing.** Audit run history showing what fired on which patient-facing URLs on what date. When the complaint alleges a specific date range, this is the central rebuttal data.
 - **`scan_audit_pii` with healthcare-context customRegex.** Detect not just generic PII patterns but customer-specific identifiers (member IDs, MRNs, appointment confirmation numbers).

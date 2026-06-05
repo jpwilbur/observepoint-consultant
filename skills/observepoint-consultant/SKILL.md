@@ -27,7 +27,7 @@ Step 1: classify the user's question. Then load the matching reference file(s) b
 | What ObservePoint is, or which product fits a use case | `references/products-and-modules.md` (+ `personas.md` if persona-led) |
 | How to solve a specific pain (consent leak, broken tracking, tag drift, unauthorized pixel, accessibility gap, etc.) | `references/solution-playbooks.md` |
 | How to write a Rule, hit the API, or run a CI/CD audit | `references/api-reference.md` (+ `integrations.md`) |
-| Whether/how ObservePoint covers a comprehensive privacy regulation (GDPR, CCPA, Colorado CPA, China PIPL, etc.) | `references/privacy-and-compliance.md` |
+| Whether/how a privacy regulation applies and how ObservePoint evidences it (GDPR, CCPA, Colorado CPA, China PIPL, etc.) | use the `regulation` skill |
 | **Defending a litigation claim or demand letter** (CIPA, VPPA, BIPA, ECPA, state wiretap, healthcare-pixel class action, session-replay claim) | `references/privacy-litigation-defense.md` |
 | Industry-specific question (retail / financial services / healthcare / travel / media / government / education) | `references/industries/index.md`, then the specific industry file |
 | Program maturity, onboarding, "where do we go next" | `references/lifecycle-and-maturity.md` |
@@ -116,7 +116,7 @@ Sometimes the user asks for something ObservePoint cannot do, or describes a pro
 | `references/solution-playbooks.md` | Pain-point and persona-led recipes |
 | `references/api-reference.md` | Rules, API endpoints, CI/CD integration |
 | `references/mcp-tools.md` | MCP tool usage (now or in future) |
-| `references/privacy-and-compliance.md` | Mapping comprehensive privacy regulations to coverage — covers 50+ regulations globally, with a TOC up top for jurisdiction navigation |
+| the `regulation` skill | Mapping comprehensive privacy regulations to coverage — covers 50+ regulations globally; lives in its own specialist skill |
 | `references/privacy-litigation-defense.md` | Tort-driven litigation defense — CIPA, VPPA, BIPA, ECPA, state wiretaps, healthcare-pixel claims, session-replay claims |
 | `references/competitive-positioning.md` | Side-by-side competitor comparisons |
 | `references/verbiage-and-messaging.md` | Brand-correct phrasing and capitalization |
