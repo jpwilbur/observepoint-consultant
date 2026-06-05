@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.2] — 2026-06-05
+
+Documentation correction. No skill content changes.
+
+### Fixed
+
+- **README "Updating → Cowork" section corrected.** v0.5.1 incorrectly claimed Cowork shares the terminal's `~/.claude/plugins/` install state. It does not — Cowork is a separate distribution channel that tracks plugins via an Anthropic cloud-hosted snapshot of the repo, so a terminal `/plugin marketplace update` has no effect on Cowork (which can stay frozen on an old version with a greyed-out Update button). The section now documents the real behavior and the three ways to get updates into Cowork: an org marketplace with "Sync automatically" (recommended, org-wide), a per-user remove/re-add refresh, or using the Desktop Code tab / terminal. Notes the known greyed-button limitation for personal / third-party GitHub marketplaces in Cowork.
+
 ## [0.5.1] — 2026-06-05
 
 A distribution-hygiene release. No skill content changes — this fixes how teammates *receive* updates.

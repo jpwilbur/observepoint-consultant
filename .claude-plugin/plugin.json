@@ -1,6 +1,6 @@
 {
   "name": "observepoint-consultant",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "World-class ObservePoint and web-governance advisor for Claude Code, delivered as a hub skill plus 14 focused specialists (regulation, litigation-defense, accessibility, consent-cmp, account-config, account-health, roi, martech, analytics-validation, tags, journeys-testing, reporting-charting, api-strategy, content-creation). Knows ObservePoint's products, Rules engine, REST API, MCP server tools, integrations, limitations, and approved verbiage. Comprehensive global privacy coverage: 19+ U.S. state laws, CIPA / VPPA / BIPA / ECPA litigation defense, GDPR + UK GDPR + Quebec Law 25 + China PIPL + Japan APPI + 30+ international regimes, EU AI Act + Colorado AI Act, PCI DSS 4.0, accessibility (WCAG / Section 508 / ADA / EAA), browser signals (GPC / UOOM / TCF / Consent Mode v2 / Apple ATT / Privacy Sandbox). Industry playbooks for retail, financial services, healthcare, travel, media, government, and education; a program lifecycle and maturity model with onboarding and CSM cadences; MarTech-adjacency guidance (GA4, Adobe, GTM, server-side GTM, Tealium, CDPs, attribution); account-config blueprints, tag-intelligence and analytics-validation judgment, Journey build/debug, saved-report and charting work, account-health diagnostics, ROI and renewal value framing (no pricing), accessibility impact-prioritization, and ObservePoint-voice content creation.",
   "author": {
     "name": "Jarrod Wilbur",
