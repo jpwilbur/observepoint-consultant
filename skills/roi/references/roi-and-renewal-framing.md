@@ -144,6 +144,17 @@ If the MCP server isn't loaded this is the same read by hand from the UI — run
 
 Follow the deliverable discipline in `references/consulting-deliverables.md`: numbers before prose, severity-ranked, dated, sourced to an ObservePoint report. One page, screenshot-ready, every figure traceable to the account. The snapshot doesn't argue the value — it shows it, and lets the budget owner reach the conclusion.
 
+## The value-model script
+
+`scripts/roi_model.py` (in this skill) assembles the customer's own figures into a structured value summary. Feed it JSON on stdin with the keys you have evidence for — `incidents_caught`, `avg_incident_cost`, `manual_qa_hours_saved`, `hourly_rate`, `wasted_adspend_reduced` — and it returns the three value categories (incident avoidance, QA efficiency, ad-spend efficiency), their sum, and the standing pricing disclaimer:
+
+```bash
+echo '{"incidents_caught": 4, "avg_incident_cost": 50000, "manual_qa_hours_saved": 200, "hourly_rate": 75, "wasted_adspend_reduced": 120000}' \
+  | python3 scripts/roi_model.py
+```
+
+It frames value, never cost — it never quotes ObservePoint pricing, and the disclaimer it emits says exactly that. Every input must trace to the customer's account history or a number the customer owns (incident counts and dates from the run history, QA hours from their team, wasted spend from their ad platform); the script does the arithmetic and the framing, it does not invent a benchmark. Use it to turn the assembly-sequence pull above into the snapshot's value figures, then drop those into the Value Snapshot template in `references/consulting-deliverables.md`.
+
 ---
 
 *Last verified: 2026-06-04*
