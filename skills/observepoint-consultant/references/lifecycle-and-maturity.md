@@ -51,7 +51,7 @@ The diagnosis is not a survey. You read it off the account: how many audits exis
 
 **Common stuck-at-this-stage patterns.** Complacency — the program runs so smoothly that nobody adds new Rules for emerging risks (a new privacy statute, a new vendor category, a new litigation theory), and coverage silently ages out of relevance. And sponsor attrition — the executive sponsor moves on and isn't replaced, quietly demoting the program back toward "run" without anyone noticing until renewal. The fly stage is maintained, not achieved once.
 
-**Transition checklist (staying at fly).** Schedule a recurring coverage review against the current risk landscape — new regulations (`references/privacy-and-compliance.md`), new vendor categories, new site properties. Confirm the executive sponsor is current and engaged; re-recruit on any leadership change. Keep the Rule library growing with the threat landscape rather than frozen. Treat the evidence pack and QBR as non-negotiable recurring commitments.
+**Transition checklist (staying at fly).** Schedule a recurring coverage review against the current risk landscape — new regulations (the **regulation** skill), new vendor categories, new site properties. Confirm the executive sponsor is current and engaged; re-recruit on any leadership change. Keep the Rule library growing with the threat landscape rather than frozen. Treat the evidence pack and QBR as non-negotiable recurring commitments.
 
 ## Onboarding workflow
 

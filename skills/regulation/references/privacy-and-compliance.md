@@ -83,7 +83,7 @@ Then walk them through:
 
 Add the resulting Rule/Report pair to the customer's compliance evidence pack (template in `references/consulting-deliverables.md`).
 
-For litigation-defense scenarios (responding to a class-action complaint or demand letter under CIPA, VPPA, BIPA, ECPA, or state wiretap statutes), use the companion file `references/privacy-litigation-defense.md` — different audience (in-house counsel, not privacy ops) and different evidence pattern.
+For litigation-defense scenarios (responding to a class-action complaint or demand letter under CIPA, VPPA, BIPA, ECPA, or state wiretap statutes), use the **litigation-defense** skill — different audience (in-house counsel, not privacy ops) and different evidence pattern.
 
 ## U.S. comprehensive privacy laws
 
@@ -120,7 +120,7 @@ By mid-2026, 19 U.S. states have comprehensive privacy laws in force. Every per-
 
 **Enforcement context (2024–2026).** Recent CPPA enforcement has focused on opt-out failures across devices and on websites that ignore GPC. Multimillion-dollar settlements have specifically called out scenarios where the opt-out worked on one device but not another. The "honored across every device on every page" evidence is exactly what `compare_consent_states` produces.
 
-**Separate California litigation theory — CIPA.** California also has the California Invasion of Privacy Act (CIPA), which underlies the dominant tracking-pixel class-action wave in 2024–2026 (pen-register / trap-and-trace theories). CIPA is a tort statute, not a comprehensive privacy law; treatment lives in `references/privacy-litigation-defense.md`.
+**Separate California litigation theory — CIPA.** California also has the California Invasion of Privacy Act (CIPA), which underlies the dominant tracking-pixel class-action wave in 2024–2026 (pen-register / trap-and-trace theories). CIPA is a tort statute, not a comprehensive privacy law; treatment lives in the **litigation-defense** skill.
 
 **Doesn't cover.** Lawful-basis documentation, privacy notices, Data Subject Rights workflows (access / deletion fulfillment), employee data handling. Those live in the privacy program, not in a scanner.
 
@@ -316,7 +316,7 @@ The 12-of-19 states that mandate GPC mean the GPC variant is essentially require
 - Inventory cookies and assert no advertising trackers are set on PHI-bearing pages.
 - Validate that consent banners (when used) properly suppress all non-essential tracking on these pages — and that the audit's pre-audit-action "Reject All" actually works on the patient portal, not just the marketing site.
 
-**Doesn't cover.** ObservePoint is not a Business Associate; it does not handle PHI itself. Customers run audits without exposing PHI to the platform — the scanner sees URLs and tag payloads, not patient data. PII scanning masks raw values in output. For the litigation-defense pattern around HIPAA-tracking-pixel claims specifically, see `references/privacy-litigation-defense.md`.
+**Doesn't cover.** ObservePoint is not a Business Associate; it does not handle PHI itself. Customers run audits without exposing PHI to the platform — the scanner sees URLs and tag payloads, not patient data. PII scanning masks raw values in output. For the litigation-defense pattern around HIPAA-tracking-pixel claims specifically, see the **litigation-defense** skill.
 
 ### GLBA (United States — financial services)
 
@@ -1027,4 +1027,4 @@ Full template lives in `references/consulting-deliverables.md`.
 
 ---
 
-*Last verified: 2026-06-03*
+*Last verified: 2026-06-04*

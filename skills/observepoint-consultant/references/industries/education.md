@@ -14,9 +14,9 @@ The two share FERPA and accessibility exposure; everything else diverges. Pin do
 
 The regulatory stack on a K-12 property, in layers:
 
-- **FERPA** protects student education records — identifiable student data cannot flow to third parties without consent. A tracking pixel on a student portal that ships an identifiable student value to an ad vendor is the FERPA fact pattern. See `references/privacy-and-compliance.md` → FERPA.
-- **State student-data-privacy laws (SOPIPA-style).** 30+ states (California's SOPIPA being the model) bar edtech vendors from using student data for advertising, building student profiles, or selling student data. See `references/privacy-and-compliance.md` → State student data privacy laws.
-- **COPPA on under-13s.** Verifiable parental consent before collecting personal information from children under 13, and no behavioral advertising to them — COPPA 2.0 (phasing through 2026) sweeps persistent identifiers into "personal information." See `references/privacy-and-compliance.md` → COPPA.
+- **FERPA** protects student education records — identifiable student data cannot flow to third parties without consent. A tracking pixel on a student portal that ships an identifiable student value to an ad vendor is the FERPA fact pattern. See the **regulation** skill, FERPA.
+- **State student-data-privacy laws (SOPIPA-style).** 30+ states (California's SOPIPA being the model) bar edtech vendors from using student data for advertising, building student profiles, or selling student data. See the **regulation** skill, State student data privacy laws.
+- **COPPA on under-13s.** Verifiable parental consent before collecting personal information from children under 13, and no behavioral advertising to them — COPPA 2.0 (phasing through 2026) sweeps persistent identifiers into "personal information." See the **regulation** skill, COPPA.
 - **Edtech vendor management** is the operational core: the district's exposure is the sum of every tool it has approved, so the vendor inventory *is* the compliance posture.
 
 **Rule example — no advertising tracker fires on student-portal / learning URLs.**
@@ -35,9 +35,9 @@ Note **schoolyear-driven traffic**: K-12 properties spike at back-to-school and 
 
 The regulatory and structural picture for a university, in layers:
 
-- **FERPA** applies the same as K-12 — the logged-in student experience (registration, grades, financial aid) is education records, and tracking on those pages is the exposure. See `references/privacy-and-compliance.md` → FERPA.
-- **AADC on under-18 prospective and incoming students.** Marketing and admissions pages are accessed by minors researching colleges, which pulls the California Age-Appropriate Design Code (where in force — verify the current injunction status) onto the prospect-facing surface. See `references/privacy-and-compliance.md` → California AADC.
-- **DOJ Title II accessibility actions (active in 2026).** The 2024 DOJ ADA Title II rule sets WCAG 2.1 AA for public university web content, and enforcement against universities is active through 2026. Course catalogs, application flows, and the logged-in student experience are the high-traffic templates that must conform. The accessibility audit motion is in `references/privacy-and-compliance.md` → Accessibility (WCAG 2.1 AA).
+- **FERPA** applies the same as K-12 — the logged-in student experience (registration, grades, financial aid) is education records, and tracking on those pages is the exposure. See the **regulation** skill, FERPA.
+- **AADC on under-18 prospective and incoming students.** Marketing and admissions pages are accessed by minors researching colleges, which pulls the California Age-Appropriate Design Code (where in force — verify the current injunction status) onto the prospect-facing surface. See the **regulation** skill, California AADC.
+- **DOJ Title II accessibility actions (active in 2026).** The 2024 DOJ ADA Title II rule sets WCAG 2.1 AA for public university web content, and enforcement against universities is active through 2026. Course catalogs, application flows, and the logged-in student experience are the high-traffic templates that must conform. The accessibility audit motion is in the **regulation** skill, Accessibility (WCAG 2.1 AA).
 - **The sprawling-subdomain problem.** A university is not one site — it is hundreds. Departments, athletics, research labs, and the alumni/donor office each run their own CMS instance and their own tags on their own subdomain, with no central container and no shared governance. This is the defining Higher Ed challenge: you cannot govern what you have not discovered.
 
 **Rule example — PII canary on a logged-in student journey.** Script a Journey through login → a student-record page, typing a known fake student name and ID, then run `scan_journey_pii` in canary mode — any downstream appearance of that literal in a tag, cookie, or request is a definitive FERPA leak with zero false positives.
@@ -59,10 +59,10 @@ EXPECT
 
 ## Regulations
 
-Education's exposure layers student-data privacy on top of accessibility. Do not restate effective dates or enforcement detail — those live in `references/privacy-and-compliance.md`:
+Education's exposure layers student-data privacy on top of accessibility. Do not restate effective dates or enforcement detail — those live in the **regulation** skill:
 
-- **FERPA**, **COPPA / COPPA 2.0**, **California AADC**, and **state student data privacy laws** — see the named sections in `references/privacy-and-compliance.md`.
-- **Accessibility (WCAG 2.1 AA / EAA)** — the Section 508 / DOJ Title II target is WCAG 2.1 AA; see `references/privacy-and-compliance.md` → Accessibility. A dedicated accessibility playbook is forthcoming; until then that section is the reference for how the accessibility scan and reports work.
+- **FERPA**, **COPPA / COPPA 2.0**, **California AADC**, and **state student data privacy laws** — see the named sections in the **regulation** skill.
+- **Accessibility (WCAG 2.1 AA / EAA)** — the Section 508 / DOJ Title II target is WCAG 2.1 AA; see the **regulation** skill, Accessibility. A dedicated accessibility playbook is forthcoming; until then that section is the reference for how the accessibility scan and reports work.
 
 ## Common vendor patterns
 
