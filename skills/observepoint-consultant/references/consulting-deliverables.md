@@ -339,7 +339,7 @@ of a program that's been accumulating evidence of its own worth.
 
 ## Accessibility Priority Report
 
-The triage artifact for an Accessibility Specialist drowning in findings. It ranks violations so the team knows what to fix first and produces the good-faith-remediation evidence trail counsel needs. See `references/accessibility-playbooks.md` for the prioritization model.
+The triage artifact for an Accessibility Specialist drowning in findings. It ranks violations so the team knows what to fix first and produces the good-faith-remediation evidence trail counsel needs. The **accessibility** skill carries the prioritization model.
 
 ### Skeleton
 
