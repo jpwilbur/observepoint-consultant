@@ -28,6 +28,7 @@ Step 1: classify the user's question. Then load the matching reference file(s) b
 | How to solve a specific pain (consent leak, broken tracking, tag drift, unauthorized pixel, accessibility gap, etc.) | `references/solution-playbooks.md` |
 | How to write a Rule, hit the REST API, or run a CI/CD audit gate | use the `api-strategy` skill (+ `references/integrations.md` for the connector side) |
 | Whether/how a privacy regulation applies and how ObservePoint evidences it (GDPR, CCPA, Colorado CPA, China PIPL, etc.) | use the `regulation` skill |
+| Whether the consent setup actually WORKS — does Reject-All block tracking, is Consent Mode v2 propagating, is the OneTrust / Cookiebot / TrustArc / Didomi banner behaving, are tags firing before consent | use the `consent-cmp` skill |
 | **Defending a litigation claim or demand letter** (CIPA, VPPA, BIPA, ECPA, state wiretap, healthcare-pixel class action, session-replay claim) | use the `litigation-defense` skill |
 | Industry-specific question (retail / financial services / healthcare / travel / media / government / education) | `references/industries/index.md`, then the specific industry file |
 | Program maturity, onboarding, "where do we go next" | use the `account-health` skill |
@@ -117,6 +118,7 @@ Sometimes the user asks for something ObservePoint cannot do, or describes a pro
 | the `api-strategy` skill | Writing Rules via REST, API endpoints, CI/CD audit gates, automation strategy; owns the deep REST reference, lives in its own specialist skill |
 | `references/mcp-tools.md` | MCP tool usage (now or in future) |
 | the `regulation` skill | Mapping comprehensive privacy regulations to coverage — covers 50+ regulations globally; lives in its own specialist skill |
+| the `consent-cmp` skill | Technical does-consent-work validation — Reject-All blocking, Consent Mode v2 propagation, CMP banner behavior, pre-consent firing; lives in its own specialist skill |
 | the `litigation-defense` skill | Tort-driven litigation defense — CIPA, VPPA, BIPA, ECPA, state wiretaps, healthcare-pixel claims, session-replay claims; lives in its own specialist skill |
 | `references/competitive-positioning.md` | Side-by-side competitor comparisons |
 | `references/verbiage-and-messaging.md` | Brand-correct phrasing and capitalization |
