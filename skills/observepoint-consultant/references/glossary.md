@@ -32,13 +32,13 @@ Alphabetical. Cross-references in **bold**.
 
 **Beacon.** A small image or request used to transmit tracking data. Often used synonymously with "pixel."
 
-**BIPA (Biometric Information Privacy Act).** Illinois law (2008) regulating collection, use, and storage of biometric identifiers. Notable for high statutory damages ($1K–5K per violation, no cap) and active class-action litigation. See `references/privacy-litigation-defense.md`.
+**BIPA (Biometric Information Privacy Act).** Illinois law (2008) regulating collection, use, and storage of biometric identifiers. Notable for high statutory damages ($1K–5K per violation, no cap) and active class-action litigation. See the `litigation-defense` skill.
 
 ## C
 
 **CCPA (California Consumer Privacy Act).** The California privacy law. **CPRA** is its amendment effective from 2023, expanding scope.
 
-**CIPA (California Invasion of Privacy Act).** Cal. Penal Code §§ 631, 632, 638.51. California's wiretap and pen-register statutes. Drives the dominant 2024-2026 tracking-pixel class-action wave (1,000+ filings annually) via the pen-register theory applied to session-replay vendors and chat-pixel handoffs. See `references/privacy-litigation-defense.md`.
+**CIPA (California Invasion of Privacy Act).** Cal. Penal Code §§ 631, 632, 638.51. California's wiretap and pen-register statutes. Drives the dominant 2024-2026 tracking-pixel class-action wave (1,000+ filings annually) via the pen-register theory applied to session-replay vendors and chat-pixel handoffs. See the `litigation-defense` skill.
 
 **Churn.** The loss of a customer at or before renewal. In the CSM context, the outcome the account-health and renewal motions exist to prevent. The leading churn signal in a web-governance program is a healthy operation with no executive sponsor to defend it at budget time. See `references/account-health-and-strategy.md`.
 
@@ -76,7 +76,7 @@ Alphabetical. Cross-references in **bold**.
 
 **EAA (European Accessibility Act).** EU directive extending accessibility obligations across member states. In force June 28 2025.
 
-**ECPA (Electronic Communications Privacy Act).** Federal U.S. law including the Wiretap Act (18 U.S.C. § 2511). Used in tracking-pixel litigation alongside state wiretap statutes and CIPA. See `references/privacy-litigation-defense.md`.
+**ECPA (Electronic Communications Privacy Act).** Federal U.S. law including the Wiretap Act (18 U.S.C. § 2511). Used in tracking-pixel litigation alongside state wiretap statutes and CIPA. See the `litigation-defense` skill.
 
 **EU AI Act.** European regulation governing artificial intelligence systems. Prohibited practices (Article 5) in force February 2 2025; Article 50 transparency obligations August 2 2026; high-risk AI obligations August 2 2027.
 
@@ -226,7 +226,7 @@ Alphabetical. Cross-references in **bold**.
 
 **VPAT (Voluntary Product Accessibility Template).** A standardized document a vendor publishes to report how its product conforms to accessibility standards (**Section 508**, **WCAG**, EN 301 549). Frequently requested in procurement, especially by public-sector buyers. See `references/accessibility-playbooks.md`.
 
-**VPPA (Video Privacy Protection Act).** 18 U.S.C. § 2710. Federal U.S. law originally enacted 1988 (post-Bork-nomination). Currently underlies a substantial pixel-litigation wave against sites with video content. Statutory damages up to $2,500/violation. See `references/privacy-litigation-defense.md`.
+**VPPA (Video Privacy Protection Act).** 18 U.S.C. § 2710. Federal U.S. law originally enacted 1988 (post-Bork-nomination). Currently underlies a substantial pixel-litigation wave against sites with video content. Statutory damages up to $2,500/violation. See the `litigation-defense` skill.
 
 ## W
 
@@ -236,7 +236,7 @@ Alphabetical. Cross-references in **bold**.
 
 **Web governance.** The category ObservePoint operates in. Continuous, automated validation that a website behaves correctly for analytics, privacy, accessibility, and operational quality. See `references/verbiage-and-messaging.md`.
 
-**Wiretap Act.** The federal Wiretap Act (18 U.S.C. § 2511), part of the **ECPA**. Prohibits unauthorized "interception" of electronic communications. State equivalents exist (CIPA, Massachusetts § 99, Pennsylvania § 5703, Florida § 934, Washington § 9.73). All used in tracking-pixel litigation. See `references/privacy-litigation-defense.md`.
+**Wiretap Act.** The federal Wiretap Act (18 U.S.C. § 2511), part of the **ECPA**. Prohibits unauthorized "interception" of electronic communications. State equivalents exist (CIPA, Massachusetts § 99, Pennsylvania § 5703, Florida § 934, Washington § 9.73). All used in tracking-pixel litigation. See the `litigation-defense` skill.
 
 ---
 

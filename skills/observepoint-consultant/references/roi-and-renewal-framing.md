@@ -50,7 +50,7 @@ Six categories. For each: **what to measure**, **how ObservePoint data evidences
 ### 4. Legal and fine-exposure reduction — privacy and CIPA defense readiness
 
 - **Measure:** the litigation and fine exposure retired by being able to prove reasonable controls and a change history — CIPA/wiretap, VPPA, BIPA, and healthcare-pixel theories all turn on what data left to which third party, and when.
-- **Evidence:** `scan_audit_pii` and `scan_journey_pii` produce the masked leak-path findings (what value matched which pattern, to which destination domain) without echoing the data; consent-state audits and `compare_consent_states` document whether opt-out actually blocks what it claims to. This is the evidence backbone described in `references/privacy-litigation-defense.md`.
+- **Evidence:** `scan_audit_pii` and `scan_journey_pii` produce the masked leak-path findings (what value matched which pattern, to which destination domain) without echoing the data; consent-state audits and `compare_consent_states` document whether opt-out actually blocks what it claims to. This is the evidence backbone described in the `litigation-defense` skill.
 - **Express it:** "When the demand letter arrives, we can show counsel exactly what fired, to whom, under which consent state, on which date — a documented control history instead of a frantic forensic reconstruction." The value is the difference between a defensible posture and a discovery scramble. (Frame the customer's exposure generically; never quote ObservePoint's price against it.)
 
 ### 5. Operational efficiency — audit automation versus manual QA hours
@@ -108,7 +108,7 @@ The sharpest renewal framing is the honest one: what regresses, and what risk re
 - **Monitoring goes dark.** Scheduled audits stop. There is no longer anything checking whether tags fire, whether the conversion pixel works, whether a new vendor appeared. The site keeps changing; nothing watches it.
 - **Drift returns undetected.** The slow accretion `find_anomalies` and `find_first_observed` were catching — the silently-added vendor, the gradually-degrading tag coverage — goes back to surfacing only when someone happens to notice. Time-to-detect resets from hours to "whenever."
 - **Compliance evidence stops accruing.** The dated, scheduled run history that made the evidence pack a routine export stops growing. When the next audit or regulator inquiry comes, there's a gap in the record exactly where the lapse was — and a gap in a control history is its own kind of exposure.
-- **Consent verification stops.** `compare_consent_states` is no longer confirming Reject All blocks what it should. A consent regression — the kind that drives CIPA and wiretap claims per `references/privacy-litigation-defense.md` — can ship and sit live, undetected.
+- **Consent verification stops.** `compare_consent_states` is no longer confirming Reject All blocks what it should. A consent regression — the kind that drives CIPA and wiretap claims per the `litigation-defense` skill — can ship and sit live, undetected.
 - **The next incident is found by the CFO, not the alert.** This is the whole framing in one line. With the program running, a broken purchase event is a same-day alert to an owner. Without it, it's a discrepancy the CFO spots in the quarter-end numbers — after weeks of corrupted data and wasted spend, and after the chance to catch it cheaply has passed.
 
 The value of renewing is the inverse of this list. Frame the lapse as the regression it is, in the customer's own terms, never as a pricing threat.

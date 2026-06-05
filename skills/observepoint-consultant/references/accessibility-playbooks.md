@@ -159,7 +159,7 @@ Short notes on where accessibility pressure concentrates per vertical. Each cros
 
 ## Accessibility lawsuit defense
 
-This section parallels the tort-defense pattern in `references/privacy-litigation-defense.md`. When a customer receives an ADA Title III demand letter or class complaint, ObservePoint produces the technical record of what their accessibility posture was and how it has moved over time. As with the privacy file: this is technical evidence, not legal advice, and automated scanning alone does not prove conformance. Coordinate with the customer's accessibility and legal experts.
+This section parallels the tort-defense pattern in the `litigation-defense` skill. When a customer receives an ADA Title III demand letter or class complaint, ObservePoint produces the technical record of what their accessibility posture was and how it has moved over time. As with the privacy file: this is technical evidence, not legal advice, and automated scanning alone does not prove conformance. Coordinate with the customer's accessibility and legal experts.
 
 **What's typically alleged.** The plaintiff (often a serial filer, frequently a screen-reader user) states they could not use the site to complete a task and that the site fails WCAG 2.1 AA. Demand letters tend to be templated and short on specifics; the leverage is the cost asymmetry — settling is cheaper than litigating. A demonstrable, ongoing remediation program changes that calculus.
 
@@ -170,7 +170,7 @@ This section parallels the tort-defense pattern in `references/privacy-litigatio
 - **Current state.** The most recent scan results for the pages named in the complaint — what passes now, and the manual-testing record that backs up the automated scan.
 - **Process evidence.** The audit definitions, the schedule cadence, and the alert routing — proof that accessibility checking is a regular, defined process rather than an after-the-fact scramble. This mirrors the "reasonable practices" narrative in the privacy-litigation file.
 
-**Assemble the pack as** (parallel to `references/privacy-litigation-defense.md` → producing the evidence pack):
+**Assemble the pack as** (parallel to the `litigation-defense` skill → producing the evidence pack):
 
 1. An executive summary: what was scanned, the conformance trajectory, what was remediated, current state.
 2. A trajectory appendix: run-over-run critical/serious counts on the named pages, with dates (export via `mcp__ObservePoint__export_report`).

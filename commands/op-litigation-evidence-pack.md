@@ -14,7 +14,7 @@ Two values from $ARGUMENTS: the statute or theory at issue (e.g. CIPA, VPPA, wir
 
 This produces technical evidence, not legal advice — coordinate with the customer's counsel.
 
-1. Load `skills/observepoint-consultant/references/privacy-litigation-defense.md`.
+1. Load the **litigation-defense** skill and its deep privacy-litigation-defense reference.
 2. Locate the section for the supplied statute or theory and identify the relevant evidentiary signals (e.g. pen-register / wiretap data flows, video-pixel detection, PHI-bearing URLs).
 3. Walk through assembling the technical evidence pack for the domain: which audits and Rules to run, which Privacy Reports and PII scans to export, and how to preserve audit history as a defensible timeline.
 4. Return an ordered evidence-assembly plan, framing every artifact as technical findings to hand to counsel — never as a legal conclusion or outcome promise.

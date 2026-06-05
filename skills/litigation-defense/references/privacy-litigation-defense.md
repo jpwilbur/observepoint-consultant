@@ -217,6 +217,6 @@ The package goes to counsel. ObservePoint produces the technical record; counsel
 
 ---
 
-*Last verified: 2026-06-03*
+*Last verified: 2026-06-04*
 
 *This file is technical evidence guidance, not legal advice. The statutes covered drive active class-action waves with substantial damages exposure; coordinate with counsel before relying on any audit data in litigation. "ObservePoint" and product names referenced here are trademarks of ObservePoint, LLC.*
