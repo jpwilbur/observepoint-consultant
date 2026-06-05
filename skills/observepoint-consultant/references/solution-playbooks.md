@@ -281,7 +281,7 @@ EXPECT
 
 ## Litigation defense
 
-When a customer has received a demand letter, class-action filing, or discovery request, these playbooks apply. See `references/privacy-litigation-defense.md` for the per-statute deep treatment.
+When a customer has received a demand letter, class-action filing, or discovery request, these playbooks apply. See the `litigation-defense` skill for the per-statute deep treatment.
 
 ### "Defend a CIPA / VPPA / BIPA / wiretap claim"
 

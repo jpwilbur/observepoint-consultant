@@ -28,7 +28,7 @@ Step 1: classify the user's question. Then load the matching reference file(s) b
 | How to solve a specific pain (consent leak, broken tracking, tag drift, unauthorized pixel, accessibility gap, etc.) | `references/solution-playbooks.md` |
 | How to write a Rule, hit the API, or run a CI/CD audit | `references/api-reference.md` (+ `integrations.md`) |
 | Whether/how a privacy regulation applies and how ObservePoint evidences it (GDPR, CCPA, Colorado CPA, China PIPL, etc.) | use the `regulation` skill |
-| **Defending a litigation claim or demand letter** (CIPA, VPPA, BIPA, ECPA, state wiretap, healthcare-pixel class action, session-replay claim) | `references/privacy-litigation-defense.md` |
+| **Defending a litigation claim or demand letter** (CIPA, VPPA, BIPA, ECPA, state wiretap, healthcare-pixel class action, session-replay claim) | use the `litigation-defense` skill |
 | Industry-specific question (retail / financial services / healthcare / travel / media / government / education) | `references/industries/index.md`, then the specific industry file |
 | Program maturity, onboarding, "where do we go next" | `references/lifecycle-and-maturity.md` |
 | Implementing or validating an adjacent MarTech platform (GA4, Adobe, GTM, server-side GTM, Tealium, Consent Mode v2, CAPI, CDP, attribution, Privacy Sandbox) | `references/martech-adjacency.md` |
@@ -117,7 +117,7 @@ Sometimes the user asks for something ObservePoint cannot do, or describes a pro
 | `references/api-reference.md` | Rules, API endpoints, CI/CD integration |
 | `references/mcp-tools.md` | MCP tool usage (now or in future) |
 | the `regulation` skill | Mapping comprehensive privacy regulations to coverage — covers 50+ regulations globally; lives in its own specialist skill |
-| `references/privacy-litigation-defense.md` | Tort-driven litigation defense — CIPA, VPPA, BIPA, ECPA, state wiretaps, healthcare-pixel claims, session-replay claims |
+| the `litigation-defense` skill | Tort-driven litigation defense — CIPA, VPPA, BIPA, ECPA, state wiretaps, healthcare-pixel claims, session-replay claims; lives in its own specialist skill |
 | `references/competitive-positioning.md` | Side-by-side competitor comparisons |
 | `references/verbiage-and-messaging.md` | Brand-correct phrasing and capitalization |
 | `references/limitations.md` | What ObservePoint cannot do, and the workaround |

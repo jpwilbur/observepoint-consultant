@@ -305,7 +305,7 @@ Detect PII / personal data being collected on the site. Both wrappers MASK raw v
 | `scan_audit_pii` | Site-wide PII scan over an audit run. Checks tag-variable values, cookie values, request query strings. Uses three detection modes: REGEX (email + your `customRegex`; numeric patterns off by default to avoid false positives on analytics IDs), OP-STATIC-IP (visitor IP equals ObservePoint's egress IP), and severity weighting by destination (first-party data layer = governance smell; same value to a third-party domain = active leak). |
 | `scan_journey_pii` | Per-journey-run PII scan. Adds a CANARY mode on top of the audit version: any literal typed via the journey's `input` / `maskedinput` steps appearing downstream in tags/cookies/requests/POST-bodies = definitive collection, zero false positives. The strongest signal. |
 
-Healthcare-tracking and CIPA-style litigation defense both lean heavily on these. See `references/privacy-litigation-defense.md` (when present) for the evidence patterns.
+Healthcare-tracking and CIPA-style litigation defense both lean heavily on these. See the `litigation-defense` skill for the evidence patterns.
 
 ### Cross-audit comparison
 
