@@ -86,6 +86,8 @@ Use these to understand the customer's environment before doing anything.
 | `get_account` | Need account-level info, plan tier, usage caps |
 | `list_users` | Show who has access |
 | `get_usage_overview`, `get_usage_summary`, `get_usage_trends` | Capacity planning, budget conversations |
+| `whoami` | Confirm which account/identity the session is currently acting as |
+| `find_account`, `login_as_account` | Admin/CSM only: locate a customer account and impersonate into it to run a diagnostic on their behalf (pair with `stop_impersonation` to return) |
 
 ### Audits — the bread and butter
 
