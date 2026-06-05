@@ -100,7 +100,13 @@ then run the two commands above again.
 
 ### Cowork
 
-Cowork shares the same install state as the Claude Code terminal — both read `~/.claude/plugins/` and `enabledPlugins` from `~/.claude/settings.json`. There is **no separate install/update step for Cowork**, and the `/plugin` command isn't available there. Install or update **once from the Claude Code terminal** (or the Desktop **Code** tab) using the commands above, and Cowork will pick up the same version on its next session.
+**Cowork is a separate distribution channel from the terminal — it does _not_ read `~/.claude/plugins/`.** Cowork tracks plugins through an Anthropic **cloud-hosted snapshot** of this repo, which only re-syncs when that cloud marketplace record is refreshed. As a result, updating in the terminal (above) has **no effect** on Cowork, and Cowork can stay frozen on an old version with the Update button greyed out — a known limitation for personal / third-party GitHub marketplaces in Cowork.
+
+To get the latest version into Cowork, in order of preference:
+
+1. **Org marketplace (recommended).** An organization owner adds this repo under **Claude → Organization settings → Plugins** and turns on **"Sync automatically."** New pushes to `main` then propagate to every member's Cowork on their next session (up to ~30 min) — no per-person action and no greyed button. See [Manage Cowork plugins for your organization](https://support.claude.com/en/articles/13837433-manage-claude-cowork-plugins-for-your-organization).
+2. **Per-user refresh.** In Cowork, **remove** the `observepoint-consultant` marketplace and **re-add** it to force a fresh snapshot. This is per-person and may need repeating on each release.
+3. **Use the Desktop "Code" tab or terminal** for this plugin, where the update path above works reliably.
 
 ### Optional: org-wide auto-update (admin)
 
