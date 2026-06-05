@@ -6,29 +6,31 @@ Type `/observepoint-consultant` in Claude Code (or any Claude Code-compatible cl
 
 ## What it knows
 
-The skill ships **26 reference files** inside one focused `SKILL.md` dispatcher. Topic coverage:
+The plugin ships as **a hub skill plus 14 focused specialists**. The `observepoint-consultant` hub is a thin router and shared foundation — when a question is squarely in one specialist's lane it hands off to that skill; when a question spans domains or sits above any single lane, the hub answers it directly. Each specialist owns its own deep reference; the shared foundation (~11 files: products, MCP tools, verbiage, limitations, glossary, competitive positioning, personas, consulting deliverables, solution playbooks, integrations, and the industries directory) lives under the hub and every specialist links back to it.
 
-| Reference | What it covers |
-|---|---|
-| `products-and-modules.md` | Web Audits, Journeys, Page Insights, Touchpoints / JourneyStream / Prism, Tag & Cookie Debugger, HAR Analyzer, LiveConnect, Rules engine, Alerts, Reports |
-| `solution-playbooks.md` | Recipes for analytics validation, consent enforcement, accessibility, performance, CMP-specific work, campaign launches, healthcare compliance, litigation defense, state-specific monitoring, AI-Act disclosure, multi-jurisdiction programs |
-| `api-reference.md` | v3 REST API endpoints, auth, recipes for triggering audits, creating Rules, processing HARs, and wiring CI/CD gates |
-| `mcp-tools.md` | 130+ MCP wrapper catalog organized by family (PII scanning, consent-state comparison, anomaly detection, analysis primitives, etc.) with the safety gates documented |
-| `privacy-and-compliance.md` | **Comprehensive global privacy coverage** — 50+ regulations across all 19 U.S. comprehensive state laws (CCPA, CPA, CTDPA, VCDPA, UCPA, TDPSA, OCPA, MCDPA, DPDPA, …), sectoral (HIPAA, GLBA, COPPA, FERPA), U.S. health-data (Washington MHMDA, Nevada SB 370), U.S. AI (Colorado AI Act, Texas RAIGA, NYC LL 144), U.S. kids (CA AADC, KOSA), EU (GDPR, ePrivacy, EU AI Act, DSA, DMA, Data Act, NIS2), UK (UK GDPR, DPA 2018, PECR), Latin America, APAC (China PIPL, Japan APPI, Singapore PDPA, Korea PIPA, India DPDP, Australia, NZ), Canada (PIPEDA, Quebec Law 25), Middle East & Africa, browser signals (GPC, UOOM, TCF, GPP, Consent Mode v2, Apple ATT, Privacy Sandbox), voluntary standards (PCI DSS 4.0, NIST Privacy Framework, ISO/IEC 27701), accessibility (WCAG / EAA) |
-| `privacy-litigation-defense.md` | **Tort / litigation-driven privacy claims** — CIPA pen-register theory, VPPA video-tracking, BIPA biometric, ECPA / federal Wiretap, state wiretap statutes (MA, PA, FL, WA), healthcare-tracking pixel claims, session-replay claims. Evidence-pack assembly for counsel. |
-| `competitive-positioning.md` | Honest, public-source-only comparisons against DataTrue, Tag Inspector, Tealium iQ Validate, OneTrust scanning, Crownpeak, Trackingplan |
-| `verbiage-and-messaging.md` | Brand-correct phrasing, capitalization, do/don't language |
-| `limitations.md` | What ObservePoint cannot do, with the recommended workaround for each |
-| `integrations.md` | TMS, CMP, ticketing, comms, identity, CI/CD, BI plug-ins |
-| `consulting-deliverables.md` | Hand-back templates: tag audit report, governance policy, RACI, release-gate checklist, evidence pack, QBR |
-| `personas.md` | Tone and content tuning for common ObservePoint personas (incl. CSM and Accessibility Specialist) |
-| `glossary.md` | Term reference (~80 terms covering products, regulations, litigation theories, signals, frameworks, accessibility, ROI) |
-| `industries/` | Directory of **7 vertical playbooks** (retail / e-commerce, financial services & insurance, healthcare & life sciences, travel & hospitality, media & publishing, government & public sector, education) plus an `index.md` router — each maps the vertical's pains, regulations, and seasonal moments to ObservePoint coverage |
-| `lifecycle-and-maturity.md` | Program maturity model and onboarding starter — "where do we go next" sequencing (starter content; fuller treatment lands in v0.5.0) |
-| `martech-adjacency.md` | Adjacent MarTech platforms ObservePoint validates: GA4, Adobe Analytics, GTM (client + server-side), Adobe Launch, Tealium iQ, Consent Mode v2, Meta CAPI / Conversions API ecosystem, CDPs, attribution, Privacy Sandbox — what ObservePoint can prove and what it can't |
-| `account-health-and-strategy.md` | Account diagnostics, common underuse patterns, and biggest-bang-for-buck next actions — "what should I focus on in my account" |
-| `roi-and-renewal-framing.md` | Quantified value framing and renewal narrative for a budget owner (no pricing) |
-| `accessibility-playbooks.md` | Accessibility prioritization, the ADA / Section 508 / WCAG / EAA landscape, and lawsuit-defense evidence |
+## Skills
+
+All 15 skills auto-trigger from their `description` whenever a question matches their lane — you usually don't need to invoke one by name. You can also call any of them explicitly with the slash command shown.
+
+| Skill | Invoke | What it's for |
+|---|---|---|
+| **observepoint-consultant** (hub) | `/observepoint-consultant` | Router + general advisor + shared foundation. Answers cross-cutting questions and routes the rest to a specialist. |
+| regulation | `/observepoint-consultant:regulation` | Whether a privacy/marketing **law applies** to a site and how to evidence it — GDPR, CCPA/CPRA, the 19+ U.S. state laws, HIPAA, GLBA, China PIPL, and 30+ international regimes. |
+| litigation-defense | `/observepoint-consultant:litigation-defense` | A **demand letter or class action** under a tort/wiretap theory — CIPA, VPPA, BIPA, ECPA, state wiretap, healthcare-pixel, session-replay. Evidence packs for counsel. |
+| accessibility | `/observepoint-consultant:accessibility` | **Accessibility** law and prioritization — ADA Title II/III, Section 508, WCAG 2.1/2.2, EAA, highest-impact-fix sequencing, lawsuit-defense evidence. |
+| consent-cmp | `/observepoint-consultant:consent-cmp` | Whether the **consent banner / Consent Mode actually works** — does Reject-All block tracking, is Consent Mode v2 propagating, are tags firing pre-consent. |
+| account-config | `/observepoint-consultant:account-config` | How to **set up or structure the account** — audits, Tag & Variable Rules, consent categories, folders/labels, alerts, schedules, regulation→config blueprints. |
+| account-health | `/observepoint-consultant:account-health` | **What to focus on / program maturity / onboarding / "where do we go next."** |
+| roi | `/observepoint-consultant:roi` | **Value, ROI, or renewal** framing for a budget owner (no pricing). |
+| martech | `/observepoint-consultant:martech` | How an **adjacent MarTech platform is implemented** and what ObservePoint can see of it — GA4, Adobe, GTM, server-side GTM, Tealium, Consent Mode v2, CAPI, CDP, attribution, Privacy Sandbox. |
+| analytics-validation | `/observepoint-consultant:analytics-validation` | Whether the **analytics data is firing correctly** — GA4/Adobe events & variables, data-layer correctness, value integrity, duplicate/missing events, attribution-parameter survival. |
+| tags | `/observepoint-consultant:tags` | **What a tag/pixel is and whether it should be on a page** — vendor authorization, risk, classifying a tag inventory. |
+| journeys-testing | `/observepoint-consultant:journeys-testing` | Building, scripting, or **debugging a multi-step Journey** or funnel/login/form test — SPA Prevent Navigation, selector-evidence/journey-shape/watch-usage gates, LiveConnect, HAR Analyzer. |
+| reporting-charting | `/observepoint-consultant:reporting-charting` | Building a **saved report, grid report, dashboard, or chart** — entity types, report-schema column discovery, saved-report CRUD, the charting extension point. |
+| api-strategy | `/observepoint-consultant:api-strategy` | **REST or MCP automation** — writing Rules over the API, CI/CD audit gates, the deep REST reference, automation strategy. |
+| content-creation | `/observepoint-consultant:content-creation` | **Writing or improving external content** — a blog post, how-to guide, one-pager, thought-leadership piece, or feedback on a draft, in ObservePoint's voice. |
+
+The four adjacent-but-distinct skills that collide most often: **tags** asks *should this tag be here?* (presence & governance), **analytics-validation** asks *is this tag's data correct?* (data integrity), **consent-cmp** asks *does Reject-All actually block this tag?* (consent mechanics), and **martech** asks *how is this platform built and what can ObservePoint see of it?* (implementation).
 
 ## Slash commands
 
@@ -137,12 +139,12 @@ See [CHANGELOG.md](./CHANGELOG.md) for the release history.
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md). The easiest place to add value is in [skills/observepoint-consultant/references/](./skills/observepoint-consultant/references/) — each file is self-contained markdown.
+See [CONTRIBUTING.md](./CONTRIBUTING.md). The easiest place to add value is in a skill's `references/` directory — the shared foundation lives under [skills/observepoint-consultant/references/](./skills/observepoint-consultant/references/), and each specialist owns its deep reference under `skills/<specialist>/references/`. Each file is self-contained markdown.
 
 Especially welcome:
 
 - Refreshes when ObservePoint ships new features (update the relevant reference file and bump its `Last verified` date).
-- New playbooks in `solution-playbooks.md` for pains we haven't covered.
+- New playbooks in the hub's `solution-playbooks.md` for pains we haven't covered.
 - Real MCP tool documentation once the server reaches GA.
 
 ## Anthropic skill conventions

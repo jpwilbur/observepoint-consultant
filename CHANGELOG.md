@@ -4,6 +4,51 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] — 2026-06-05
+
+The "skill-breakout" release. v0.4.0 made the skill act like a consultant; v0.5.0 changes the *shape* of that consultant. The single mega-skill is split into a hybrid multi-skill plugin — a thin `observepoint-consultant` hub that routes (and answers cross-cutting questions itself) plus 14 flat, independently-triggered specialist skills, each owning its lane and its deep reference. Triggering gets sharper because each specialist advertises a narrow `description`, and answers get deeper because each specialist can carry more domain detail without bloating one dispatcher. The audience scope is unchanged — customer + internal-consulting / CSM, with **no** sales / pre-sales / prospect-research content.
+
+### Changed — architecture
+
+- **Hybrid hub + specialists.** The plugin is now a thin `observepoint-consultant` hub (router + persona contract + shared foundation) plus **14 flat, independently-triggered specialist skills**. The hub routes a question to the specialist whose lane it sits in, and answers cross-cutting or above-the-lane questions itself. **Non-breaking:** the hub keeps the `observepoint-consultant` name and entry point, so existing `/observepoint-consultant …` invocations and auto-triggering continue to work unchanged.
+- **Shared foundation lives under the hub.** The ~11 shared reference files (products, MCP tools, verbiage, limitations, glossary, competitive positioning, personas, consulting deliverables, solution playbooks, integrations, industries) stay under the meta-skill; every specialist cross-links them. Each specialist owns its own deep reference under `skills/<specialist>/references/`.
+
+### Added — specialists
+
+Fourteen specialist skills under `skills/`, each with its own `SKILL.md`, narrow trigger `description`, and references:
+
+- **Net-new** (no prior content): `consent-cmp`, `account-config`, `analytics-validation`, `tags`, `journeys-testing`, `reporting-charting`, `content-creation`.
+- **Migrated** from existing v0.4.0 references: `regulation` (privacy-and-compliance), `litigation-defense` (privacy-litigation-defense), `accessibility` (accessibility-playbooks), `account-health` (account-health-and-strategy + lifecycle-and-maturity), `roi` (roi-and-renewal-framing), `martech` (martech-adjacency), `api-strategy` (api-reference).
+
+### Added — bundled scripts
+
+Three TDD'd helper scripts, each owned by its specialist:
+
+- **`skills/tags/scripts/classify_tag_inventory.py`** — classifies a tag inventory by vendor / purpose / risk for the tags specialist.
+- **`skills/account-config/scripts/config_blueprint.py`** — emits a regulation→config blueprint (audits, Rules, consent categories) for account-config.
+- **`skills/roi/scripts/roi_model.py`** — a value-model helper for the roi specialist (no pricing).
+
+### Added — new capability surface
+
+- **Tag intelligence** (`tags`) as a live judgment layer over `list_tags` / `get_tag_inventory` — identity, classification, and the "should this tag be here?" call, distinct from data-correctness and consent mechanics.
+- **Account-config blueprints** (`account-config`) — turning a regulation or program goal into a concrete account structure (audits, Rules, consent categories, folders/labels, alerts, schedules).
+- **Content creation** (`content-creation`) as an output skill — produces external content (blog post, how-to, one-pager, thought-leadership) in ObservePoint's voice, pairing with the `humanizer` skill on the final pass.
+- **Reporting & charting** (`reporting-charting`) — saved-report CRUD and report-schema column discovery, with charting documented as an extension point pending MCP support.
+
+### Changed — standards
+
+- **`scripts/quick_validate.py` reworked to be multi-skill-aware** — discovers every `skills/*/SKILL.md`, validates frontmatter and body-size ceilings across all skills, checks `Last verified` footers on every reference in every skill, and resolves cross-references against a dual base (the owning skill's `references/` **or** the shared meta-skill `references/`).
+- **Evals grew to 39** (`evals/evals.json`) — the original 21 plus a per-specialist triggering eval for each of the 14 specialists and an adjacent-quartet disambiguation set (tags / analytics-validation / consent-cmp / martech). The original evals' `must_include` expectations were refreshed to name the **skill** that now owns each answer instead of the moved reference filename.
+- **`references/mcp-tools.md` gained the admin / CSM tools** — `find_account`, `login_as_account`, `whoami`, `stop_impersonation`.
+- **New test** — `scripts/test_quick_validate_multiskill.py` covers the multi-skill discovery and dual-base cross-reference resolution; `scripts/test_quick_validate.py` continues to cover the single-skill checks.
+
+### Notes
+
+- **v0.6.0 follow-ups:** deepen `account-health`'s lifecycle / maturity content (customer-size onboarding timelines, internal program material); an `mcp-tools.md` catalog refresh — newer live tools surfaced during this build (`stop_journey`, `confirm_account_plan`, `find_item`, and others) are not yet catalogued; and general tooling polish.
+- The shared foundation lives under the meta skill; specialists cross-link it rather than duplicating it.
+- Audience scope is unchanged: customer + internal-consulting / CSM. There is intentionally **no** sales, pre-sales, or prospect-research content.
+- File totals: 15 `SKILL.md` files (hub + 14 specialists), ~11 shared-foundation references under the hub plus each specialist's own deep reference, 3 bundled scripts, 39 evals. Every `SKILL.md` body remains well under Anthropic's 500-line ceiling.
+
 ## [0.4.0] — 2026-06-04
 
 The "consultant, not just encyclopedia" release. v0.3.0 made the skill know everything about website privacy; v0.4.0 makes it act like a seasoned ObservePoint consultant — talking the language of a specific industry, meeting an account where it is in its lifecycle, validating the adjacent MarTech a customer actually runs, and framing value for the person who signs the renewal. It also brings the repo up to Anthropic's full plugin-standards bar: evals, a CI validation gate, and slash commands. The audience scope is unchanged — customer + internal-consulting/CSM, with **no** sales / pre-sales / prospect-research content.
@@ -127,6 +172,7 @@ Initial release.
 - The ObservePoint MCP server is not yet generally available. The skill detects `mcp__ObservePoint__*` tools at runtime and prefers them when present; otherwise it falls back to REST API recipes documented in `references/api-reference.md`. The skill never invents MCP tool names.
 - This is a community-built, MIT-licensed plugin. It is not an official ObservePoint product.
 
+[0.5.0]: https://github.com/jpwilbur/observepoint-consultant/releases/tag/v0.5.0
 [0.4.0]: https://github.com/jpwilbur/observepoint-consultant/releases/tag/v0.4.0
 [0.3.0]: https://github.com/jpwilbur/observepoint-consultant/releases/tag/v0.3.0
 [0.2.0]: https://github.com/jpwilbur/observepoint-consultant/releases/tag/v0.2.0
