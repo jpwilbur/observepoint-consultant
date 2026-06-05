@@ -42,6 +42,7 @@ Step 1: classify the user's question. Then load the matching reference file(s) b
 | Accessibility prioritization, ADA / Section 508 / EAA, "highest-impact fix" | use the `accessibility` skill |
 | How ObservePoint compares to a competitor | `references/competitive-positioning.md` |
 | **Building a saved report, grid report, dashboard, or chart in ObservePoint** — discovering report columns, querying grid entities (pages, cookies, tags, accessibility issues, etc.), assembling reporting artifacts; charting is a new ObservePoint feature documented as an extension point pending MCP support | use the `reporting-charting` skill |
+| **Writing or improving external content** in the web-governance / ObservePoint domain — a blog post, how-to guide, one-pager, or thought-leadership piece, or feedback on a draft; produces the artifact in ObservePoint's voice and pairs with the `humanizer` skill | use the `content-creation` skill |
 | Building a deliverable (tag-audit report, governance policy, RACI, release-gate checklist) | `references/consulting-deliverables.md` |
 | Whether ObservePoint can do `<X>` where X may not exist | `references/limitations.md` FIRST, then `products-and-modules.md` |
 | "Use the ObservePoint MCP to do `<X>`" | `references/mcp-tools.md` (see MCP section below) |
@@ -141,6 +142,7 @@ Sometimes the user asks for something ObservePoint cannot do, or describes a pro
 | the `account-health` skill | Account diagnostics, underuse patterns, biggest-bang-for-buck, plus the maturity model, onboarding workflow, and CSM cadences; lives in its own specialist skill |
 | the `roi` skill | ROI framing + renewal narratives for budget owners, no pricing; lives in its own specialist skill |
 | the `reporting-charting` skill | Building saved reports, grid reports, dashboards, and charts — grid entity types, `get_report_schema` column discovery, `query_report`, saved-report CRUD, and the charting extension point (pending MCP support); lives in its own specialist skill |
+| the `content-creation` skill | Writing or improving web-governance / ObservePoint content — blog posts, how-to guides, one-pagers, thought-leadership, and draft feedback — in ObservePoint's voice, grounded in the specialist skills, paired with `humanizer`; an OUTPUT skill, lives in its own specialist skill |
 | the `accessibility` skill | Accessibility prioritization, legal landscape, lawsuit-defense evidence — ADA Title III/II, Section 508, WCAG 2.1/2.2, EAA; lives in its own specialist skill |
 
 ## Status & disclaimer
