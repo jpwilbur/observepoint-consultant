@@ -1,6 +1,6 @@
 # Industry playbooks — index
 
-This directory holds the per-industry playbooks: one file per vertical, each carrying the regulatory exposure, vendor patterns, Rule examples, pitfalls, and CSM cadence that are specific to that industry. They sit on top of the cross-cutting references (the **regulation** skill, `references/solution-playbooks.md`, `references/products-and-modules.md`) and specialize the general advice for a named vertical.
+This directory holds the per-industry playbooks: one file per vertical, each carrying the regulatory exposure, vendor patterns, Rule examples, pitfalls, and CSM cadence that are specific to that industry. They sit on top of the cross-cutting references (the **privacy-compliance** skill, `references/solution-playbooks.md`, `references/products-and-modules.md`) and specialize the general advice for a named vertical.
 
 **How the consultant uses these.** When a user names or implies their vertical — "we're a hospital," "we run a state benefits portal," "our checkout funnel," "we're a university" — load the matching industry file and lead with its specifics rather than the generic playbook. Each file follows the same shape: industry context → top use cases → regulations → common vendor patterns → industry-specific Rule examples → common pitfalls → CSM cadence. If a user spans two verticals (a retailer with a video catalog, a health system with a marketing site), load both and reconcile.
 

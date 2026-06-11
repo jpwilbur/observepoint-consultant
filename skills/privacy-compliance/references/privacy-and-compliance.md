@@ -1027,4 +1027,21 @@ Full template lives in `references/consulting-deliverables.md`.
 
 ---
 
+## Workflow: compliance quick-check for a URL
+
+Use this workflow when the user provides a URL and asks which privacy regulations apply and whether ObservePoint already evidences readiness.
+
+1. **Infer jurisdiction.** From the domain TLD, any country/region path signals, and the user's stated operating footprint, identify the likely applicable jurisdictions (e.g., `.de` → GDPR + TTDSG; `.com` with US traffic → CCPA/CPRA + relevant U.S. state laws; healthcare content → HIPAA overlay).
+2. **Map regulations to ObservePoint coverage.** For each applicable regulation, name the audit setup, Rule, and report that produces the compliance evidence (consult the per-regulation entries in this file and the coverage matrix above).
+3. **Look up existing audits.** If `mcp__ObservePoint__*` tools are present in the session, call `mcp__ObservePoint__list_audits` filtered by the domain extracted from the URL. Do not create new audits without explicit user confirmation.
+4. **Pull the latest run.** For any audit found, call `mcp__ObservePoint__get_audit_runs` to retrieve the most recent completed run.
+5. **Check consent behavior.** Call `mcp__ObservePoint__compare_consent_states` with `leftState="default"` and `rightState="opt-out"` (and separately `rightState="gpc"` if the jurisdiction mandates GPC) to surface the consent-leak delta.
+6. **Return a per-regulation readiness summary.** For each applicable regulation: what applies, what ObservePoint already covers based on the run data, and the gaps to close (missing audit variants, Rules not yet attached, reports not yet scheduled).
+
+### If the ObservePoint MCP server is not connected
+
+Do not fabricate audit results. Explain that the live lookup requires the MCP server, then provide the knowledge-only mapping: which regulations apply to the URL based on its jurisdiction signals, and the ObservePoint audit setup that would prove compliance for each. Cite the regulation entries in this file.
+
+---
+
 *Last verified: 2026-06-04*

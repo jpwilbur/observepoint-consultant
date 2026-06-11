@@ -135,7 +135,7 @@ Cross-reference the stage diagnosis in `references/lifecycle-and-maturity.md`, t
 - *Biggest bang:* the move toward an executive sponsor. The lifecycle file flags sponsor absence as the leading renewal risk — tie the program's output to a metric an executive owns.
 
 **Fly (governance program, executive-owned, continuously improving) — keep coverage current, don't let it age out.**
-- Run a recurring coverage review against the current risk landscape — new regulations (the **regulation** skill), new vendor categories, new properties.
+- Run a recurring coverage review against the current risk landscape — new regulations (the **privacy-compliance** skill), new vendor categories, new properties.
 - Keep `get_inventory` rolling up cleanly; organize new properties into the existing folder/label scheme on day one (underuse pattern #1 in reverse — stay organized).
 - Confirm the executive sponsor is current and engaged; re-recruit on any leadership change.
 - Keep the Rule library growing with the threat landscape rather than frozen.

@@ -164,7 +164,7 @@ This skill proves the data is correct. It defers in three directions:
 
 - **`martech`** — *how the platform is set up*. GA4's event model, Adobe's Web SDK vs AppMeasurement transport, the dataLayer→tag handoff architecture, server-side GTM, the Conversions API ecosystem. martech describes the build; this skill validates the data the build produces. The can't-see line is martech's too: anything server-side (Measurement Protocol, sGTM's server→vendor send, CAPI's server leg) is invisible to ObservePoint — validate the client-side hit and pair with server logs.
 - **`tags`** — *what tags exist and whether they belong*. Tag identity, the analytics-vs-advertising-vs-social classification, risk tier, the should-it-be-here judgment. tags says the `purchase` tag belongs on the confirmation page; this skill proves the `purchase` data it sends is sound.
-- **`consent-cmp`** — *consent wiring*. Whether Reject-All actually suppresses the analytics hit, whether Consent Mode v2 is propagating, whether the banner behaves. This skill validates the hit's payload; consent-cmp validates whether the hit should have fired at all under the current consent state.
+- **`privacy-compliance`** — *consent wiring and regulation*. Whether Reject-All actually suppresses the analytics hit, whether Consent Mode v2 is propagating, whether the banner behaves, and what the law requires. This skill validates the hit's payload; privacy-compliance validates whether the hit should have fired at all under the current consent state.
 
 For the end-to-end recipes — the broken purchase event, events firing twice, validating every release — see the shared `references/solution-playbooks.md` → "Analytics validation — events fire correctly."
 

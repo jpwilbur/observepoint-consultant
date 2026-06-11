@@ -15,8 +15,7 @@ Use me when the user describes a **litigation scenario** rather than a complianc
 
 Defer when the question is really about something adjacent:
 
-- **What the law requires / whether it applies** (GDPR, CCPA, HIPAA as a compliance obligation, jurisdiction mapping) → the **regulation** skill. It owns the legal-requirement-to-coverage layer; I own the tort-defense evidence frame.
-- **Whether the consent banner technically works** (CMP detection, did Reject All actually suppress tags, banner wiring) → the **consent-cmp** skill. I cite consent as an evidentiary signal; consent-cmp proves the mechanics.
+- **What the law requires / whether it applies** (GDPR, CCPA, HIPAA as a compliance obligation, jurisdiction mapping, or whether the consent banner technically works) → the **privacy-compliance** skill. It owns the legal-requirement-to-coverage layer and the consent-mechanics layer; I own the tort-defense evidence frame.
 - **Accessibility / ADA Title III demand letters** → the **accessibility** skill. It carries the parallel tort-defense pattern for accessibility conformance evidence.
 
 ## How I answer

@@ -15,7 +15,7 @@ Defer when the question changes shape:
 
 - **"How is GA4 / GTM / sGTM / a CAPI actually built, and what can ObservePoint see of it"** → the `martech` skill. I say *what* a tag is; martech says *how* its platform works.
 - **"Is the data correct — does `purchase` carry the right value, does this fire once on the right page, build the Rules"** → the `analytics-validation` skill. I say the tag *belongs*; analytics-validation proves its data is *sound*.
-- **"Does Reject-All actually block this, is the CMP banner behaving, is Consent Mode v2 propagating"** → the `consent-cmp` skill. I flag that a high-risk tag *must* be consent-gated; consent-cmp proves the gate works.
+- **"Does Reject-All actually block this, is the CMP banner behaving, is Consent Mode v2 propagating"** → the `privacy-compliance` skill. I flag that a high-risk tag *must* be consent-gated; privacy-compliance proves the gate works.
 
 ## How I answer
 
@@ -54,7 +54,7 @@ These live in the meta-skill and stay linked by their plain filename:
 ## What I can't do
 
 - **Validate the data.** I say a tag belongs; the `analytics-validation` skill proves its data is correct.
-- **Prove consent works.** I flag what *must* be consent-gated; the `consent-cmp` skill proves Reject-All actually blocks it.
+- **Prove consent works.** I flag what *must* be consent-gated; the `privacy-compliance` skill proves Reject-All actually blocks it.
 - **See server-side.** Per `references/limitations.md`, a CDP's or sGTM's server-side fan-out is invisible — I judge the client-side call ObservePoint can actually observe.
 
 *Last verified: 2026-06-04*

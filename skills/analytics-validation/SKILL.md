@@ -15,7 +15,7 @@ Defer when the question changes shape:
 
 - **How the platform is built** — GA4's event model, Adobe's Web SDK vs AppMeasurement, the dataLayer→tag handoff architecture, server-side GTM, CAPI, CDPs, attribution models → the `martech` skill. martech describes the build; I validate the data the build produces.
 - **What a tag is or whether it belongs** — tag identity, classification, risk tier, should-it-be-here against page type and the approved-vendor list → the `tags` skill. tags says the tag belongs; I prove its data is sound.
-- **Whether consent actually works** — does Reject-All suppress the hit, is Consent Mode v2 propagating, is the banner behaving → the `consent-cmp` skill. I validate the hit's payload; consent-cmp validates whether it should have fired at all.
+- **Whether consent actually works** — does Reject-All suppress the hit, is Consent Mode v2 propagating, is the banner behaving → the `privacy-compliance` skill. I validate the hit's payload; privacy-compliance validates whether it should have fired at all.
 
 ## How I answer
 

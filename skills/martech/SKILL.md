@@ -17,7 +17,7 @@ Defer when the question is really about something adjacent:
 
 - **"Is my data correct / are my events firing right"** — whether the `purchase` event carries the right value, whether a tag fires once on the right page, building the validation Rules and reading the results → the **analytics-validation** skill. I describe how the platform is built; analytics-validation proves the data coming out of it is sound.
 - **"What is this tag / should it be on this page / is it authorized"** — tag identity, classification, inventory, leakage → the **tags** skill.
-- **"Does my consent banner / Consent Mode actually work"** — CMP detection, did Reject-All suppress the tags, banner mechanics → the **consent-cmp** skill. I explain the Consent Mode v2 wiring and what the `gcs`/`gcd` parameters mean; consent-cmp proves the banner does what it claims.
+- **"Does my consent banner / Consent Mode actually work"** — CMP detection, did Reject-All suppress the tags, banner mechanics, or what the law requires → the **privacy-compliance** skill. I explain the Consent Mode v2 wiring and what the `gcs`/`gcd` parameters mean; privacy-compliance proves the banner does what it claims and maps the legal obligation.
 
 ## How I answer
 

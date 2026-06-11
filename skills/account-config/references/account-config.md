@@ -1,6 +1,6 @@
 # Account configuration — how to set up and structure an ObservePoint account
 
-Load this when the user is asking *how to build the account*: how to organize audits into folders, what to name things, how to design the rule library and consent categories, where alerts should route, how often audits should run, and how to stand up the configuration that addresses a specific regulation or use case. This is the *set-up-and-structure* layer — distinct from *what the law requires* (the `regulation` skill), *what to focus on next* (the `account-health` skill), and *whether consent actually works* (the `consent-cmp` skill).
+Load this when the user is asking *how to build the account*: how to organize audits into folders, what to name things, how to design the rule library and consent categories, where alerts should route, how often audits should run, and how to stand up the configuration that addresses a specific regulation or use case. This is the *set-up-and-structure* layer — distinct from *what the law requires or whether consent works* (the `privacy-compliance` skill), *what to focus on next* (the `account-health` skill).
 
 The discipline that defines this skill: I describe the blueprint and the click-path; the human applies it. Every tool named below is a real wrapper verified in the shared `references/mcp-tools.md`, and the config is only as good as the evidence the audits then produce — a tidy folder tree with no Rules attached governs nothing.
 
@@ -116,13 +116,13 @@ Build the schedule with `build_schedule`, never a hand-written RRULE — it vali
 
 ## 7. Regulation → configuration mapping
 
-This is where a legal mandate becomes an account shape. The legal *why* lives in the `regulation` skill (which laws apply, what they require, how ObservePoint evidences them); this section is the *what to build*. `config_blueprint.py` (section 9) emits these as JSON.
+This is where a legal mandate becomes an account shape. The legal *why* lives in the `privacy-compliance` skill (which laws apply, what they require, how ObservePoint evidences them, and whether the consent banner works); this section is the *what to build*. `config_blueprint.py` (section 9) emits these as JSON.
 
 - **CCPA / CPRA → three audits.** Default (baseline, all categories) + Opt-Out (pre-audit CMP Reject-All, Strictly Necessary only) + GPC (`gpcEnabled` + `blockThirdPartyCookies`, Strictly Necessary only). Use `setup_compliance_monitoring(regulation="ccpa", domain=...)` — it creates all three with the correct pre-audit actions and consent assignments in one call. Rules: no advertising/sale-share pixels under opt-out, GPC honored. Never assign a non-essential category to the Opt-Out or GPC audit.
 - **GDPR / ePrivacy → reject-all pair.** Accept-All (baseline) + Reject-All (Strictly Necessary only, the core evidence). The Reject-All audit proves no non-essential tag fired before consent — that's the finding regulators ask for. Rules: no non-essential tags pre-consent, vendor inventory, cookie classification.
 - **HIPAA → PHI-URL audit.** A single audit scoped to patient-facing URL patterns, paired with `scan_audit_pii` on those URLs daily. Rules: no advertising tag on PHI URLs, portal CMP suppression. The finding here is an ad pixel on an authenticated health page, which is a far bigger problem than the same pixel on a marketing page.
 
-For the consent-state mechanics — pre-audit `privacyoptout` actions, `blockThirdPartyCookies`, and whether the diff actually proves blocking — defer to the `consent-cmp` skill. This skill stands up the audits; that skill proves they catch what they're supposed to.
+For the consent-state mechanics — pre-audit `privacyoptout` actions, `blockThirdPartyCookies`, and whether the diff actually proves blocking — defer to the `privacy-compliance` skill. This skill stands up the audits; that skill proves they catch what they're supposed to.
 
 ## 8. The admin/config MCP tools
 

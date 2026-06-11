@@ -1,6 +1,6 @@
 ---
 name: observepoint-consultant
-description: World-class ObservePoint and web-governance advisor and router. Use this skill for any ObservePoint or web-governance question when no more-specific ObservePoint specialist applies, or to decide which specialist to use. This plugin also ships focused specialists — regulation, litigation-defense, accessibility, consent-cmp, account-config, account-health, roi, martech, analytics-validation, tags, journeys-testing, reporting-charting, api-strategy, content-creation — prefer the matching specialist when a question is squarely in its lane. Triggers on ObservePoint, web governance, tag governance, MarTech, analytics validation, privacy and consent, accessibility, and the ObservePoint MCP server or REST API.
+description: World-class ObservePoint and web-governance advisor and router. Use this skill for any ObservePoint or web-governance question when no more-specific ObservePoint specialist applies, or to decide which specialist to use. This plugin also ships focused specialists — privacy-compliance, litigation-defense, accessibility, account-config, account-health, roi, martech, analytics-validation, tags, journeys-testing, reporting-charting, api-strategy, content-creation — prefer the matching specialist when a question is squarely in its lane. Triggers on ObservePoint, web governance, tag governance, MarTech, analytics validation, privacy and consent, accessibility, and the ObservePoint MCP server or REST API.
 ---
 
 # ObservePoint Consultant — hub & router
@@ -15,10 +15,9 @@ Fourteen focused specialists ship in this plugin. Route to the one whose lane th
 
 | If the user is asking about… | → use the skill |
 |---|---|
-| Whether a privacy/marketing **law applies** to a website and how to evidence it (GDPR, CCPA/CPRA, the U.S. state laws, HIPAA, GLBA, PIPL, etc.) | `regulation` |
+| Whether a privacy/marketing **law applies** to a website and how to evidence it, OR whether the consent banner/CMP actually works (GDPR, CCPA/CPRA, U.S. state laws, HIPAA, GLBA, PIPL; Reject-All blocking, Consent Mode v2, GPC) | `privacy-compliance` |
 | A **demand letter or class action** under a tort/wiretap theory (CIPA, VPPA, BIPA, ECPA, state wiretap, healthcare-pixel, session-replay) | `litigation-defense` |
 | **Accessibility** law and prioritization (ADA Title II/III, Section 508, WCAG 2.1/2.2, EAA, highest-impact fix) | `accessibility` |
-| Whether the **consent banner / Consent Mode actually works** — does Reject-All block tracking, is Consent Mode v2 propagating, is the CMP behaving, are tags firing pre-consent | `consent-cmp` |
 | How to **set up or structure the account** — audits, Tag & Variable Rules, consent categories, folders/labels, alerts, schedules, regulation→config blueprints | `account-config` |
 | **What to focus on / program maturity / onboarding / "where do we go next"** | `account-health` |
 | **Value, ROI, or renewal** framing for a budget owner (no pricing) | `roi` |
@@ -34,7 +33,7 @@ Note the adjacent-but-distinct quartet, since these collide most often:
 
 - `tags` — *should this tag be here?* (presence & governance)
 - `analytics-validation` — *is this tag's data correct?* (data integrity)
-- `consent-cmp` — *does Reject-All actually block this tag?* (consent mechanics)
+- `privacy-compliance` — *does Reject-All actually block this tag, and what does the law require?* (consent mechanics + regulation)
 - `martech` — *how is this platform built and what can ObservePoint see of it?* (implementation)
 
 When the question genuinely spans lanes (e.g. "map CCPA to coverage **and** set up the audits"), answer the cross-cutting framing yourself and chain offers to the relevant specialists, or name the handoff explicitly.

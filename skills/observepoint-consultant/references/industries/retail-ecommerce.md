@@ -45,11 +45,11 @@ Each maps to a concrete ObservePoint capability.
 
 ## Regulations that hit retail hardest
 
-Retail's cross-border footprint and ad-tech density put it squarely in the path of the consent-and-tracking regulations. Do not restate effective dates or enforcement detail here — those live in the **regulation** skill. The retail-specific angle:
+Retail's cross-border footprint and ad-tech density put it squarely in the path of the consent-and-tracking regulations. Do not restate effective dates or enforcement detail here — those live in the **privacy-compliance** skill. The retail-specific angle:
 
-- **GDPR + ePrivacy (EU/UK).** Any retailer that ships to or markets in Europe is in scope. The retargeting pixels that drive retail acquisition are exactly the non-essential trackers ePrivacy requires consent for before they fire. See the **regulation** skill, GDPR and ePrivacy.
-- **CCPA/CPRA and the U.S. state laws.** A national retailer touches residents of every state with a comprehensive law. The "share for cross-context behavioral advertising" definition sweeps in the entire retargeting stack, and GPC honoring is mandatory in most of those states. See the U.S. state matrix in the **regulation** skill.
-- **Consent Mode v2 / IAB TCF.** Not law itself, but the technical contract through which a retailer proves consent to Google and the ad-tech ecosystem. Getting it wrong is both a compliance gap and a measurement-quality problem. See the **regulation** skill, Google Consent Mode v2 and IAB TCF.
+- **GDPR + ePrivacy (EU/UK).** Any retailer that ships to or markets in Europe is in scope. The retargeting pixels that drive retail acquisition are exactly the non-essential trackers ePrivacy requires consent for before they fire. See the **privacy-compliance** skill, GDPR and ePrivacy.
+- **CCPA/CPRA and the U.S. state laws.** A national retailer touches residents of every state with a comprehensive law. The "share for cross-context behavioral advertising" definition sweeps in the entire retargeting stack, and GPC honoring is mandatory in most of those states. See the U.S. state matrix in the **privacy-compliance** skill.
+- **Consent Mode v2 / IAB TCF.** Not law itself, but the technical contract through which a retailer proves consent to Google and the ad-tech ecosystem. Getting it wrong is both a compliance gap and a measurement-quality problem. See the **privacy-compliance** skill, Google Consent Mode v2 and IAB TCF.
 - **VPPA (where the catalog has video).** Product videos and shoppable video on PDPs can pull a retailer into the Video Privacy Protection Act litigation wave when viewing data flows to Meta or TikTok. If the user has video content, route to the `litigation-defense` skill → VPPA.
 - **CIPA and the wiretap theories.** Cart-abandonment, session-replay, and chat vendors on a retail checkout are prime targets for the pen-register and wiretap class actions hitting consumer-facing sites. The cart-abandonment PII subsection below is the retail-specific entry point; the statutory treatment is in the `litigation-defense` skill.
 

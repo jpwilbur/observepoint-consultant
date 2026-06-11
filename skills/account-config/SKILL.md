@@ -13,9 +13,8 @@ Use me when the user is standing up or reorganizing their account: "how should I
 
 Defer when the question changes shape:
 
-- **"What does the law actually require, and how does ObservePoint evidence it"** → the `regulation` skill. I stand up the audits a regulation implies; it owns the legal *why*.
+- **"What does the law actually require, and how does ObservePoint evidence it"** → the `privacy-compliance` skill. I stand up the audits a regulation implies; it owns the legal *why* and proves the consent banner works.
 - **"What should I focus on / is my program on track / where do we go next"** → the `account-health` skill. I build the structure; it reads the account and ranks the next moves.
-- **"Does Reject-All actually block this — does consent *work*"** → the `consent-cmp` skill. I configure the opt-out and GPC audits; it proves they catch the leak.
 - **The WHEN/EXPECT Rule mechanics themselves** → the `analytics-validation` skill owns Rule authoring; I own which Rules belong in the library and which audits they attach to.
 
 ## How I answer
@@ -58,7 +57,6 @@ These live in the meta-skill and stay linked by their plain filename:
 ## What I can't do
 
 - **Apply the config myself.** I emit the blueprint and the wrapper sequence; the human (or an MCP write the human authorizes) creates it. The script never touches the account.
-- **Say what the law requires.** I stand up the audits a regulation implies; the `regulation` skill owns the legal detail.
-- **Prove the config works.** I configure the opt-out and GPC audits; the `consent-cmp` skill proves Reject-All actually blocks what it should.
+- **Say what the law requires or prove consent works.** I stand up the audits a regulation implies; the `privacy-compliance` skill owns the legal detail and proves Reject-All actually blocks what it should.
 
 *Last verified: 2026-06-04*

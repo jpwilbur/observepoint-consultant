@@ -23,13 +23,13 @@ Each maps to a concrete ObservePoint capability.
 
 ## Regulations
 
-Government's regulatory exposure is dominated by **accessibility**, with a thin privacy layer on top for state/local bodies. Do not restate effective dates or enforcement detail — the accessibility audit motion lives in the **regulation** skill, Accessibility (WCAG 2.1 AA / European Accessibility Act).
+Government's regulatory exposure is dominated by **accessibility**, with a thin privacy layer on top for state/local bodies. Do not restate effective dates or enforcement detail — the accessibility audit motion lives in the **privacy-compliance** skill, Accessibility (WCAG 2.1 AA / European Accessibility Act).
 
 - **Section 508 (federal accessibility).** Section 508 of the Rehabilitation Act requires federal agencies' electronic and information technology to be accessible, and it incorporates WCAG 2.1 AA as the technical standard. This is the dominant exposure for any federal property. ObservePoint's automated WCAG scanning produces the conformance evidence; pair it with manual review for what automation cannot test.
 - **ADA Title II (state and local government).** The 2024 DOJ rule under ADA Title II sets WCAG 2.1 AA as the standard for state and local government web content and mobile apps, with compliance deadlines phasing in by entity size. This is the dominant exposure for state and local bodies — the same WCAG scan motion, a different legal hook.
-- **U.S. state privacy laws (state/local, where any tracking exists).** A state or local site serving residents of many states sits under the patchwork of comprehensive state laws. See the U.S. state matrix in the **regulation** skill. In practice the cleanest defense is the zero-tracking baseline below — if nothing non-essential fires, most of the state-law surface never engages.
+- **U.S. state privacy laws (state/local, where any tracking exists).** A state or local site serving residents of many states sits under the patchwork of comprehensive state laws. See the U.S. state matrix in the **privacy-compliance** skill. In practice the cleanest defense is the zero-tracking baseline below — if nothing non-essential fires, most of the state-law surface never engages.
 
-Both Section 508 and ADA Title II resolve to the same technical target — WCAG 2.1 AA — so the audit is one motion that satisfies two legal regimes. For the impact-prioritization scoring, the violation-remediation catalog, and the MCP-tool workflow that turns a raw scan into a ranked queue, see the **accessibility** skill; the WCAG/EAA section of the **regulation** skill carries the regulation-to-coverage mapping and effective dates.
+Both Section 508 and ADA Title II resolve to the same technical target — WCAG 2.1 AA — so the audit is one motion that satisfies two legal regimes. For the impact-prioritization scoring, the violation-remediation catalog, and the MCP-tool workflow that turns a raw scan into a ranked queue, see the **accessibility** skill; the WCAG/EAA section of the **privacy-compliance** skill carries the regulation-to-coverage mapping and effective dates.
 
 ## Common vendor patterns
 
@@ -55,7 +55,7 @@ EXPECT
   no third-party request domains receive data EXCEPT the approved-vendor allowlist
 ```
 
-**2. Accessibility scan passes Section 508 / WCAG 2.1 AA thresholds.** The conformance guard. Attach the accessibility scan to the Web Audit and assert no critical/serious violations on the priority templates (home, primary navigation, the top public-service pages and forms). The **accessibility** skill carries the full prioritization and Rule pattern; the scan itself is the WCAG motion from the **regulation** skill.
+**2. Accessibility scan passes Section 508 / WCAG 2.1 AA thresholds.** The conformance guard. Attach the accessibility scan to the Web Audit and assert no critical/serious violations on the priority templates (home, primary navigation, the top public-service pages and forms). The **accessibility** skill carries the full prioritization and Rule pattern; the scan itself is the WCAG motion from the **privacy-compliance** skill.
 
 ```
 WHEN accessibility scan runs on page templates IN ("home", "service landing", "online form")

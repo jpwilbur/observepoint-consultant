@@ -259,7 +259,7 @@ Drive it with a Journey through real checkout so `utag.view()`/`utag.link()` fir
 
 ## 7. Consent Mode v2 (deep-dive)
 
-This is the deepest section, because Consent Mode v2 is where a privacy program most often *thinks* it's compliant while the wire says otherwise — and the wire is exactly what ObservePoint reads. Cross-reference the **Google Consent Mode v2** entry in the **regulation** skill; this section is the implementation-and-validation companion to that regulatory summary.
+This is the deepest section, because Consent Mode v2 is where a privacy program most often *thinks* it's compliant while the wire says otherwise — and the wire is exactly what ObservePoint reads. Cross-reference the **Google Consent Mode v2** entry in the **privacy-compliance** skill; this section is the implementation-and-validation companion to that regulatory summary.
 
 **Implementation patterns.**
 
@@ -308,7 +308,7 @@ EXPECT
   (NOT a full identified hit carrying the client_id from a persistent cookie)
 ```
 
-Run both consent states, then `compare_consent_states(domain, leftState="default", rightState="opt-out")` to surface any tag that fires identified on Accept-All but should be cookieless/absent on Reject-All. Use `get_cookie_privacy_report` to confirm which Google tags set cookies under each state, and `scan_audit_pii` if you suspect an identified value leaks under denial. For basic mode, invert Rule 2 to expect *no* Google request at all under Reject-All. See the **regulation** skill (Google Consent Mode v2) and `references/solution-playbooks.md` for the end-to-end consent-validation workflow.
+Run both consent states, then `compare_consent_states(domain, leftState="default", rightState="opt-out")` to surface any tag that fires identified on Accept-All but should be cookieless/absent on Reject-All. Use `get_cookie_privacy_report` to confirm which Google tags set cookies under each state, and `scan_audit_pii` if you suspect an identified value leaks under denial. For basic mode, invert Rule 2 to expect *no* Google request at all under Reject-All. See the **privacy-compliance** skill (Google Consent Mode v2) and `references/solution-playbooks.md` for the end-to-end consent-validation workflow.
 
 **What ObservePoint can / can't see.**
 
@@ -465,13 +465,13 @@ Pair with `find_anomalies` (metric = tags) to catch a release that suddenly doub
 
 ## 12. Privacy Sandbox APIs
 
-Privacy Sandbox is Google's set of Chrome APIs meant to replace third-party cookies and cross-site tracking with privacy-preserving alternatives. For the regulatory framing, cross-reference the **Privacy Sandbox (Chrome)** entry in the **regulation** skill; this section is the implementation-and-validation companion. The validation angle is consistent with the rest of this reference: ObservePoint can see the **API invocations in the page's script and network activity**, but the privacy-preserving computation those APIs perform (on-device auctions, aggregated reporting) is deliberately *not* observable — that opacity is the point of the design.
+Privacy Sandbox is Google's set of Chrome APIs meant to replace third-party cookies and cross-site tracking with privacy-preserving alternatives. For the regulatory framing, cross-reference the **Privacy Sandbox (Chrome)** entry in the **privacy-compliance** skill; this section is the implementation-and-validation companion. The validation angle is consistent with the rest of this reference: ObservePoint can see the **API invocations in the page's script and network activity**, but the privacy-preserving computation those APIs perform (on-device auctions, aggregated reporting) is deliberately *not* observable — that opacity is the point of the design.
 
 **The APIs.**
 
 - **Protected Audience API** (formerly **FLEDGE**). Remarketing and custom-audience bidding without third-party cookies, via **on-device ad auctions**. A site joins a browser into an interest group (`navigator.joinAdInterestGroup(...)`); auctions later run *inside the browser*. The join/leave calls are observable; the auction internals are not.
 - **Attribution Reporting API.** Measures ad-driven conversions without cross-site identifiers, in two flavors: **event-level** reports (coarse, delayed, noised — tying a click to a conversion) and **aggregate** reports (richer dimensions through the Aggregation Service, with added noise). Registered via attribution-source and attribution-trigger headers/calls.
-- **Topics API.** **Retired / deprioritized — reflect current status accurately.** Per the **Privacy Sandbox (Chrome)** entry in the **regulation** skill, Topics was retired (October 2025). Treat it as a deprecated API: relying on it is itself an antipattern, and a page still calling `document.browsingTopics()` is a finding, not a feature.
+- **Topics API.** **Retired / deprioritized — reflect current status accurately.** Per the **Privacy Sandbox (Chrome)** entry in the **privacy-compliance** skill, Topics was retired (October 2025). Treat it as a deprecated API: relying on it is itself an antipattern, and a page still calling `document.browsingTopics()` is a finding, not a feature.
 - **CHIPS** (Cookies Having Independent Partitioned State). **Partitioned cookies** — a cookie set with the `Partitioned` attribute is scoped to the top-level site under which it was set, so a cross-site embed can keep state without it becoming a cross-site tracking cookie.
 - **FedCM** (Federated Credential Management). A browser-mediated **federated login** flow (e.g. "Sign in with…") that removes the redirects and third-party cookies federated identity used to rely on.
 - **Private State Tokens** (formerly Trust Tokens). Cryptographic **anti-fraud / "is this a real user"** tokens issued in one context and redeemed in another without revealing identity or enabling cross-site tracking.

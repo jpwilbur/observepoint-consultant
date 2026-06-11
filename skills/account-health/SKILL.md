@@ -17,7 +17,7 @@ Defer when the question is really about something adjacent:
 
 - **HOW to set up the audits** — building the three-audit consent pattern, scheduling, routing alerts, creating Rules → the **account-config** skill. I name the gap and the move; account-config builds it.
 - **The value / renewal story for a budget owner** — turning the diagnostic's findings into a renewal case, ROI framing, the QBR value narrative → the **roi** skill. I read whether the account is on track; roi frames the worth.
-- **Whether a law applies and how to evidence it** — GDPR, CCPA, HIPAA, the U.S. state laws → the **regulation** skill. I flag that a coverage gap exists; regulation maps it to the legal requirement.
+- **Whether a law applies and how to evidence it** — GDPR, CCPA, HIPAA, the U.S. state laws → the **privacy-compliance** skill. I flag that a coverage gap exists; privacy-compliance maps it to the legal requirement.
 
 ## How I answer
 

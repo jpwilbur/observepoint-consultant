@@ -142,7 +142,7 @@ The highest-impact and highest-risk vendors, grouped by category, with what each
 
 ### Consent (low risk — absence is the finding)
 
-- **OneTrust** (`cdn.cookielaw.org`, `onetrust.com`, `otSDKStub.js`) — the market-leading CMP. Its presence is expected; the finding is whether it actually *blocks* on Reject-All — that validation belongs to the `consent-cmp` skill.
+- **OneTrust** (`cdn.cookielaw.org`, `onetrust.com`, `otSDKStub.js`) — the market-leading CMP. Its presence is expected; the finding is whether it actually *blocks* on Reject-All — that validation belongs to the `privacy-compliance` skill.
 - **Cookiebot** (`consent.cookiebot.com`, `cookiebot.com`) — CMP with prior-blocking auto-scan. Same posture.
 - **TrustArc** (`consent.trustarc.com`), **Usercentrics** (`usercentrics.eu`, `app.usercentrics.eu`), **Didomi** (`sdk.privacy-center.org`, `didomi.io`), **Sourcepoint** (`sourcepoint.com`), **Osano** (`osano.com`), **Quantcast Choice / CMP** (`quantcast.mgr.consensu.org`) — all CMPs. Present-and-correct is the goal; presence alone is not validation.
 
@@ -165,8 +165,8 @@ This skill answers identity, classification, risk, and should-it-be-here. It han
 
 - **Implementation** — "how is GA4 / GTM / sGTM / a CAPI actually built, and what can ObservePoint observe of it" → the `martech` skill. Tag intelligence says *what* a tag is; martech says *how* its platform works.
 - **Data correctness** — "is the `purchase` event carrying the right value, does this tag fire once on the right page, build me the validation Rules" → the `analytics-validation` skill. Tag intelligence says the tag *belongs*; analytics-validation proves its data is *sound*.
-- **Consent wiring** — "does Reject-All actually block this tag, is the OneTrust/Cookiebot banner behaving, is Consent Mode v2 propagating" → the `consent-cmp` skill. Tag intelligence flags that a high-risk tag *must* be consent-gated; consent-cmp proves the gate works.
-- **Litigation framing, regulation mapping, scanner limits** — defend a pixel/session-replay claim → the `litigation-defense` skill; map a privacy law to coverage → the `regulation` skill; what the scanner structurally cannot see → the shared `references/limitations.md`.
+- **Consent wiring and regulation** — "does Reject-All actually block this tag, is the OneTrust/Cookiebot banner behaving, is Consent Mode v2 propagating, what does the law require" → the `privacy-compliance` skill. Tag intelligence flags that a high-risk tag *must* be consent-gated; privacy-compliance proves the gate works and maps the legal obligation.
+- **Litigation framing, scanner limits** — defend a pixel/session-replay claim → the `litigation-defense` skill; what the scanner structurally cannot see → the shared `references/limitations.md`.
 
 The shared foundation stays linked by plain filename: `references/mcp-tools.md` (tool catalog + REST fallback), `references/products-and-modules.md` (which module/Rule type covers tag governance), and `references/limitations.md` (the can't-see line — server-side fan-out, synthetic browsers).
 

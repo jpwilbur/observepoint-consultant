@@ -313,7 +313,7 @@ When a customer has received a demand letter, class-action filing, or discovery 
 **ObservePoint approach.**
 
 1. Identify which states the customer operates in (where it processes residents' data) — this is a legal question, not a technical one. Ask counsel for the list.
-2. For each state, check the U.S. state matrix in the **regulation** skill — note whether GPC is required, opt-in vs. opt-out for sensitive data, and any distinctive features (e.g., NIST-aligned-program defense in Tennessee, MHMDA-style strict consent for health data in Washington).
+2. For each state, check the U.S. state matrix in the **privacy-compliance** skill — note whether GPC is required, opt-in vs. opt-out for sensitive data, and any distinctive features (e.g., NIST-aligned-program defense in Tennessee, MHMDA-style strict consent for health data in Washington).
 3. Use `setup_compliance_monitoring(regulation="ccpa", domain=...)` as the starting template — it produces the three-audit (default + opt-out + GPC) shape that fits most state laws. Adjust the consent banner copy and the opt-out path per state.
 4. For states without GPC recognition (Virginia, Utah, Iowa, Indiana, Kentucky), skip the GPC variant — just default + opt-out.
 5. Schedule weekly; route alerts per region to the responsible team.

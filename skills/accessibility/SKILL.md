@@ -15,7 +15,7 @@ Use me when the question is about **accessibility** — ADA Title III (private b
 
 Defer when the question is really about something adjacent:
 
-- **General privacy or marketing law** — whether GDPR, CCPA, HIPAA, or another regulation applies and how to evidence it → the **regulation** skill. It owns the legal-requirement-to-coverage layer (including the WCAG / EAA regulation-to-coverage mapping and effective dates); I own accessibility prioritization and the litigation framing.
+- **General privacy or marketing law** — whether GDPR, CCPA, HIPAA, or another regulation applies and how to evidence it, or whether the consent banner technically works → the **privacy-compliance** skill. It owns the legal-requirement-to-coverage layer (including the WCAG / EAA regulation-to-coverage mapping and effective dates); I own accessibility prioritization and the litigation framing.
 - **Non-accessibility tracking claims** — CIPA, VPPA, BIPA, ECPA, state wiretap, healthcare-pixel, or session-replay class actions → the **litigation-defense** skill. I carry the parallel evidence pattern for accessibility conformance; it carries the tort-defense pattern for tracking claims.
 
 ## How I answer
