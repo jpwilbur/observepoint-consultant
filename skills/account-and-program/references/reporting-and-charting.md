@@ -4,14 +4,14 @@ Load this when the user wants to **build a saved report, a grid report, a dashbo
 
 This file owns the *mechanics* of building the report — the entity types, the column-discovery step, the query and save calls, and how saved reports roll up into a dashboard. It does **not** decide *which* metrics deserve a dashboard (that judgment comes from `references/account-health-and-strategy.md`) or the specifics of the accessibility-issues report (that's `accessibility`). Build the report here; let those references tell you what to put on it.
 
-One discipline to flag up front: **charting is a brand-new ObservePoint feature that is not yet exposed through the MCP server.** This file documents it as an extension point using the same pre-GA discipline the codebase applies everywhere else — describe the anticipated capability, build the underlying saved report with the real tools that exist today, and never invent a charting tool name. See section 4.
+One note up front: **charting is now in the MCP server** — `add_report_chart` attaches a chart to an existing saved report and `remove_report_chart` removes one. A chart is a presentation layer over a saved report's existing query, so you build (or pick) the saved report first, then attach the chart referencing columns the report already selects. The runtime tool list stays the source of truth — never name a charting tool that isn't loaded. See section 4.
 
 ## Contents
 
 1. [Grid reporting — entities, schema discovery, querying](#1-grid-reporting--entities-schema-discovery-querying)
 2. [Saved reports — create, list, inspect, update, delete](#2-saved-reports--create-list-inspect-update-delete)
 3. [Dashboards — assembling saved reports](#3-dashboards--assembling-saved-reports)
-4. [Charting — extension point (pending MCP support)](#4-charting--extension-point-pending-mcp-support)
+4. [Charting](#4-charting)
 5. [Worked examples](#5-worked-examples)
 6. [Boundaries](#6-boundaries)
 
@@ -53,7 +53,7 @@ A note on filters and grouping: filters narrow the rows (a status threshold, a d
 
 ## 2. Saved reports — create, list, inspect, update, delete
 
-A **saved report** is a grid query persisted with a name, its entity type, its columns, and its filters, so it can be reopened, scheduled into a dashboard, and (once charting ships) visualized. The full CRUD surface:
+A **saved report** is a grid query persisted with a name, its entity type, its columns, and its filters, so it can be reopened, scheduled into a dashboard, and visualized as a chart (`add_report_chart`, section 4). The full CRUD surface:
 
 | Tool | Use when |
 |---|---|
@@ -77,7 +77,7 @@ Naming matters: a saved report's name is what shows up in the dashboard picker a
 
 ## 3. Dashboards — assembling saved reports
 
-A dashboard in ObservePoint is a layout of saved reports — each tile is a saved report rendered as a table (and, once charting ships, as a chart; see section 4). You build the dashboard from the bottom up: **each tile is a saved report you create first.** There is no "create dashboard" MCP tool; the dashboard composition lives in the ObservePoint UI today. The MCP-supported half of the workflow is the durable half — the saved reports — and that is where your tool calls go.
+A dashboard in ObservePoint is a layout of saved reports — each tile is a saved report rendered as a table or a chart (`add_report_chart`; see section 4). You build the dashboard from the bottom up: **each tile is a saved report you create first.** There is no "create dashboard" MCP tool; the dashboard composition lives in the ObservePoint UI today. The MCP-supported half of the workflow is the durable half — the saved reports — and that is where your tool calls go.
 
 So the pattern for "build me a tag-governance dashboard" is:
 
@@ -87,22 +87,26 @@ So the pattern for "build me a tag-governance dashboard" is:
 
 Because the tiles are saved reports, the dashboard stays live: re-running the underlying audits refreshes every tile, and `update_saved_report` on a tile's report updates it in place wherever it's used.
 
-## 4. Charting — extension point (pending MCP support)
+## 4. Charting
 
-**Charting is a new ObservePoint feature. It is NOT yet exposed through the MCP server.** Treat it exactly the way this codebase treats every pre-GA capability (mirror the framing in `references/mcp-tools.md`): describe the anticipated capability, point at what exists today, and **never invent a tool name for it.**
+**Charting is now in the MCP server.** A saved report can carry one or more chart "view" tabs alongside its table, added with `add_report_chart` and removed with `remove_report_chart`. (This was previously a pending capability; it has shipped. Still: the runtime tool list is the source of truth — if `add_report_chart` isn't loaded in your session, don't reference it.)
 
-**The anticipated capability.** Charting will let a saved report render as a visualization — a bar/line/pie/area chart over the report's grid data — instead of (or alongside) a flat table, with the chart type, the dimension/measure mapping, and the grouping configured on the saved report. A dashboard tile then shows the chart rather than rows. Conceptually it is a *presentation layer on top of a saved report*: the same grid query you already build, drawn as a picture.
+**The model — a chart rides an existing report's query.** A chart does NOT run its own query; it's a presentation layer over the saved report's existing grid query. So you build (or pick) the saved report FIRST, then attach a chart whose category and series reference columns *already selected by that report's query*.
 
-**How it will slot in.** When the MCP server exposes charting, the natural shape is a chart specification carried on the existing saved-report surface — i.e., `create_saved_report` / `update_saved_report` gain chart-configuration fields, rather than a new top-level "create chart" tool. The grid query underneath is unchanged; only the render config is added. **Do not assume that shape is final and do not name a tool for it.** The runtime tool list is the source of truth; if a charting parameter or tool is not in your available tools, it does not exist yet.
+| Tool | Use when |
+|---|---|
+| `add_report_chart` | Add a chart "view" to an existing saved report without resending the whole body. WRITE — confirm before adding. |
+| `remove_report_chart` | Remove a chart by `title`, internal `name`, or 0-based `index`. WRITE. |
 
-**What to do today.** Build the chart's data foundation with the real tools that exist now:
+**Chart types.** `area`, `bar`, `column`, `line` — each with `-stacked` and `-stacked-100` (100%-stacked) variants — plus `pie` and `donut` (single-series polar charts: use exactly one series).
 
-1. `get_report_schema` → confirm the dimension and measure columns the chart will plot.
-2. `query_report` → verify the data shape (the grouping you want to chart is actually present in the rows).
-3. `create_saved_report` → persist that query as a saved report.
-4. Tell the user the chart visualization itself is configured **in the ObservePoint UI** on that saved report today, and that programmatic charting via MCP is **pending exposure** — the saved report you just built is exactly what the chart will sit on when it lands.
+**The `columnRef` rule — the thing that trips people up.** Every `categoryColumn` and every `series` references a report column via `columnRef`, and those refs MUST match columns already in the saved report's query: the `groupBy` column becomes the category (X-axis), and an aggregation becomes each series. So the build order is:
 
-**Follow-up, out of scope here.** "Expose charting via MCP" is an ObservePoint MCP-team task, not something this plugin can implement — the plugin documents and consumes the server, it does not build it. Flag it as that team's follow-up; don't fake it with `op_api_call` against an unstable endpoint, and don't reference a charting tool as if it were loaded.
+1. `get_saved_report(reportId)` → read the report's columns; the chart can only plot what the query already selects.
+2. If the column you want isn't in the report, `update_saved_report` to add it (or pick a different report).
+3. `add_report_chart(reportId, chart={ type, title, categoryColumn:{ displayName, columnRef:{...} }, series:[{ displayName, columnRef:{...}, color? }] })` — confirm with the user first (it's a write).
+
+**Dashboards are still UI-composed.** There is still no `create_dashboard` MCP tool — a dashboard is a layout of saved reports arranged in the ObservePoint UI. Charting adds a chart *on a report*; arranging reports/charts into a dashboard layout remains a UI step.
 
 ## 5. Worked examples
 
@@ -112,7 +116,7 @@ Because the tiles are saved reports, the dashboard stays live: re-running the un
 2. `get_report_schema(entityType="tags", search="audit")` — find the audit-name/ID column; `search="tag"` for the tag-identity column.
 3. `query_report(entityType="tags", columns=["auditName", "tagName"], filters={...})` — confirm the rows group the way you expect (one row per tag observation; the count is the aggregation).
 4. `create_saved_report(entityType="tags", columns=[...], filters={...})` named "Tag count by audit."
-5. Charting note: a bar chart of *count of tags grouped by audit* is the obvious visualization. Build this saved report now; the bar chart is configured on it in the UI, pending MCP charting (section 4).
+5. Add the chart: a `column` chart of *count of tags grouped by audit* is the obvious visualization — `add_report_chart(reportId, chart={type:"column", categoryColumn:{columnRef→audit}, series:[count of tags]})` (section 4). Confirm the saved report's query already selects the category + measure columns the chart references, and confirm the write with the user.
 
 **"Broken pages this week."** The user wants every page returning a 4xx/5xx in the last seven days, across all audits.
 
@@ -126,7 +130,7 @@ Because the tiles are saved reports, the dashboard stays live: re-running the un
 
 - **Which metrics matter / what belongs on the dashboard** → program health section of `account-and-program`. This file builds whatever report you ask for; it does not decide that broken-page rate, tag duplication, or consent-leak count is the metric your account should watch. Account strategy lives there.
 - **The accessibility-issues report specifics** → `accessibility`. The `accessibility-issues` entity is queryable here like any other, but which severities, WCAG criteria, and rules to surface — and how to prioritize them — is that skill's domain.
-- **Charting tool calls** → nobody, yet. Charting is not in the MCP server (section 4). Build the saved report; configure the chart in the UI; treat MCP charting as a pending MCP-team follow-up.
-- **The MCP tool catalog and the pre-GA discipline** → `references/mcp-tools.md` (shared). The grid/report tools are listed there under "Grid reports"; that file is the authority on what's GA, what's pending, and the never-invent-a-tool rule.
+- **Charting** → `add_report_chart` / `remove_report_chart` (section 4). A chart rides an existing saved report's query, so build/confirm the report first; assembling reports/charts into a dashboard layout remains a UI step (there's no `create_dashboard` tool).
+- **The MCP tool catalog and the never-invent-a-tool rule** → `references/mcp-tools.md` (shared). The grid/report/charting tools are listed there under "Grid reports"; that file is the authority on what's loaded, and the runtime tool list always overrides this doc.
 
-*Last verified: 2026-06-04*
+*Last verified: 2026-06-10*

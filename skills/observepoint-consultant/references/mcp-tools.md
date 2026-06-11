@@ -32,6 +32,10 @@ This file is the working reference for those tools. When the server reaches GA, 
   - [Analysis primitives](#analysis-primitives) *(new)*
   - [Inventory and data shape](#inventory-and-data-shape) *(new)*
   - [Selector verification](#selector-verification) *(new)*
+  - [Bulk operations](#bulk-operations) *(new)*
+  - [Site Census](#site-census) *(new, admin)*
+  - [HAR Analyzer](#har-analyzer) *(new)*
+  - [Account governance and event log](#account-governance-and-event-log) *(new)*
   - [Escape hatches](#escape-hatches)
 - [Safety gates encoded in the wrappers](#safety-gates-encoded-in-the-wrappers)
 - [Common patterns](#common-patterns)
@@ -51,7 +55,7 @@ Three rules. They are absolute.
 
 ## What the server is
 
-- **130+ tools** spanning every ObservePoint product surface — audits, journeys, action-sets, rules, alerts, consent categories, CMP integration, grid reports, scheduling, exports, plus newer analysis primitives (PII scanning, consent-state comparison, anomaly detection).
+- **160+ tools** spanning every ObservePoint product surface — audits, journeys, action-sets, rules, alerts, consent categories, CMP integration, grid reports, scheduling, exports, plus newer surfaces: PII scanning, consent-state comparison, anomaly detection, **charting** (`add_report_chart`), report templates, **bulk operations**, **Site Census** scoping (admin), the **HAR Analyzer**, and account-governance / event-log / admin-impersonation tools.
 - **Wraps both v2 and v3** of the ObservePoint REST API. v2 for CRUD; v3 for reporting and advanced features.
 - **One escape hatch**: `op_api_call` for endpoints without a typed wrapper. See `get_api_docs` for the full endpoint list.
 - **One self-describing call**: `get_api_docs` returns the entire endpoint reference, including which wrappers exist for which endpoints.
@@ -86,8 +90,14 @@ Use these to understand the customer's environment before doing anything.
 | `get_account` | Need account-level info, plan tier, usage caps |
 | `list_users` | Show who has access |
 | `get_usage_overview`, `get_usage_summary`, `get_usage_trends` | Capacity planning, budget conversations |
-| `whoami` | Confirm which account/identity the session is currently acting as |
-| `find_account`, `login_as_account` | Admin/CSM only: locate a customer account and impersonate into it to run a diagnostic on their behalf (pair with `stop_impersonation` to return) |
+| `whoami` | Confirm which account/identity the session is currently acting as. **Call FIRST** on any "my account"/"our account" task — the connector is one long-lived session shared across conversations, so a prior task may have left an impersonation active. |
+| `find_account` | Admin: locate a customer account by name/id. |
+| `find_item` | Admin: resolve an audit / journey / run ID to the ACCOUNT that owns it (the "item finder") — paste any numeric id (or partial) and get account, folder, domain, latest run. Substring-matches; prefers an exact id, lists candidates when several match. |
+| `login_as_account` | Admin: impersonate into an account — reads work immediately, **writes are BLOCKED until `confirm_account_plan`**. Persists until you switch / `stop_impersonation` / idle auto-revert. |
+| `confirm_account_plan` | Admin: **arms writes** for the impersonated account — call ONLY after telling the user which account + intent and getting an explicit "proceed." Re-confirm for each distinct piece of work. |
+| `stop_impersonation` | Admin: return to your own admin account. |
+
+**Admin impersonation doctrine.** The connector is ONE long-lived session shared across conversations. Start any account task with `whoami`; if it shows an impersonation you didn't expect, surface it rather than assume. Lifecycle: `login_as_account` (reads only) → tell the user the account + plan → on explicit approval `confirm_account_plan` (arms writes) → work → `stop_impersonation`. A wrong-account write lands in real customer data — treat the gate as load-bearing.
 
 ### Audits — the bread and butter
 
@@ -106,6 +116,8 @@ Use these to understand the customer's environment before doing anything.
 | `stop_audit` | Stop an active run |
 | `get_audit_runs`, `check_run_status` | Run history + live status |
 | `compare_audit_runs` | Regression detection between two runs |
+| `reprocess_audit_rules` | **Re-evaluate an existing run's rules/reports WITHOUT re-crawling** — near-instant, consumes NO page-scan quota. The correct cheap follow-up after `update_audit_rules` ("reprocess" vs a full "re-run"). Audits only; journeys have no reprocess path — use `run_journey`. |
+| `get_audits_status` | Compact run-status across a SET of audits (folder / domain / id list) — see [Account governance](#account-governance-and-event-log). |
 
 ### Audit configuration
 
@@ -170,6 +182,9 @@ Multi-step interaction validation.
 | `get_run_action_outcomes` | Diagnostic per-step results (the only sensible way to inspect a journey run — the raw `/results` endpoint is 3+ MB) |
 | `get_journey_console_errors` | Browser-console errors captured during a journey run |
 | `get_journey_run_rule_results` | Rule pass/fail breakdown for a specific journey run |
+| `update_journey_rules` | Assign rules to a journey at the JOURNEY level and/or per-ACTION (step) level. Event rules (`view_item`, `purchase`…) usually belong on the STEP that fires them, not journey-wide. `dryRun` previews. Write counterpart to `get_journey_rules`. |
+| `stop_journey` | Stop a running journey scan (needs the specific `runId`, or finds the latest in-progress run). Tolerates "nothing running." |
+| `analyze_journey_failures` | **Fleet-wide** journey-failure analysis in two aggregated grid calls — the failure-reason vocabulary + top culprit journeys over a window. Use THIS for "which journeys are failing across the account, and why" instead of iterating per-journey (infeasible at ~1000 journeys). For a single run's drill-down use `get_run_action_outcomes`. |
 
 ### Action-sets — reusable journey sequences
 
@@ -285,6 +300,10 @@ Custom dashboards built on the v3 grid-reporting API.
 | `list_saved_reports`, `get_saved_report` | Discover existing saved reports |
 | `create_saved_report` | Build a new saved report (chart, table, etc.) |
 | `update_saved_report`, `delete_saved_report` | Manage |
+| `add_report_chart` | **Charting (now in the MCP).** Add a chart "view" tab to an EXISTING saved report without resending the whole body. Types: area / bar / column / line (+ `-stacked`, `-stacked-100`), pie, donut. The category + each series reference report columns via `columnRef` — they MUST match columns already in the report's query, so call `get_saved_report` first. WRITE — confirm before adding. |
+| `remove_report_chart` | Remove a chart from a saved report by `title`, internal `name`, or 0-based `index` (`get_saved_report` first). WRITE. |
+| `list_report_templates` | List ObservePoint-published report "library" templates; filter by `search` / `gridEntityType` / `useCase`. |
+| `create_report_from_template` | Clone a template into the account as an editable saved report (`dryRun:true` first; created `private` by default). |
 
 Entity types supported: `web-audit-runs`, `web-journey-runs`, `pages`, `cookies`, `tags`, `accessibility-issues`, `links`, `tag-variables`, `network-requests`, `browser-logs`, `rules`.
 
@@ -358,6 +377,58 @@ Higher-level diagnostics built on the raw `get_*` data tools. Use these when you
 | Tool | Use when |
 |---|---|
 | `verify_selectors` | Verify a CSS / XPath / ID selector resolves to exactly one element on a page. Pairs with the selector-evidence gate documented under "Safety gates" below. |
+
+### Bulk operations
+
+Create / update / delete / assign many objects of ONE entity type in a single call. Supported entities: `audit`, `label`, `rule`, `consent-category`, `alert`, `folder`. Continue-on-error — created ids + failed rows are reported so you re-run only the failures.
+
+| Tool | Use when |
+|---|---|
+| `bulk_describe` | **Call FIRST.** With an `entity`, returns the item shape per op (create/update/delete/assign); without, lists the registered entities. |
+| `bulk_create` | Create many from shared `defaults` + terse `items[]` overrides (max 500/call). Some entities take relational fields on create (rule/consent-category `assignToAuditIds`; consent-category `cookies`/`tags`). `dryRun:true` first. |
+| `bulk_update` | Patch many by `id` (read-modify-write per id); `defaults` is a shared patch. |
+| `bulk_delete` | Delete many by id. **Two-step:** `dryRun:true` to preview, then `dryRun:false` AND `confirm:true` to execute. Destructive; max 500. |
+| `bulk_assign` | Attach rules / consent-categories to a set of audits. `mode`: `add` (union, default — does not clobber), `remove`, `replace` (set EXACTLY — removes others). Serial by default (concurrency 1) to avoid lost-update races. |
+
+Lost-update caution: `bulk_create` with `assignToAuditIds` and `bulk_assign` both do per-audit read-modify-write. If multiple items target the SAME audit in one call, keep `concurrency:1` or attach afterward.
+
+### Site Census
+
+The internal large-scale crawler that sizes a domain's real page count for audit / licence scoping. **Admin-only — impersonate the central census account first** (`login_as_account`). This is the engine behind contract page-count scoping.
+
+| Tool | Use when |
+|---|---|
+| `list_site_censuses` | List censuses (server-side `search` by name; `runningOnly`). Shows crawl completeness per census. |
+| `create_site_censuses` | Create (auto-starts unless `autoStart:false`) from `items[]` + `defaults`. `dryRun:true` previews. |
+| `update_site_censuses` | Read-modify-write patch by id (`dryRun` previews). |
+| `delete_site_censuses` | Delete by id — `dryRun:true` first; permanent. |
+| `start_site_census` | Start OR resume a census by id (resume keeps crawling an under-crawled one). |
+| `size_site_census` | Estimate page count from the Links grid: classifies query-param spirals, rolls up a URL-based total and a spiral-adjusted total, rates crawl completeness. The defensible scoping number. |
+| `sample_site_census_pages` | Pull a few REAL example URLs per host (spirals + top-N by real-page count) as evidence the count isn't junk — never fabricates URLs. |
+
+### HAR Analyzer
+
+Run Tag & Variable Rules against captured traffic (a `.har` from Charles, mitmproxy, Fiddler, or DevTools), including a mobile app's capture — the supported path for native-app validation given the no-native-mobile limitation. A HAR "configuration" (a.k.a. "device") groups uploaded sessions and carries the rules applied to every upload.
+
+| Tool | Use when |
+|---|---|
+| `summarize_har_file` | **Local, read-only.** Parse a local `.har` → entry count, top hosts, capture window, recognizable vendors (GA4/Adobe/Meta/Segment/OneTrust…). Pre-upload sanity check, or a standalone look when the account doesn't license the Analyzer. Uploads nothing. |
+| `list_har_configs` | List HAR configurations; the id is the `configId` for the tools below. |
+| `create_har_config` | Create a configuration (requires a `folderId` — use `list_folders`). Attach rules afterward. WRITE. |
+| `update_har_config_rules` | Full-replace the rule set applied to every FUTURE upload (bare rule-ID array, same contract as `update_audit_rules`; re-upload to re-score). `dryRun` previews. WRITE. |
+| `upload_har_file` | Upload 1–15 local `.har` files (≤300 MB each) → validate → upload → process → poll. Returns the run id + rule rollup. **The HAR content is sent to ObservePoint (transits its S3 bucket)** — same as a UI upload; confirm with the user. WRITE. |
+| `get_har_run_status` | Poll a run (16 = processing, 30 = completed); omit `runId` to list a config's recent sessions. |
+| `get_har_run_results` | Processed results, summarized: sections `tags` / `rules` / `requests` / `actions` / `all`; `verboseRequests` for the raw per-request log. |
+
+### Account governance and event log
+
+| Tool | Use when |
+|---|---|
+| `get_account_health` | Account-health digest: the most problematic audits across the account (or a folder / audit-id `scope`), ranked by a weighted severity score over failed runs, triggered alerts, rule failures, broken pages (unapproved cookies as tiebreaker). The fast "what's broken right now?" read. |
+| `get_audits_status` | Compact run-status for a SET of audits (by `folderId`, sub-folder `domainId`, or explicit `auditIds`) — one terse row each (state, pagesScanned, lastRun) + a state tally. No-run audits show "queued" rather than vanishing. Watch a `bulk_create` batch move queued → running → completed. |
+| `query_user_events` | Account event log — who created/deleted/updated which item and when. **Attribution only** (THAT it changed + WHEN; no before/after diff). Server-side `itemType`/`eventType`; client-side `userId`/`itemId`/`since`/`until`. |
+| `review_account_access` | Access review — who can access the account, flagging admins, never-logged-in, and stale users (no login within `staleDays`, default 90). |
+| `get_user` | A single user by id — role/permissions, email, last login. |
 
 ### Escape hatches
 
@@ -504,6 +575,43 @@ find_rule_references(ruleId)
 // Same pattern: find_actionset_references(actionSetId) before deleting an action-set.
 ```
 
+**"Reprocess rules after I changed them" (no re-crawl, no quota)**
+```
+update_audit_rules(auditId, ruleIds=[...])
+reprocess_audit_rules(auditId)   // re-scores the existing run in place — near-instant
+```
+
+**"Validate the mobile app's tags from a capture"**
+```
+summarize_har_file(filePath="/abs/capture.har")        // local sanity check, uploads nothing
+list_har_configs() → create_har_config(name=..., folderId=...) if none
+update_har_config_rules(configId, ruleIds=[...])        // rules to score every upload
+upload_har_file(configId, filePaths=["/abs/capture.har"])  // sends the HAR to OP — confirm first
+get_har_run_results(configId, runId, section="rules")
+```
+
+**"Create 30 audits from a list"**
+```
+bulk_describe(entity="audit", op="create")              // get the item shape
+bulk_create(entity="audit", defaults={...}, items=[...], dryRun=true)   // preview
+bulk_create(entity="audit", defaults={...}, items=[...])                // execute
+get_audits_status(folderId=...)                         // watch queued → running → completed
+```
+
+**"Add a chart to a saved report"**
+```
+get_saved_report(reportId)        // see the report's columns (the columnRef targets)
+add_report_chart(reportId, chart={type:"column", title:"Tags by audit", categoryColumn:{...}, series:[{...}]})
+```
+
+**"Size example.com for a contract" (admin)**
+```
+whoami                                  // confirm identity; impersonate the census account if needed
+create_site_censuses(items=[{domain:"example.com", startingUrls:[...]}])
+size_site_census(censusId=...)          // URL total + spiral-adjusted total + completeness
+sample_site_census_pages(censusId=...)  // real example URLs as evidence
+```
+
 ## When to use `op_api_call`
 
 The escape hatch. Use it only when:
@@ -536,4 +644,4 @@ Watch the changelog and the server's own `get_api_docs` for the source of truth.
 
 ---
 
-*Last verified: 2026-06-03*
+*Last verified: 2026-06-10*

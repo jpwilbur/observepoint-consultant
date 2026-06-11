@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "observepoint-consultant",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "description": "World-class ObservePoint and web-governance advisor for Claude Code — a hub skill plus 6 focused advisors: privacy-compliance (global privacy regulations, GDPR/CCPA/CPRA/19+ U.S. state laws/HIPAA/GLBA/PIPL, consent banner and CMP verification, Reject-All/Consent Mode v2/GPC/OneTrust/Cookiebot), litigation-defense (CIPA/VPPA/BIPA/ECPA/state wiretap/healthcare-pixel/session-replay technical evidence for counsel), accessibility (ADA/Section 508/WCAG 2.1-2.2/EAA, impact-prioritized fixes, lawsuit-defense evidence), tag-and-analytics-quality (tag identity and vendor risk, GA4/Adobe analytics data correctness, data-layer and attribution, GTM/sGTM/Tealium/Meta CAPI/CDPs/Privacy Sandbox), account-and-program (account setup, Rules, consent categories, alerts, schedules, program health/maturity/onboarding, saved reports and dashboards), and automation-and-testing (REST/MCP automation, CI/CD audit gates, multi-step Journey build and debug, LiveConnect, HAR Analyzer). Products, Rules, REST API, MCP wrappers, consulting deliverables.",
       "author": {
         "name": "Jarrod Wilbur",

@@ -1,6 +1,6 @@
 ---
 name: account-and-program
-description: ObservePoint account, program & reporting advisor. Use when the user asks how to SET UP or STRUCTURE their ObservePoint account — audits, Tag & Variable Rules, consent categories, folders and labels, alerts, schedules, regulation-to-config blueprints; what to FOCUS on, how mature their program is, onboarding, coverage gaps, underuse patterns, or "where do we go next"; or how to build a SAVED REPORT, grid report, dashboard, or chart — report-schema column discovery, saved-report CRUD, the charting extension point. Setup, program strategy, and reporting in one. For API-driven setup or CI/CD gates use automation-and-testing.
+description: ObservePoint account, program & reporting advisor. Use when the user asks how to SET UP or STRUCTURE their ObservePoint account — audits, Tag & Variable Rules, consent categories, folders and labels, alerts, schedules, regulation-to-config blueprints; what to FOCUS on, how mature their program is, onboarding, coverage gaps, underuse patterns, or "where do we go next"; or how to build a SAVED REPORT, grid report, dashboard, or chart — report-schema column discovery, saved-report CRUD, and charting via add_report_chart. Setup, program strategy, and reporting in one. For API-driven setup or CI/CD gates use automation-and-testing.
 ---
 
 # Account, program & reporting
@@ -108,7 +108,7 @@ The `search` parameter filters the column list by keyword — essential for wide
 
 **Dashboards.** A dashboard is a layout of saved reports. There is no `create_dashboard` MCP tool — dashboard composition lives in the ObservePoint UI. Build each tile as a saved report first; then the user drops them onto a dashboard. Because tiles are saved reports, `update_saved_report` on a tile updates it everywhere it's used.
 
-**Charting — extension point, never invent the tool.** Charting is a new ObservePoint feature that is NOT yet exposed through the MCP server. Build the underlying saved report with the real tools that exist today; tell the user the chart visualization is configured in the ObservePoint UI on that saved report, pending MCP exposure. Never name a charting tool; the runtime tool list is the source of truth. Full mechanics in `references/reporting-and-charting.md`.
+**Charting is now in the MCP.** A chart rides an existing saved report's query: build (or pick) the report, then `add_report_chart` to attach a chart "view" (column/bar/line/area/pie/donut) whose category + series reference columns the report already selects — call `get_saved_report` first, and confirm the write. `remove_report_chart` removes one. Dashboards (arranging tiles) are still a UI step — there's no `create_dashboard` tool. Always defer to the runtime tool list; don't reference a charting tool that isn't loaded. Full mechanics in `references/reporting-and-charting.md`.
 
 **Organizing reports.** `get_saved_report_labels` and `set_saved_report_labels` let teams group governance, privacy, and accessibility reports. The label vocabulary is this skill's domain (see account setup above).
 
@@ -156,7 +156,7 @@ Deep references owned by this skill:
 - `references/account-config.md` — folder/label taxonomy, naming convention, rule-library themes, consent-category design, alert routing, schedule-cadence table, full regulation→configuration mapping, WHEN/EXPECT examples, end-to-end configuration walkthrough.
 - `references/account-health-and-strategy.md` — seven-dimension diagnostic framework, eight underuse patterns, bang-for-buck rubric, MCP diagnostic workflows, stage-keyed next-action templates, and the Workflows section (account strategy diagnostic, state-of-play for a domain, Day-1 onboarding checklist).
 - `references/lifecycle-and-maturity.md` — crawl→walk→run→fly maturity model, onboarding milestone arc, CSM cadences, common stuck-patterns with break-through plays, maturity-driven roadmap.
-- `references/reporting-and-charting.md` — grid entity types, `get_report_schema` discovery, `query_report` → `create_saved_report` build order, dashboards, charting extension point, worked examples.
+- `references/reporting-and-charting.md` — grid entity types, `get_report_schema` discovery, `query_report` → `create_saved_report` build order, dashboards, charting (`add_report_chart`/`remove_report_chart`), worked examples.
 
 ## What I can't do
 
