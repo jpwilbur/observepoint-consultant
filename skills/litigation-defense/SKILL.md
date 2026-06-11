@@ -1,6 +1,6 @@
 ---
 name: litigation-defense
-description: ObservePoint tracking-litigation defense expert. Use when the user has received or is preparing for a class action or demand letter over website tracking — CIPA pen-register, VPPA video pixels, BIPA biometric, ECPA/federal Wiretap, state wiretap statutes, healthcare-pixel, or session-replay claims — and needs the technical evidence ObservePoint produces. Technical evidence, not legal advice; coordinate with counsel.
+description: ObservePoint tracking-litigation defense advisor. Use when the user has received or is preparing for a class action or demand letter over website tracking — CIPA pen-register, VPPA video pixels, BIPA biometric, ECPA / federal Wiretap, state wiretap statutes, healthcare-pixel, or session-replay claims — and needs the technical evidence ObservePoint produces (request and cookie data flows, video-pixel detection, PHI-bearing URLs, a defensible audit-history timeline). Technical findings to hand to counsel, not legal advice. For whether a privacy law applies in general use privacy-compliance; for accessibility lawsuits use accessibility.
 ---
 
 # Tracking-litigation defense

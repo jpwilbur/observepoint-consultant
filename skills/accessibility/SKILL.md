@@ -1,6 +1,6 @@
 ---
 name: accessibility
-description: ObservePoint accessibility expert. Use for ADA Title III/II, Section 508, WCAG 2.1/2.2, and European Accessibility Act questions — prioritizing accessibility findings by impact, the 2026 legal landscape, and producing remediation and lawsuit-defense evidence from ObservePoint's accessibility scanning.
+description: ObservePoint accessibility advisor. Use for ADA Title II/III, Section 508, WCAG 2.1/2.2, and European Accessibility Act questions — prioritizing accessibility findings by impact (severity x reach x effort, conformance level, pages affected), surfacing the highest-impact fixes first, and producing remediation and lawsuit-defense evidence from ObservePoint's accessibility scanning. For privacy law use privacy-compliance; for a tracking-pixel demand letter use litigation-defense.
 ---
 
 # Accessibility

@@ -180,6 +180,52 @@ This section parallels the tort-defense pattern in the `litigation-defense` skil
 
 **Frame it honestly.** The evidence shows a good-faith, documented, improving remediation program and the current technical state. It does not — and ObservePoint should never claim it does — prove WCAG or ADA *conformance*, guarantee a litigation outcome, or substitute for manual and assistive-technology testing. ObservePoint detects the machine-testable subset and produces the technical record; counsel and accessibility experts build the defense around it. The strongest position is the customer who can show they were already scanning, already prioritizing by impact, and already remediating before the letter arrived.
 
+## Workflow: impact-prioritizing accessibility findings
+
+Use this workflow when accessibility findings are available — either via the ObservePoint MCP server or from an existing report the user has opened. The goal is a ranked "fix this first" queue, not a flat dump of violations.
+
+**1. Discover the columns before querying.** Grid-report column names vary by entity type; guessing wastes a round trip. Run `get_report_schema` first:
+
+```
+mcp__ObservePoint__get_report_schema(entityType="accessibility-issues", search="severity")
+```
+
+Re-run with `search="page"` and `search="wcag"` to find the URL and criterion columns. Use the exact column names returned in all subsequent queries.
+
+**2. Pull the accessibility findings.** Query the `accessibility-issues` entity for the relevant audit run, filtering to critical and serious to keep the initial queue focused on findings that cause real user harm:
+
+```
+mcp__ObservePoint__query_report(
+  entityType="accessibility-issues",
+  auditId=<auditId>,
+  runId=<runId>,
+  columns=[<severity_col>, <wcagCriterion_col>, <pageUrl_col>, ...],
+  filters={ <severity_col> in ["critical", "serious"] }
+)
+```
+
+**3. Apply severity x reach x effort + WCAG conformance-level ranking.** For each finding, compute the priority score:
+
+```
+priority_score = severity_weight x page_exposure_weight x population_impact_weight
+```
+
+Weights per the Impact-prioritization framework above: severity (critical = 10, serious = 6, moderate = 3, minor = 1); page exposure (tier-1 templates = 5, tier-2 = 3, tier-3 = 1); population impact (blocks essential/transactional task = 3, important task = 2, informational = 1). When two items score close, break the tie by remediation effort — prefer the fix that removes user harm sooner. WCAG conformance level is a secondary ranking signal: Level A failures rank ahead of Level AA failures at the same priority score.
+
+**4. Return highest-impact fixes first.** Emit a ranked queue. Each row must carry:
+
+- The violation type
+- The WCAG success criterion (e.g., 4.1.2 Name, Role, Value — Level A)
+- The affected scope (which templates / how many pages)
+- The priority score (showing the `severity x exposure x population` math)
+- The remediation step
+
+Treat critical and serious findings on tier-1 templates (checkout, forms, primary navigation, sign-in) as the release gate; everything else becomes a managed backlog worked down over time.
+
+### If the ObservePoint MCP server is not connected
+
+Do not fabricate accessibility findings. Explain that pulling live issues requires the MCP server, then walk through the manual version: open the Accessibility Report (or Accessibility Highlight Report) in the ObservePoint UI, filter to critical and serious severity, group by page template, and apply the severity x reach x effort scoring manually to the rows visible in the report. The impact-prioritization framework in this file — severity weights, page-exposure tiers, population-impact weights, and the priority-score formula — applies identically whether the data comes from a live MCP query or a report the user has open in the app.
+
 ---
 
 *Last verified: 2026-06-04*

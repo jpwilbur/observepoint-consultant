@@ -215,6 +215,28 @@ When counsel asks for the technical record, assemble:
 
 The package goes to counsel. ObservePoint produces the technical record; counsel uses it as part of a broader litigation defense.
 
+## Workflow: assembling a technical evidence pack
+
+Use this workflow when the user states a specific statute or theory and a domain under scrutiny. Every artifact produced is technical findings for counsel — not a legal conclusion or outcome promise.
+
+**1. Identify the statute or theory.** From the user's description, locate the relevant section above (CIPA, VPPA, BIPA, ECPA, state wiretap, healthcare-pixel, or session-replay). Note the specific evidentiary signals that matter for that theory: pen-register / wiretap data flows for CIPA and state wiretap; video-pixel payload inspection for VPPA; biometric-vendor presence and capture evidence for BIPA; PHI-bearing URL detection for healthcare-pixel; session-replay vendor presence and form-field masking for session-replay claims.
+
+**2. Identify the evidentiary signals.** For the claimed statute, identify which ObservePoint outputs are most relevant:
+
+- **Data flows and vendor presence** — Domains & Geo Privacy Report from the relevant audit; `mcp__ObservePoint__compare_consent_states` for the pre-consent vs. post-consent diff.
+- **Video-pixel detection** — audit scoped to video-bearing URL patterns; `mcp__ObservePoint__get_page_requests` on those pages to surface the pixel payload.
+- **PHI-bearing URLs** — `mcp__ObservePoint__scan_audit_pii` with healthcare-context `customRegex` patterns; URL patterns that include condition names, appointment paths, or member identifiers.
+- **Timeline anchors** — `mcp__ObservePoint__find_first_observed` to date when the named vendor first appeared; audit run history to place the vendor's presence during the alleged period.
+
+**3. Determine which audits, Rules, Privacy Reports, and PII scans to run and export.**
+
+- Confirm a Web Audit covering the relevant URL scope is configured and has run history covering the alleged period. If not, set one up immediately and flag that historical evidence will only go back to when the audit starts running.
+- Attach `WHEN/EXPECT` Rules for the named vendor asserting no pre-consent firing (see statute-specific Rule templates above).
+- Run `mcp__ObservePoint__scan_audit_pii` (site-wide) and `mcp__ObservePoint__scan_journey_pii` (on the specific flows named in the complaint) for the relevant period.
+- Export via `mcp__ObservePoint__export_report`: the rule-summary entity for Rule pass/fail history; the network-requests entity for the named vendor's actual request payloads; the Domains & Geo Privacy Report for the vendor inventory.
+
+**4. Preserve audit history as a defensible timeline.** The run history is the defensible timeline — each run is timestamped and shows what fired, what Rules passed or failed, and when. Assemble the pack as described in [Producing the evidence pack for litigation](#producing-the-evidence-pack-for-litigation): audit definitions, Rules library, run history with pass/fail, exception log, change log, PII scan output, and vendor inventory. Frame every item as: "on date X, the audit detected Y; on date Z, remediation was applied." The "reasonable practices" narrative belongs to counsel; the technical record belongs to ObservePoint.
+
 ---
 
 *Last verified: 2026-06-04*
