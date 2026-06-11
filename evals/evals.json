@@ -1,46 +1,301 @@
 {
   "skill_name": "observepoint-consultant",
   "evals": [
-    {"id": 1, "area": "compliance", "prompt": "Map CCPA enforcement readiness to ObservePoint coverage.", "expected_output_summary": "Routes to the regulation specialist; recommends the three-audit setup, names setup_compliance_monitoring.", "must_include": ["regulation", "setup_compliance_monitoring", "opt-out", "GPC"], "must_not_include": ["pricing", "assign_audit_consent_categories"]},
-    {"id": 2, "area": "compliance", "prompt": "How do I prove Colorado CPA compliance for our site?", "expected_output_summary": "Loads privacy-and-compliance.md Colorado entry, notes GPC required, three-audit pattern.", "must_include": ["Colorado", "GPC", "compare_consent_states"], "must_not_include": ["pricing"]},
-    {"id": 3, "area": "compliance", "prompt": "We operate in China. What does ObservePoint do for PIPL?", "expected_output_summary": "Loads APAC section, covers cross-border transfer inventory via Domains & Geo Privacy Report.", "must_include": ["PIPL", "cross-border", "Domains"], "must_not_include": ["pricing"]},
-    {"id": 4, "area": "litigation", "prompt": "What's CIPA and how does ObservePoint help defend a class action?", "expected_output_summary": "Routes to the litigation-defense specialist; explains pen-register theory, names scan_audit_pii and compare_consent_states, frames as evidence not legal advice.", "must_include": ["litigation-defense", "pen-register", "scan_audit_pii", "counsel"], "must_not_include": ["guarantee", "we will win"]},
-    {"id": 5, "area": "litigation", "prompt": "Defend a VPPA class action — what evidence do I produce?", "expected_output_summary": "VPPA section, video-pixel detection Rules, audit-history export.", "must_include": ["VPPA", "video", "evidence"], "must_not_include": ["guaranteed"]},
-    {"id": 6, "area": "litigation", "prompt": "Our hospital got sued over the Meta Pixel leaking patient data. What can ObservePoint show?", "expected_output_summary": "Healthcare-pixel section, PHI-bearing URL audits, scan_audit_pii, remediation timeline.", "must_include": ["scan_audit_pii", "PHI", "HIPAA"], "must_not_include": ["pricing"]},
-    {"id": 7, "area": "products", "prompt": "What's the difference between an Audit and a Journey?", "expected_output_summary": "Loads products-and-modules.md, side-by-side comparison, mentions Prevent Navigation.", "must_include": ["products-and-modules.md", "Prevent Navigation"], "must_not_include": ["pricing"]},
-    {"id": 8, "area": "products", "prompt": "Can I test our iOS app with ObservePoint?", "expected_output_summary": "Loads limitations.md, no native app testing, HAR Analyzer workaround.", "must_include": ["limitations.md", "HAR"], "must_not_include": ["yes, ObservePoint tests native"]},
-    {"id": 9, "area": "api", "prompt": "Help me write a Rule for GA4 purchase events.", "expected_output_summary": "WHEN/EXPECT Rule, schedule, alert routing, cites api-reference and solution-playbooks.", "must_include": ["WHEN", "EXPECT", "ecommerce.value"], "must_not_include": ["pricing"]},
-    {"id": 10, "area": "api", "prompt": "How do I gate a deploy on an ObservePoint audit in GitHub Actions?", "expected_output_summary": "Routes to the api-strategy specialist; CI/CD recipe, REST trigger + poll + fail on rule violations.", "must_include": ["api-strategy", "OBSERVEPOINT_API_KEY"], "must_not_include": ["pricing"]},
-    {"id": 11, "area": "mcp", "prompt": "Use the ObservePoint MCP to scan a journey for PII leaks.", "expected_output_summary": "Names scan_journey_pii; if no MCP tools present, explains and falls back to REST.", "must_include": ["scan_journey_pii"], "must_not_include": ["assign_audit_consent_categories", "export_audit_run"]},
-    {"id": 12, "area": "mcp", "prompt": "Does our Reject All actually block tracking? Use the account tools.", "expected_output_summary": "Names compare_consent_states, default vs opt-out diff.", "must_include": ["compare_consent_states"], "must_not_include": ["get_audit_locations"]},
-    {"id": 13, "area": "industries", "prompt": "What's the ObservePoint playbook for a retail site preparing for Black Friday?", "expected_output_summary": "Loads industries/retail-ecommerce.md, peak-traffic + conversion-funnel + ad-pixel Rules.", "must_include": ["retail-ecommerce.md", "conversion"], "must_not_include": ["pricing"]},
-    {"id": 14, "area": "industries", "prompt": "Map GLBA Safeguards Rule to ObservePoint coverage in financial services.", "expected_output_summary": "Loads industries/financial-services-insurance.md, NPI scanning, vendor inventory.", "must_include": ["financial-services-insurance.md", "GLBA"], "must_not_include": ["pricing"]},
-    {"id": 15, "area": "industries", "prompt": "We're a news publisher with video. What's our biggest ObservePoint use case?", "expected_output_summary": "Loads industries/media-publishing.md, VPPA + TCF/GPP, programmatic ad-tech.", "must_include": ["media-publishing.md", "VPPA"], "must_not_include": ["pricing"]},
-    {"id": 16, "area": "lifecycle", "prompt": "What should I focus on in my ObservePoint account? What's the biggest bang for buck?", "expected_output_summary": "Routes to the account-health specialist; underuse patterns, MCP diagnostic workflow.", "must_include": ["account-health", "find_coverage_gaps"], "must_not_include": ["pricing"]},
-    {"id": 17, "area": "lifecycle", "prompt": "I'm onboarding a new retail customer. Build a Day-1 checklist.", "expected_output_summary": "Routes to the account-health specialist (owns lifecycle-and-maturity) + industries/retail-ecommerce.md, Day-1 milestones.", "must_include": ["account-health"], "must_not_include": ["pricing"]},
-    {"id": 18, "area": "martech", "prompt": "Set up the Consent Mode v2 wiring between OneTrust and GTM. What should ObservePoint check?", "expected_output_summary": "Routes to the martech specialist; Consent Mode v2 wiring, validation Rules.", "must_include": ["martech", "ad_storage"], "must_not_include": ["pricing"]},
-    {"id": 19, "area": "martech", "prompt": "Server-side GTM — what can ObservePoint validate and what can't it?", "expected_output_summary": "Routes to the martech specialist; sGTM coverage, client-side-request-only caveat.", "must_include": ["martech", "server-side"], "must_not_include": ["ObservePoint runs your server"]},
-    {"id": 20, "area": "accessibility", "prompt": "From our accessibility data, what's the highest-impact fix to target first?", "expected_output_summary": "Routes to the accessibility specialist; impact-prioritization framework, query_report on accessibility-issues.", "must_include": ["accessibility", "query_report"], "must_not_include": ["pricing"]},
-    {"id": 21, "area": "out-of-scope", "prompt": "Can ObservePoint fulfill our customers' data deletion requests?", "expected_output_summary": "Honest no — DSAR fulfillment is out of scope; routes to a privacy management platform.", "must_include": ["out of scope", "DSAR"], "must_not_include": ["yes, ObservePoint fulfills"]},
-
-    {"id": 22, "area": "regulation", "prompt": "Does the Colorado Privacy Act apply to our e-commerce site, and how would we prove we comply?", "expected_output_summary": "Routes to the regulation specialist; maps the law to ObservePoint coverage (three-audit pattern, Privacy Reports) as evidence, not legal advice.", "must_include": ["regulation"], "must_not_include": ["pricing", "litigation-defense"]},
-    {"id": 23, "area": "litigation-defense", "prompt": "We just received a CIPA demand letter alleging our session-replay tool is a wiretap. What evidence can ObservePoint produce?", "expected_output_summary": "Routes to the litigation-defense specialist; frames technical findings for counsel, not legal conclusions.", "must_include": ["litigation-defense", "counsel"], "must_not_include": ["pricing", "regulation skill"]},
-    {"id": 24, "area": "accessibility", "prompt": "From our WCAG findings, which accessibility fix should we tackle first for the biggest impact?", "expected_output_summary": "Routes to the accessibility specialist; impact-prioritization framework over the accessibility findings.", "must_include": ["accessibility"], "must_not_include": ["pricing", "regulation skill"]},
-    {"id": 25, "area": "consent-cmp", "prompt": "When a visitor clicks Reject All on our OneTrust banner, do the tags actually stop firing?", "expected_output_summary": "Routes to the consent-cmp specialist; default vs Reject-All diff via compare_consent_states.", "must_include": ["consent-cmp"], "must_not_include": ["pricing", "regulation skill", "tags skill"]},
-    {"id": 26, "area": "account-config", "prompt": "How should I structure our ObservePoint account — audits, Rules, consent categories, folders, and alert schedules — for a CCPA program?", "expected_output_summary": "Routes to the account-config specialist; account structure and the three-audit blueprint.", "must_include": ["account-config"], "must_not_include": ["pricing", "regulation skill"]},
-    {"id": 27, "area": "account-health", "prompt": "What should I focus on in my ObservePoint account next, and where are we underusing the platform?", "expected_output_summary": "Routes to the account-health specialist; underuse patterns and biggest-bang-for-buck next steps.", "must_include": ["account-health"], "must_not_include": ["pricing", "roi skill"]},
-    {"id": 28, "area": "roi", "prompt": "I need to justify the ObservePoint renewal to our CFO. How do I show the value we got this year?", "expected_output_summary": "Routes to the roi specialist; value/renewal framing for a budget owner, no pricing.", "must_include": ["roi"], "must_not_include": ["pricing", "account-health skill"]},
-    {"id": 29, "area": "martech", "prompt": "We're wiring up Consent Mode v2 between OneTrust and GTM. How is that implemented and what can ObservePoint see of it?", "expected_output_summary": "Routes to the martech specialist; implementation of the adjacent platform and what ObservePoint observes.", "must_include": ["martech"], "must_not_include": ["pricing", "consent-cmp skill"]},
-    {"id": 30, "area": "analytics-validation", "prompt": "How do I confirm our GA4 purchase event carries the right ecommerce.value on every order?", "expected_output_summary": "Routes to the analytics-validation specialist; data-integrity Rules over GA4 events and variables.", "must_include": ["analytics-validation"], "must_not_include": ["pricing", "tags skill"]},
-    {"id": 31, "area": "tags", "prompt": "An unfamiliar pixel showed up on our site. What is it and should it be there?", "expected_output_summary": "Routes to the tags specialist; identity, classification, and should-it-be-here judgment.", "must_include": ["tags"], "must_not_include": ["pricing", "analytics-validation skill"]},
-    {"id": 32, "area": "journeys-testing", "prompt": "Help me build and debug a multi-step checkout Journey where the conversion tag only fires after login.", "expected_output_summary": "Routes to the journeys-testing specialist; Journey build/debug, selectors, Prevent Navigation.", "must_include": ["journeys-testing"], "must_not_include": ["pricing", "analytics-validation skill"]},
-    {"id": 33, "area": "reporting-charting", "prompt": "I want to build a saved dashboard with a chart of our cookie inventory over time. How?", "expected_output_summary": "Routes to the reporting-charting specialist; saved-report CRUD, schema discovery, charting extension point.", "must_include": ["reporting-charting"], "must_not_include": ["pricing", "account-health skill"]},
-    {"id": 34, "area": "api-strategy", "prompt": "How do I trigger an ObservePoint audit and fail the build on rule violations from our CI pipeline?", "expected_output_summary": "Routes to the api-strategy specialist; REST trigger + poll + fail-on-violation CI/CD recipe.", "must_include": ["api-strategy"], "must_not_include": ["pricing"]},
-    {"id": 35, "area": "content-creation", "prompt": "Help me write a blog post on why web governance matters for analytics teams, in ObservePoint's voice.", "expected_output_summary": "Routes to the content-creation specialist; produces the artifact in ObservePoint's voice, pairs with humanizer.", "must_include": ["content-creation"], "must_not_include": ["pricing"]},
-
-    {"id": 36, "area": "tags", "prompt": "Should this Meta Pixel be on my checkout page?", "expected_output_summary": "Should-it-be-here judgment routes to the tags specialist, not analytics-validation/consent-cmp/martech.", "must_include": ["tags"], "must_not_include": ["analytics-validation skill", "consent-cmp skill", "martech skill"]},
-    {"id": 37, "area": "analytics-validation", "prompt": "Is my GA4 purchase event double-firing?", "expected_output_summary": "Data-correctness/dedup question routes to the analytics-validation specialist, not tags/consent-cmp/martech.", "must_include": ["analytics-validation"], "must_not_include": ["tags skill", "consent-cmp skill", "martech skill"]},
-    {"id": 38, "area": "consent-cmp", "prompt": "Does our Reject-All actually block the advertising pixels?", "expected_output_summary": "Consent-mechanics question routes to the consent-cmp specialist, not tags/analytics-validation/martech.", "must_include": ["consent-cmp"], "must_not_include": ["tags skill", "analytics-validation skill", "martech skill"]},
-    {"id": 39, "area": "martech", "prompt": "How should I architect server-side GTM?", "expected_output_summary": "Platform-implementation question routes to the martech specialist, not tags/analytics-validation/consent-cmp.", "must_include": ["martech"], "must_not_include": ["tags skill", "analytics-validation skill", "consent-cmp skill"]}
+    {
+      "id": "privacy-ccpa-readiness",
+      "area": "privacy-compliance",
+      "prompt": "Map CCPA enforcement readiness to ObservePoint coverage.",
+      "expected_output_summary": "Routes to the privacy-compliance advisor; recommends the three-audit setup, names setup_compliance_monitoring.",
+      "must_include": ["setup_compliance_monitoring", "opt-out", "GPC"],
+      "must_not_include": ["pricing", "assign_audit_consent_categories"]
+    },
+    {
+      "id": "privacy-colorado-cpa",
+      "area": "privacy-compliance",
+      "prompt": "How do I prove Colorado CPA compliance for our site?",
+      "expected_output_summary": "Loads privacy-and-compliance.md Colorado entry, notes GPC required, three-audit pattern.",
+      "must_include": ["Colorado", "GPC", "compare_consent_states"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "privacy-pipl-china",
+      "area": "privacy-compliance",
+      "prompt": "We operate in China. What does ObservePoint do for PIPL?",
+      "expected_output_summary": "Loads APAC section, covers cross-border transfer inventory via Domains and Geo Privacy Report.",
+      "must_include": ["PIPL", "cross-border", "Domains"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "litigation-cipa-defense",
+      "area": "litigation-defense",
+      "prompt": "What's CIPA and how does ObservePoint help defend a class action?",
+      "expected_output_summary": "Routes to the litigation-defense advisor; explains pen-register theory, names scan_audit_pii and compare_consent_states, frames as evidence not legal advice.",
+      "must_include": ["pen-register", "scan_audit_pii", "counsel"],
+      "must_not_include": ["guarantee", "we will win"]
+    },
+    {
+      "id": "litigation-vppa-evidence",
+      "area": "litigation-defense",
+      "prompt": "Defend a VPPA class action — what evidence do I produce?",
+      "expected_output_summary": "VPPA section, video-pixel detection Rules, audit-history export.",
+      "must_include": ["VPPA", "video", "evidence"],
+      "must_not_include": ["guaranteed"]
+    },
+    {
+      "id": "litigation-meta-pixel-hipaa",
+      "area": "litigation-defense",
+      "prompt": "Our hospital got sued over the Meta Pixel leaking patient data. What can ObservePoint show?",
+      "expected_output_summary": "Healthcare-pixel section, PHI-bearing URL audits, scan_audit_pii, remediation timeline.",
+      "must_include": ["scan_audit_pii", "PHI", "HIPAA"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "hub-audit-vs-journey",
+      "area": "hub",
+      "prompt": "What's the difference between an Audit and a Journey?",
+      "expected_output_summary": "Loads products-and-modules context, side-by-side comparison, mentions Prevent Navigation.",
+      "must_include": ["Prevent Navigation"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "hub-ios-app-testing",
+      "area": "hub",
+      "prompt": "Can I test our iOS app with ObservePoint?",
+      "expected_output_summary": "Explains no native app testing, HAR Analyzer workaround.",
+      "must_include": ["HAR"],
+      "must_not_include": ["yes, ObservePoint tests native"]
+    },
+    {
+      "id": "automation-rule-ga4-purchase",
+      "area": "automation-and-testing",
+      "prompt": "Help me write a Rule for GA4 purchase events.",
+      "expected_output_summary": "WHEN/EXPECT Rule, schedule, alert routing.",
+      "must_include": ["WHEN", "EXPECT", "ecommerce.value"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "automation-github-actions-gate",
+      "area": "automation-and-testing",
+      "prompt": "How do I gate a deploy on an ObservePoint audit in GitHub Actions?",
+      "expected_output_summary": "Routes to the automation-and-testing advisor; CI/CD recipe, REST trigger + poll + fail on rule violations.",
+      "must_include": ["OBSERVEPOINT_API_KEY"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "automation-mcp-journey-pii",
+      "area": "automation-and-testing",
+      "prompt": "Use the ObservePoint MCP to scan a journey for PII leaks.",
+      "expected_output_summary": "Names scan_journey_pii; if no MCP tools present, explains and falls back to REST.",
+      "must_include": ["scan_journey_pii"],
+      "must_not_include": ["assign_audit_consent_categories"]
+    },
+    {
+      "id": "privacy-reject-all-blocking",
+      "area": "privacy-compliance",
+      "prompt": "Does our Reject All actually block tracking? Use the account tools.",
+      "expected_output_summary": "Names compare_consent_states, default vs opt-out diff.",
+      "must_include": ["compare_consent_states"],
+      "must_not_include": ["get_audit_locations"]
+    },
+    {
+      "id": "hub-retail-black-friday",
+      "area": "hub",
+      "prompt": "What's the ObservePoint playbook for a retail site preparing for Black Friday?",
+      "expected_output_summary": "Covers retail/e-commerce patterns, peak-traffic, conversion-funnel, and ad-pixel Rules.",
+      "must_include": ["conversion"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "hub-glba-financial-services",
+      "area": "hub",
+      "prompt": "Map GLBA Safeguards Rule to ObservePoint coverage in financial services.",
+      "expected_output_summary": "Covers financial-services context, NPI scanning, vendor inventory.",
+      "must_include": ["GLBA"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "hub-media-vppa-video",
+      "area": "hub",
+      "prompt": "We're a news publisher with video. What's our biggest ObservePoint use case?",
+      "expected_output_summary": "Covers media/publishing context, VPPA + TCF/GPP, programmatic ad-tech.",
+      "must_include": ["VPPA"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "account-biggest-bang",
+      "area": "account-and-program",
+      "prompt": "What should I focus on in my ObservePoint account? What's the biggest bang for buck?",
+      "expected_output_summary": "Routes to the account-and-program advisor; underuse patterns, health diagnostic workflow.",
+      "must_include": ["find_coverage_gaps"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "account-onboarding-retail",
+      "area": "account-and-program",
+      "prompt": "I'm onboarding a new retail customer. Build a Day-1 checklist.",
+      "expected_output_summary": "Routes to the account-and-program advisor, covers lifecycle-and-maturity and retail context, Day-1 milestones.",
+      "must_include": ["get_audit_health"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "tag-consent-mode-v2",
+      "area": "tag-and-analytics-quality",
+      "prompt": "Set up the Consent Mode v2 wiring between OneTrust and GTM. What should ObservePoint check?",
+      "expected_output_summary": "Routes to the tag-and-analytics-quality advisor; Consent Mode v2 wiring, validation Rules.",
+      "must_include": ["ad_storage"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "tag-server-side-gtm",
+      "area": "tag-and-analytics-quality",
+      "prompt": "Server-side GTM — what can ObservePoint validate and what can't it?",
+      "expected_output_summary": "Routes to the tag-and-analytics-quality advisor; sGTM coverage, client-side-request-only caveat.",
+      "must_include": ["server-side"],
+      "must_not_include": ["ObservePoint runs your server"]
+    },
+    {
+      "id": "accessibility-highest-impact-fix",
+      "area": "accessibility",
+      "prompt": "From our accessibility data, what's the highest-impact fix to target first?",
+      "expected_output_summary": "Routes to the accessibility advisor; impact-prioritization framework, query_report on accessibility-issues.",
+      "must_include": ["query_report"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "hub-dsar-out-of-scope",
+      "area": "hub",
+      "prompt": "Can ObservePoint fulfill our customers' data deletion requests?",
+      "expected_output_summary": "Honest no — DSAR fulfillment is out of scope; routes to a privacy management platform.",
+      "must_include": ["out of scope", "DSAR"],
+      "must_not_include": ["yes, ObservePoint fulfills"]
+    },
+    {
+      "id": "privacy-colorado-cpa-v2",
+      "area": "privacy-compliance",
+      "prompt": "Does the Colorado Privacy Act apply to our e-commerce site, and how would we prove we comply?",
+      "expected_output_summary": "Routes to the privacy-compliance advisor; maps the law to ObservePoint coverage (three-audit pattern, Privacy Reports) as evidence, not legal advice.",
+      "must_include": ["compare_consent_states"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "litigation-cipa-wiretap",
+      "area": "litigation-defense",
+      "prompt": "We just received a CIPA demand letter alleging our session-replay tool is a wiretap. What evidence can ObservePoint produce?",
+      "expected_output_summary": "Routes to the litigation-defense advisor; frames technical findings for counsel, not legal conclusions.",
+      "must_include": ["counsel"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "accessibility-wcag-priority",
+      "area": "accessibility",
+      "prompt": "From our WCAG findings, which accessibility fix should we tackle first for the biggest impact?",
+      "expected_output_summary": "Routes to the accessibility advisor; impact-prioritization framework over the accessibility findings.",
+      "must_include": ["query_report"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "privacy-reject-all-onetrust",
+      "area": "privacy-compliance",
+      "prompt": "When a visitor clicks Reject All on our OneTrust banner, do the tags actually stop firing?",
+      "expected_output_summary": "Routes to the privacy-compliance advisor; default vs Reject-All diff via compare_consent_states.",
+      "must_include": ["compare_consent_states"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "account-ccpa-structure",
+      "area": "account-and-program",
+      "prompt": "How should I structure our ObservePoint account — audits, Rules, consent categories, folders, and alert schedules — for a CCPA program?",
+      "expected_output_summary": "Routes to the account-and-program advisor; account structure and the three-audit blueprint.",
+      "must_include": ["setup_compliance_monitoring"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "account-underuse-next-steps",
+      "area": "account-and-program",
+      "prompt": "What should I focus on in my ObservePoint account next, and where are we underusing the platform?",
+      "expected_output_summary": "Routes to the account-and-program advisor; underuse patterns and biggest-bang-for-buck next steps.",
+      "must_include": ["get_audit_health"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "tag-consent-mode-v2-wiring",
+      "area": "tag-and-analytics-quality",
+      "prompt": "We're wiring up Consent Mode v2 between OneTrust and GTM. How is that implemented and what can ObservePoint see of it?",
+      "expected_output_summary": "Routes to the tag-and-analytics-quality advisor; implementation of the adjacent platform and what ObservePoint observes.",
+      "must_include": ["ad_storage"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "tag-ga4-purchase-value-v2",
+      "area": "tag-and-analytics-quality",
+      "prompt": "How do I confirm our GA4 purchase event carries the right ecommerce.value on every order?",
+      "expected_output_summary": "Routes to the tag-and-analytics-quality advisor; data-integrity Rules over GA4 events and variables.",
+      "must_include": ["WHEN", "EXPECT"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "tag-unknown-pixel",
+      "area": "tag-and-analytics-quality",
+      "prompt": "An unfamiliar pixel showed up on our site. What is it and should it be there?",
+      "expected_output_summary": "Routes to the tag-and-analytics-quality advisor; identity, classification, and should-it-be-here judgment.",
+      "must_include": ["get_tag_inventory"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "automation-checkout-journey-debug",
+      "area": "automation-and-testing",
+      "prompt": "Help me build and debug a multi-step checkout Journey where the conversion tag only fires after login.",
+      "expected_output_summary": "Routes to the automation-and-testing advisor; Journey build/debug, selectors, Prevent Navigation.",
+      "must_include": ["Prevent Navigation"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "account-cookie-dashboard",
+      "area": "account-and-program",
+      "prompt": "I want to build a saved dashboard with a chart of our cookie inventory over time. How?",
+      "expected_output_summary": "Routes to the account-and-program advisor; saved-report CRUD, schema discovery, charting.",
+      "must_include": ["create_saved_report"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "automation-ci-cd-trigger",
+      "area": "automation-and-testing",
+      "prompt": "How do I trigger an ObservePoint audit and fail the build on rule violations from our CI pipeline?",
+      "expected_output_summary": "Routes to the automation-and-testing advisor; REST trigger + poll + fail-on-violation CI/CD recipe.",
+      "must_include": ["run_audit"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "boundary-reject-all-blocks-pixel",
+      "area": "privacy-compliance",
+      "prompt": "Does Reject-All actually stop the Meta pixel from firing on our site?",
+      "expected_output_summary": "Routes to privacy-compliance; explains the consent-state audit pattern (Default/Opt-Out) and compare_consent_states to prove the pixel is suppressed under Reject-All.",
+      "must_include": ["compare_consent_states", "Reject-All"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "boundary-ga4-purchase-value",
+      "area": "tag-and-analytics-quality",
+      "prompt": "Is my GA4 purchase event firing with the correct revenue value?",
+      "expected_output_summary": "Routes to tag-and-analytics-quality; describes a WHEN/EXPECT Rule on the purchase value and driving a Journey so the event fires.",
+      "must_include": ["WHEN", "EXPECT"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "boundary-cicd-gate",
+      "area": "automation-and-testing",
+      "prompt": "Write a CI/CD gate that fails the build if an unapproved pixel appears.",
+      "expected_output_summary": "Routes to automation-and-testing; shows triggering an audit run via the API, polling to completion, and failing the build on Rule failures.",
+      "must_include": ["audit", "Rule"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "boundary-account-priorities",
+      "area": "account-and-program",
+      "prompt": "What should we prioritize in our ObservePoint account this quarter?",
+      "expected_output_summary": "Routes to account-and-program; runs the health diagnostic and returns a biggest-bang-for-buck prioritized next-action list.",
+      "must_include": ["get_audit_health"],
+      "must_not_include": ["pricing"]
+    }
   ]
 }
