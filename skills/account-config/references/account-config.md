@@ -81,7 +81,7 @@ Rules are where the account stops being an inventory and starts being governance
 
 A repeatable library-build sequence: `list_rules` to see what already exists (don't duplicate), `create_rule` for each missing themed Rule, `find_rule_references` before editing a shared one to see its blast radius, then `get_audit_rules` → `update_audit_rules` per audit to attach the right subset. The Opt-Out audit gets the *absence* Rules; the conversion audit gets the *variable-correctness* Rules; every audit gets the relevant *presence* and *hygiene* Rules.
 
-Build the WHEN/EXPECT mechanics with the `analytics-validation` skill, which owns Rule authoring; this skill owns *which* Rules belong in the library and *which audits* they attach to. Examples in section 10.
+Build the WHEN/EXPECT mechanics with the `tag-and-analytics-quality` skill, which owns Rule authoring; this skill owns *which* Rules belong in the library and *which audits* they attach to. Examples in section 10.
 
 ## 4. Consent-category design
 
@@ -153,7 +153,7 @@ Known regulations: `ccpa`, `gdpr`, `hipaa`. An unknown regulation exits non-zero
 
 ## 10. WHEN/EXPECT examples
 
-The Rule mechanics belong to the `analytics-validation` skill; these show the *shape* of the Rules a well-structured account's library carries, themed per section 3.
+The Rule mechanics belong to the `tag-and-analytics-quality` skill; these show the *shape* of the Rules a well-structured account's library carries, themed per section 3.
 
 - **Presence on a tier-1 property.** `WHEN page matches "shop.example.com/*"` → `EXPECT tag "Google Analytics 4" present`. Attach to the Default audit; alert routes to `#analytics-alerts`. Catches the analytics tag that silently stopped firing.
 - **Absence under opt-out (the consent-leak Rule).** `WHEN audit = "Opt-Out"` → `EXPECT tag "Meta Pixel" NOT present`. Attach to the Opt-Out audit only. A Meta Pixel surviving Reject-All is the leak the CCPA mandate exists to catch.

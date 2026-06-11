@@ -1,6 +1,6 @@
 ---
 name: observepoint-consultant
-description: World-class ObservePoint and web-governance advisor and router. Use this skill for any ObservePoint or web-governance question when no more-specific ObservePoint specialist applies, or to decide which specialist to use. This plugin also ships focused specialists — privacy-compliance, litigation-defense, accessibility, account-config, account-health, roi, martech, analytics-validation, tags, journeys-testing, reporting-charting, api-strategy, content-creation — prefer the matching specialist when a question is squarely in its lane. Triggers on ObservePoint, web governance, tag governance, MarTech, analytics validation, privacy and consent, accessibility, and the ObservePoint MCP server or REST API.
+description: World-class ObservePoint and web-governance advisor and router. Use this skill for any ObservePoint or web-governance question when no more-specific ObservePoint specialist applies, or to decide which specialist to use. This plugin also ships focused specialists — privacy-compliance, litigation-defense, accessibility, account-config, account-health, roi, tag-and-analytics-quality, journeys-testing, reporting-charting, api-strategy, content-creation — prefer the matching specialist when a question is squarely in its lane. Triggers on ObservePoint, web governance, tag governance, MarTech, analytics validation, privacy and consent, accessibility, and the ObservePoint MCP server or REST API.
 ---
 
 # ObservePoint Consultant — hub & router
@@ -21,20 +21,16 @@ Fourteen focused specialists ship in this plugin. Route to the one whose lane th
 | How to **set up or structure the account** — audits, Tag & Variable Rules, consent categories, folders/labels, alerts, schedules, regulation→config blueprints | `account-config` |
 | **What to focus on / program maturity / onboarding / "where do we go next"** | `account-health` |
 | **Value, ROI, or renewal** framing for a budget owner (no pricing) | `roi` |
-| How an **adjacent MarTech platform is implemented** and what ObservePoint can see of it (GA4, Adobe, GTM, server-side GTM, Tealium, Consent Mode v2, CAPI, CDP, attribution, Privacy Sandbox) | `martech` |
-| Whether the **analytics data is firing correctly** — GA4/Adobe events & variables, data-layer correctness, value integrity, duplicate/missing events, attribution-parameter survival | `analytics-validation` |
-| **What a tag/pixel is, whether it should be on a page**, whether a vendor is authorized or risky, classifying a tag inventory | `tags` |
+| **What a tag/pixel is, whether it should be on a page** (presence & governance), whether the analytics data is correct (GA4/Adobe events, data-layer, value integrity, duplicate/missing events), or how an adjacent MarTech platform is implemented and what ObservePoint can see of it (GTM, server-side GTM, Tealium, CAPI, CDP, attribution, Privacy Sandbox) | `tag-and-analytics-quality` |
 | Building, scripting, or **debugging a multi-step Journey** or funnel/login/form test — SPA Prevent Navigation, selector-evidence/journey-shape/watch-usage gates, LiveConnect, HAR Analyzer | `journeys-testing` |
 | Building a **saved report, grid report, dashboard, or chart** — entity types, report-schema column discovery, saved-report CRUD, the charting extension point | `reporting-charting` |
 | **REST or MCP automation** — writing Rules over the API, CI/CD audit gates, the deep REST reference, automation strategy | `api-strategy` |
 | **Writing or improving external content** — a blog post, how-to guide, one-pager, thought-leadership piece, or feedback on a draft, in ObservePoint's voice | `content-creation` |
 
-Note the adjacent-but-distinct quartet, since these collide most often:
+Note the adjacent-but-distinct pairing, since these collide most often:
 
-- `tags` — *should this tag be here?* (presence & governance)
-- `analytics-validation` — *is this tag's data correct?* (data integrity)
+- `tag-and-analytics-quality` — *should this tag be here, is its data correct, how is this platform built?* (presence, data integrity, implementation)
 - `privacy-compliance` — *does Reject-All actually block this tag, and what does the law require?* (consent mechanics + regulation)
-- `martech` — *how is this platform built and what can ObservePoint see of it?* (implementation)
 
 When the question genuinely spans lanes (e.g. "map CCPA to coverage **and** set up the audits"), answer the cross-cutting framing yourself and chain offers to the relevant specialists, or name the handoff explicitly.
 

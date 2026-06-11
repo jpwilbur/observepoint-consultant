@@ -2,7 +2,7 @@
 
 Load this when the user wants to **build, script, debug, or troubleshoot a multi-step ObservePoint Journey**, validate a funnel / login / form flow where tag firing depends on what the user did, or use **LiveConnect** (real device) or the **HAR Analyzer** (offline / mobile-app HAR). A Web Audit loads URLs; a Journey *acts like a person* — clicks, types, submits — so the events that only fire on interaction actually fire.
 
-The discipline of this skill is mechanical, not interpretive. It owns the *machinery* of the flow: the action sequence, the selectors that survive a page change, the SPA flag, the run that succeeds, the diagnosis when it doesn't. It does **not** judge whether the data the flow produced is correct — that is `analytics-validation`'s job. A Journey is the vehicle; the Rules riding on it are the assertion. This file gets the vehicle running and keeps it running.
+The discipline of this skill is mechanical, not interpretive. It owns the *machinery* of the flow: the action sequence, the selectors that survive a page change, the SPA flag, the run that succeeds, the diagnosis when it doesn't. It does **not** judge whether the data the flow produced is correct — that is `tag-and-analytics-quality`'s job. A Journey is the vehicle; the Rules riding on it are the assertion. This file gets the vehicle running and keeps it running.
 
 ## Contents
 
@@ -72,7 +72,7 @@ When `mcp__ObservePoint__*` tools are loaded (all verified in the shared `refere
 - `mcp__ObservePoint__create_actionset` / `mcp__ObservePoint__update_actionset_actions` — author and mutate (same three gates apply).
 - `mcp__ObservePoint__find_actionset_references` — **always run this before deleting** an action-set: it answers "which Journeys use this?" so you don't break a flow that depends on it. `delete_actionset` will happily tear down a set that three Journeys reference.
 
-**Attaching Rules.** A Journey verifies *behavior*; the Tag & Variable Rules attached to it verify the *data*. Author the Rule (`create_rule`), then attach it to the Journey so the run produces a pass/fail. Authoring the assertion belongs to `analytics-validation` / `privacy-compliance`; this skill makes sure the flow that triggers the hit actually runs.
+**Attaching Rules.** A Journey verifies *behavior*; the Tag & Variable Rules attached to it verify the *data*. Author the Rule (`create_rule`), then attach it to the Journey so the run produces a pass/fail. Authoring the assertion belongs to `tag-and-analytics-quality` / `privacy-compliance`; this skill makes sure the flow that triggers the hit actually runs.
 
 ## 4. Debugging a Journey
 
@@ -120,7 +120,7 @@ The HAR Analyzer is decoupled from LiveConnect — you can buy and use it standa
 
 ## 6. Worked example — a checkout funnel Journey
 
-A retail funnel: home → product → add-to-cart → checkout → confirmation, with Rules attached at the steps where the assertion belongs. The Journey is the vehicle; the Rules are owned by `analytics-validation`.
+A retail funnel: home → product → add-to-cart → checkout → confirmation, with Rules attached at the steps where the assertion belongs. The Journey is the vehicle; the Rules are owned by `tag-and-analytics-quality`.
 
 | # | Action | Selector / value | Rule at this step |
 |---|---|---|---|
@@ -146,7 +146,7 @@ This Journey has one `navto` (or two, with plenty of interaction) and many inter
 
 This skill builds, runs, and debugs the *flow*. It defers in two directions:
 
-- **`analytics-validation`** owns *whether the resulting data is correct*. This skill makes the `purchase` event fire by driving a real checkout; analytics-validation writes and reads the `WHEN tag = "GA4" AND event = "purchase" EXPECT value > 0` Rule that proves the data on that hit is sound. The same split applies to consent assertions on a Journey — author the Rule there, run the flow here. (`privacy-compliance` owns whether a hit should have fired at all under a given consent state.)
+- **`tag-and-analytics-quality`** owns *whether the resulting data is correct*. This skill makes the `purchase` event fire by driving a real checkout; tag-and-analytics-quality writes and reads the `WHEN tag = "GA4" AND event = "purchase" EXPECT value > 0` Rule that proves the data on that hit is sound. The same split applies to consent assertions on a Journey — author the Rule there, run the flow here. (`privacy-compliance` owns whether a hit should have fired at all under a given consent state.)
 - **`account-config`** owns *audit and account setup*. Pre-audit actions, on-page actions, schedules, folders, alert routing, and the broader account structure are configuration concerns. This skill is about the Journey's *internal* mechanics; how the Journey or its sibling audits are scheduled, labeled, and alerted lives there.
 
 For PII canary evidence on a journey run (`scan_journey_pii`), the litigation and healthcare/financial-services patterns live with `litigation-defense` and the industry references. For the persona-led end-to-end recipes — broken purchase event, validate every release — see the shared `references/solution-playbooks.md`.

@@ -15,7 +15,7 @@ Use me when the work is about the **flow itself**: build a checkout/login/form J
 
 Defer when the question changes shape:
 
-- **Whether the resulting data is correct** — is the `purchase` value right, did the event fire once, is the data layer populated → the `analytics-validation` skill. I make the event fire by driving the flow; analytics-validation writes and reads the Rule that proves the data on that hit is sound. (For whether a hit should have fired at all under a consent state, that's `privacy-compliance`.)
+- **Whether the resulting data is correct** — is the `purchase` value right, did the event fire once, is the data layer populated → the `tag-and-analytics-quality` skill. I make the event fire by driving the flow; tag-and-analytics-quality writes and reads the Rule that proves the data on that hit is sound. (For whether a hit should have fired at all under a consent state, that's `privacy-compliance`.)
 - **How to set up the audit or account** — pre-audit actions, on-page actions, schedules, folders, labels, alert routing, account structure → the `account-config` skill. I handle the Journey's internal mechanics; how it's scheduled and alerted lives there.
 
 ## How I answer
@@ -54,7 +54,7 @@ These live in the meta-skill and stay linked by their plain filename:
 
 ## What I can't do
 
-- **Judge whether the data is correct.** I make the event fire; the `analytics-validation` skill proves its value, dedup, and contract are sound.
+- **Judge whether the data is correct.** I make the event fire; the `tag-and-analytics-quality` skill proves its value, dedup, and contract are sound.
 - **Test a native mobile app directly.** ObservePoint is web-only (`references/limitations.md`). The workaround is a HAR captured from the app, run through the HAR Analyzer.
 - **Write a selector without live evidence.** The selector-evidence gate makes me verify against the real page via Claude for Chrome; I won't slip an unverified selector past it.
 

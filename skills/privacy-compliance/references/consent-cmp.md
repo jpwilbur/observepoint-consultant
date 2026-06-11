@@ -2,7 +2,7 @@
 
 Load this when the question is whether a consent setup *works on the wire*, not what the law requires and not how a platform is wired. The recurring trigger shapes: **does Reject-All actually block tracking**, **is Google Consent Mode v2 propagating** from the CMP to the Google tags, **is the CMP banner behaving** (firing a default before tags load, honoring the user's choice), and **are non-essential tags firing before consent**. ObservePoint runs the page in a real Chromium browser under a chosen consent state and reads the result, so it is the truth-source for the does-it-work question that a CMP's own admin console can't answer.
 
-This layer sits between two siblings. The **regulation** skill owns what the law *requires* (GDPR, CCPA, the 19 U.S. state laws, GPC recognition, the TCF/GPP legal frameworks). The **martech** skill owns how the platform is *implemented* (the Consent Mode v2 CMP-to-gtag wiring, the `gcs`/`gcd` parameters, server-side GTM). This file is the *technical validation* in the middle: prove, from the browser, that the banner does what it claims and the consent signal reaches the tags it's supposed to gate.
+This layer sits between two siblings. The **regulation** skill owns what the law *requires* (GDPR, CCPA, the 19 U.S. state laws, GPC recognition, the TCF/GPP legal frameworks). The **tag-and-analytics-quality** skill owns how the platform is *implemented* (the Consent Mode v2 CMP-to-gtag wiring, the `gcs`/`gcd` parameters, server-side GTM). This file is the *technical validation* in the middle: prove, from the browser, that the banner does what it claims and the consent signal reaches the tags it's supposed to gate.
 
 ## Contents
 
@@ -64,7 +64,7 @@ The discipline: **counting requests is the wrong test.** Under denied consent, w
 
 ## 3. Consent Mode v2 validation
 
-Consent Mode v2 is where a privacy program most often *believes* it's compliant while the wire disagrees. The **martech** skill owns the implementation deep-dive — the CMP-to-gtag wiring, the meaning of every bit in `gcs`/`gcd`, advanced vs basic mode. This section is the *validation companion*: how to prove, from ObservePoint, that the signal propagated from the CMP into the Google tags correctly.
+Consent Mode v2 is where a privacy program most often *believes* it's compliant while the wire disagrees. The **tag-and-analytics-quality** skill owns the implementation deep-dive — the CMP-to-gtag wiring, the meaning of every bit in `gcs`/`gcd`, advanced vs basic mode. This section is the *validation companion*: how to prove, from ObservePoint, that the signal propagated from the CMP into the Google tags correctly.
 
 **The four signals to validate.** Consent Mode v2 carries four consent types, and a v2-compliant implementation must set all four:
 
@@ -162,7 +162,7 @@ The order matters: a pre-consent leak (step 2) is a worse finding than a Reject-
 This skill is the technical does-it-work layer. Three things it deliberately does not own:
 
 - **The legal requirement.** Whether your site *must* honor GPC in a given state, what counts as a "sale" or "share," which consent basis a regulation demands, the TCF/GPP legal frameworks — that's the **regulation** skill. This skill proves the technical signal works; the regulation skill says whether the law required it.
-- **The platform implementation architecture.** How the CMP is wired to the Google tags, what each bit of `gcs`/`gcd` means, advanced vs basic Consent Mode, server-side GTM consent propagation — that's the **martech** skill. This skill validates the *output*; the martech skill explains the *wiring*.
+- **The platform implementation architecture.** How the CMP is wired to the Google tags, what each bit of `gcs`/`gcd` means, advanced vs basic Consent Mode, server-side GTM consent propagation — that's the **tag-and-analytics-quality** skill. This skill validates the *output*; tag-and-analytics-quality explains the *wiring*.
 - **Whether a vendor is authorized to be there at all.** "Should this pixel exist on this page, is this vendor on our allowlist" — that's the tag-governance question. This skill asks whether a tag *respects consent*, not whether it's *supposed to be present*.
 
 And the standard ObservePoint boundary applies throughout: ObservePoint sees the browser, and only the browser. It reads the consent signal the CMP put on the wire and the tag behavior that resulted — it cannot read the CMP's internal consent-record database, and it cannot confirm what a server-side container did with a consent signal after the client-to-server hop. Pair it with the CMP's own logs and the vendors' debug tools for the server side.

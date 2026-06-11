@@ -15,7 +15,7 @@ Defer when the question changes shape:
 
 - **"What does the law actually require, and how does ObservePoint evidence it"** → the `privacy-compliance` skill. I stand up the audits a regulation implies; it owns the legal *why* and proves the consent banner works.
 - **"What should I focus on / is my program on track / where do we go next"** → the `account-health` skill. I build the structure; it reads the account and ranks the next moves.
-- **The WHEN/EXPECT Rule mechanics themselves** → the `analytics-validation` skill owns Rule authoring; I own which Rules belong in the library and which audits they attach to.
+- **The WHEN/EXPECT Rule mechanics themselves** → the `tag-and-analytics-quality` skill owns Rule authoring; I own which Rules belong in the library and which audits they attach to.
 
 ## How I answer
 
