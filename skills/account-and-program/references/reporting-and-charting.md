@@ -73,7 +73,7 @@ A **saved report** is a grid query persisted with a name, its entity type, its c
 
 Naming matters: a saved report's name is what shows up in the dashboard picker and in `list_saved_reports`, so name it for the question it answers ("Broken pages — all audits, last 7 days"), not for the entity ("pages report 3").
 
-**Organizing reports.** Saved reports carry labels, the same way audits and journeys do, so a team can group its governance reports, its privacy reports, and its accessibility reports. The label tools — `get_saved_report_labels` and `set_saved_report_labels` — live in the shared catalog under saved-report management; reach for them when the user wants reports filed under a label rather than scattered in one flat list. The label vocabulary itself (how labels are structured across the account) is `account-config`'s domain, not this file's.
+**Organizing reports.** Saved reports carry labels, the same way audits and journeys do, so a team can group its governance reports, its privacy reports, and its accessibility reports. The label tools — `get_saved_report_labels` and `set_saved_report_labels` — live in the shared catalog under saved-report management; reach for them when the user wants reports filed under a label rather than scattered in one flat list. The label vocabulary itself (how labels are structured across the account) is covered in the account setup section of the `account-and-program` skill, not this file's.
 
 ## 3. Dashboards — assembling saved reports
 
@@ -81,7 +81,7 @@ A dashboard in ObservePoint is a layout of saved reports — each tile is a save
 
 So the pattern for "build me a tag-governance dashboard" is:
 
-1. Decide the tiles with the user (defer the *which-metrics* question to `account-health`).
+1. Decide the tiles with the user (defer the *which-metrics* question to the program health section of `account-and-program`).
 2. For each tile, build the saved report (section 2) — one `create_saved_report` per tile.
 3. In the UI, drop those saved reports onto a dashboard and arrange the layout.
 
@@ -120,11 +120,11 @@ Because the tiles are saved reports, the dashboard stays live: re-running the un
 2. `get_report_schema(entityType="pages", search="status")` — get the status-code column name; `search="url"` for the page URL.
 3. `query_report(entityType="pages", filters={ "statusCode": { "gte": 400 }, /* last-7-days run filter */ }, columns=["url", "statusCode", "auditName"])` — eyeball the result.
 4. `create_saved_report(...)` named "Broken pages — all audits, last 7 days."
-5. Drop it onto the health dashboard as a tile (section 3). Defer *whether broken-page count is the right health metric* to `account-health`.
+5. Drop it onto the health dashboard as a tile (section 3). Defer *whether broken-page count is the right health metric* to the program health section of `account-and-program`.
 
 ## 6. Boundaries
 
-- **Which metrics matter / what belongs on the dashboard** → `account-health`. This file builds whatever report you ask for; it does not decide that broken-page rate, tag duplication, or consent-leak count is the metric your account should watch. Account strategy lives there.
+- **Which metrics matter / what belongs on the dashboard** → program health section of `account-and-program`. This file builds whatever report you ask for; it does not decide that broken-page rate, tag duplication, or consent-leak count is the metric your account should watch. Account strategy lives there.
 - **The accessibility-issues report specifics** → `accessibility`. The `accessibility-issues` entity is queryable here like any other, but which severities, WCAG criteria, and rules to surface — and how to prioritize them — is that skill's domain.
 - **Charting tool calls** → nobody, yet. Charting is not in the MCP server (section 4). Build the saved report; configure the chart in the UI; treat MCP charting as a pending MCP-team follow-up.
 - **The MCP tool catalog and the pre-GA discipline** → `references/mcp-tools.md` (shared). The grid/report tools are listed there under "Grid reports"; that file is the authority on what's GA, what's pending, and the never-invent-a-tool rule.

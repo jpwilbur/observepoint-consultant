@@ -153,4 +153,63 @@ Deliver the ranked fix list, not the raw scores. The scores justify the ranking;
 
 ---
 
-*Last verified: 2026-06-04*
+## Workflows
+
+Pre-built execution sequences folded from the former `/op-account-strategy`, `/op-state-of-play`, and `/op-onboarding-checklist` commands. Each sequence includes an "if MCP not connected" fallback.
+
+### Account strategy diagnostic
+
+Diagnose an ObservePoint account's health and surface the biggest-bang-for-buck next actions. Accepts an optional focus area (one of: `privacy`, `analytics`, `accessibility`, `performance`); if omitted, assess the whole account.
+
+**If `mcp__ObservePoint__*` tools are present:**
+
+```
+list_audits                                       // full audit inventory
+get_audit_health(auditId) — per audit             // running clean, or config/auth issue?
+get_usage_overview                                // breadth and freshness snapshot
+get_usage_summary                                 // breakdown by audit/journey
+get_usage_trends                                  // trajectory — steady program or incident spikes?
+find_coverage_gaps(auditId) — per key audit       // pages missing expected tags
+find_anomalies(auditId, metric="tags", ...)       // scope-normalized drift
+get_inventory                                     // cross-audit vendor/tag roll-up
+```
+
+Score the account against the seven-dimension framework and the eight underuse-pattern checklist in this file. If a focus area is supplied, weight the diagnostic toward that dimension (e.g. focus=privacy: emphasize consent-state coverage and PII-scanning bands). Return a prioritized list of next actions using the impact × effort rubric — high-impact / low-effort moves first.
+
+**If MCP server is not connected:** Do not fabricate account data. Explain that the live diagnostic requires the MCP server, describe the equivalent in-app review (audit list, Rules tab, Alerts page, consent-category attachments, saved reports), and outline what the diagnostic would surface using the same seven-dimension framework and underuse-pattern checklist above.
+
+### State of play for a domain
+
+Summarize the current state of a domain — recent audits, issues, and changes. Accepts a domain name as input; treat it as the search key for finding relevant audits.
+
+**If `mcp__ObservePoint__*` tools are present:**
+
+```
+list_audits(search="<domain>")                    // find audits for the domain
+get_audit_runs(auditId) — most recent runs        // pass/fail posture for each
+find_anomalies(auditId) — per audit               // spikes and drops since last run
+get_file_changes(auditId, runId)                  // what shifted since the last run
+```
+
+Synthesize a concise status report: most recent runs and their pass/fail posture, notable anomalies, and what changed. Recommend the next action for any issue that warrants attention.
+
+**If MCP server is not connected:** Do not fabricate audit data. Explain that the live status pull requires the MCP server, then outline the manual version (run-comparison view and the Anomalies/File-Changes reports in the ObservePoint UI) and what the workflow would surface.
+
+### Day-1 onboarding checklist
+
+Build a Day-1 onboarding checklist for a customer's industry and domain. Accepts two inputs: the customer's industry (e.g. `retail-ecommerce`, `financial-services-insurance`, `media-publishing`) and their primary domain. If the industry is ambiguous, ask before proceeding.
+
+**Steps:**
+
+1. Load this file (`references/account-health-and-strategy.md`) and `references/lifecycle-and-maturity.md` for the generic Day-1 onboarding milestones (Day 1 → Week 1 → Month 1 → Quarter 1 sequence).
+2. Load `skills/observepoint-consultant/references/industries/<industry>.md` (the literal `<industry>` resolves to the matching file for the customer's vertical — e.g. `retail-ecommerce.md`).
+3. Combine the generic Day-1 milestones with the industry-specific priorities (key audits, Rules, Privacy Reports, and use cases) from the industry reference.
+4. Tailor the checklist to the supplied domain.
+
+Return an ordered Day-1 checklist with each item's owner, the ObservePoint setup it produces (naming the MCP tool or UI click-path), and the success criterion.
+
+**If MCP server is not connected:** Deliver the same ordered checklist with UI click-paths instead of MCP tool calls; note that the live setup steps simplify substantially when the MCP server is connected.
+
+---
+
+*Last verified: 2026-06-10*

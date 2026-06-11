@@ -390,7 +390,7 @@ For existing customers — reading whether the account is on track and building 
 
 **Persona.** Customer Success Manager or consultant.
 
-**ObservePoint approach.** Run the account-health diagnostic from the `account-health` skill: read breadth and usage (`get_usage_overview`, `get_usage_trends`, `list_audits`), whether what exists is working (`get_audit_health`), what's missing (`find_coverage_gaps`), and whether alerts and saved reports exist (`list_alerts`, `list_saved_reports`). Map the readings to a maturity stage (also in the `account-health` skill) and the stuck-pattern it implies.
+**ObservePoint approach.** Run the account-health diagnostic from the `account-and-program` skill: read breadth and usage (`get_usage_overview`, `get_usage_trends`, `list_audits`), whether what exists is working (`get_audit_health`), what's missing (`find_coverage_gaps`), and whether alerts and saved reports exist (`list_alerts`, `list_saved_reports`). Map the readings to a maturity stage (also in the `account-and-program` skill) and the stuck-pattern it implies.
 
 **Workflow.** Diagnose → identify the single biggest gap (most often "Rules but no alerts" or "program but no exec sponsor") → produce a prioritized action list, highest-leverage first.
 

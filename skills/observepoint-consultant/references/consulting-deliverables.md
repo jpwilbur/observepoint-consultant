@@ -321,7 +321,7 @@ what broke without warning, what evidence didn't exist.
 ## Where we are now (walk / run / fly)
 The current maturity stage, with the evidence: scheduled audits, Rule
 coverage, alert routing, the evidence-pack cadence. Reference the maturity
-model in the `account-health` skill.
+model in the `account-and-program` skill.
 
 ## The value, in their terms
 Tie the program's output to a metric the budget owner already owns — ad-spend

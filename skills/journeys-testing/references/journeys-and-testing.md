@@ -147,7 +147,7 @@ This Journey has one `navto` (or two, with plenty of interaction) and many inter
 This skill builds, runs, and debugs the *flow*. It defers in two directions:
 
 - **`tag-and-analytics-quality`** owns *whether the resulting data is correct*. This skill makes the `purchase` event fire by driving a real checkout; tag-and-analytics-quality writes and reads the `WHEN tag = "GA4" AND event = "purchase" EXPECT value > 0` Rule that proves the data on that hit is sound. The same split applies to consent assertions on a Journey — author the Rule there, run the flow here. (`privacy-compliance` owns whether a hit should have fired at all under a given consent state.)
-- **`account-config`** owns *audit and account setup*. Pre-audit actions, on-page actions, schedules, folders, alert routing, and the broader account structure are configuration concerns. This skill is about the Journey's *internal* mechanics; how the Journey or its sibling audits are scheduled, labeled, and alerted lives there.
+- **`account-and-program`** owns *audit and account setup*. Pre-audit actions, on-page actions, schedules, folders, alert routing, and the broader account structure are configuration concerns. This skill is about the Journey's *internal* mechanics; how the Journey or its sibling audits are scheduled, labeled, and alerted lives there.
 
 For PII canary evidence on a journey run (`scan_journey_pii`), the litigation and healthcare/financial-services patterns live with `litigation-defense` and the industry references. For the persona-led end-to-end recipes — broken purchase event, validate every release — see the shared `references/solution-playbooks.md`.
 

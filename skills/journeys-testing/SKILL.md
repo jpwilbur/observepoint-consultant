@@ -16,7 +16,7 @@ Use me when the work is about the **flow itself**: build a checkout/login/form J
 Defer when the question changes shape:
 
 - **Whether the resulting data is correct** — is the `purchase` value right, did the event fire once, is the data layer populated → the `tag-and-analytics-quality` skill. I make the event fire by driving the flow; tag-and-analytics-quality writes and reads the Rule that proves the data on that hit is sound. (For whether a hit should have fired at all under a consent state, that's `privacy-compliance`.)
-- **How to set up the audit or account** — pre-audit actions, on-page actions, schedules, folders, labels, alert routing, account structure → the `account-config` skill. I handle the Journey's internal mechanics; how it's scheduled and alerted lives there.
+- **How to set up the audit or account** — pre-audit actions, on-page actions, schedules, folders, labels, alert routing, account structure → the `account-and-program` skill. I handle the Journey's internal mechanics; how it's scheduled and alerted lives there.
 
 ## How I answer
 
