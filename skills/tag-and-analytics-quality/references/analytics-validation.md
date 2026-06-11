@@ -112,7 +112,7 @@ The pattern:
 3. Every page returned is a miss. Triage by template — a single broken page is a content issue; a whole template missing is a deploy regression.
 4. Pair with `find_coverage_gaps` for the cross-audit "what's missing across the whole property" view.
 
-The release-gate use case lives here too: a targeted audit on staging confirmation URLs, with a missing-event check, run as a CI/CD gate so a deploy that drops the `purchase` tag fails the build instead of shipping. The `api-strategy` skill owns the working CI/CD gate recipe.
+The release-gate use case lives here too: a targeted audit on staging confirmation URLs, with a missing-event check, run as a CI/CD gate so a deploy that drops the `purchase` tag fails the build instead of shipping. The `automation-and-testing` skill owns the working CI/CD gate recipe.
 
 ## 6. Attribution-parameter survival
 
@@ -156,7 +156,7 @@ When `mcp__ObservePoint__*` tools are loaded, this is the order of operations fo
 - `mcp__ObservePoint__create_rule` / `mcp__ObservePoint__update_rule` — author the Tag & Variable Rules. Pair with `mcp__ObservePoint__update_audit_rules` to actually attach the Rule to the audit (or the journey equivalent) — a Rule that exists but isn't attached evaluates nothing.
 - `mcp__ObservePoint__analyze_rule_results` — interpret Rule pass/fail across runs, so you can tell a one-run blip from a sustained regression.
 
-If no `mcp__ObservePoint__*` tools are loaded, the user doesn't have MCP access — the same reads come from the UI, and the REST recipes for Rules CRUD and the CI/CD gate live in the `api-strategy` skill plus the shared `references/mcp-tools.md`. Never invent a tool name; only call tools that actually appear.
+If no `mcp__ObservePoint__*` tools are loaded, the user doesn't have MCP access — the same reads come from the UI, and the REST recipes for Rules CRUD and the CI/CD gate live in the `automation-and-testing` skill plus the shared `references/mcp-tools.md`. Never invent a tool name; only call tools that actually appear.
 
 ## 8. Boundaries
 

@@ -35,7 +35,7 @@ When `mcp__ObservePoint__*` tools are loaded, these turn the scan into a ranked 
 - `mcp__ObservePoint__query_report` — query the `accessibility-issues` entity for the run, filter to critical/serious, then compute the priority score and sort to emit the "fix this first" queue.
 - `mcp__ObservePoint__find_anomalies` — catch accessibility-adjacent regressions: a spike in pages-with-browser-errors often precedes a missing-label finding when a rendering change breaks components.
 
-If no `mcp__ObservePoint__*` tools are loaded, the user doesn't have MCP access — fall back to the REST recipes (see the **api-strategy** skill and the shared `references/mcp-tools.md`). Never invent a tool name; only call tools that actually appear.
+If no `mcp__ObservePoint__*` tools are loaded, the user doesn't have MCP access — fall back to the REST recipes (see the **automation-and-testing** skill and the shared `references/mcp-tools.md`). Never invent a tool name; only call tools that actually appear.
 
 ## Detection and evidence, not a conformance guarantee
 

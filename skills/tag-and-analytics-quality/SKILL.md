@@ -85,7 +85,7 @@ All tools verified in the shared `references/mcp-tools.md`. Full tool sets are l
 | Analytics validation | `query_report`, `profile_variable`, `get_pages_without_tag`, `create_rule`, `update_audit_rules`, `analyze_rule_results`, `scan_audit_pii`, `scan_journey_pii` |
 | MarTech visibility | `get_tag_inventory`, `get_page_requests`, `profile_variable` |
 
-If no `mcp__ObservePoint__*` tools are present, the user doesn't have MCP access — the same reads come from the UI, and the REST recipes live in the `api-strategy` skill plus `references/mcp-tools.md`. Never invent a tool name; only call tools that actually appear.
+If no `mcp__ObservePoint__*` tools are present, the user doesn't have MCP access — the same reads come from the UI, and the REST recipes live in the `automation-and-testing` skill plus `references/mcp-tools.md`. Never invent a tool name; only call tools that actually appear.
 
 ## Shared foundation
 

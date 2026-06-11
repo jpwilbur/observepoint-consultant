@@ -56,7 +56,7 @@ Worked examples:
 
 ## 4. The live catalog — how ObservePoint feeds the judgment
 
-The judgment above is only as good as the evidence under it. ObservePoint supplies that evidence live (use the `mcp__ObservePoint__*` tools when they are loaded; otherwise the same reads are available from the UI and the REST recipes in the `api-strategy` skill — never invent a tool name). All tools below are verified in the shared `references/mcp-tools.md`.
+The judgment above is only as good as the evidence under it. ObservePoint supplies that evidence live (use the `mcp__ObservePoint__*` tools when they are loaded; otherwise the same reads are available from the UI and the REST recipes in the `automation-and-testing` skill — never invent a tool name). All tools below are verified in the shared `references/mcp-tools.md`.
 
 - **`list_tags`** — the authoritative catalog of tag *definitions*: the vendor library ObservePoint matches network requests against. This is the source of truth for "what is this tag," and it is *live*, so it outranks any static list including the curated reference in section 6. When the catalog and a static guess disagree, the catalog wins.
 - **`get_tag_inventory`** — what actually fired, and on which pages, in a given audit run. This is the population the should-it-be-here procedure runs against — the difference between "this vendor is defined" and "this vendor is on the wire here."

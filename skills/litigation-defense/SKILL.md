@@ -36,7 +36,7 @@ When `mcp__ObservePoint__*` tools are loaded, these produce the evidentiary sign
 - `mcp__ObservePoint__compare_consent_states` — the consent-state diff: which tags fire on default but not on opt-out, the central signal for pre-consent firing.
 - `mcp__ObservePoint__find_first_observed` — when a vendor first appeared in the audit history, for rebutting "you were tracking during period X" allegations.
 
-If no `mcp__ObservePoint__*` tools are loaded, the user doesn't have MCP access — fall back to the REST recipes (see the **api-strategy** skill and the shared `references/mcp-tools.md`). Never invent a tool name; only call tools that actually appear.
+If no `mcp__ObservePoint__*` tools are loaded, the user doesn't have MCP access — fall back to the REST recipes (see the **automation-and-testing** skill and the shared `references/mcp-tools.md`). Never invent a tool name; only call tools that actually appear.
 
 ## Shared foundation
 

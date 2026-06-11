@@ -126,7 +126,7 @@ For the consent-state mechanics — pre-audit `privacyoptout` actions, `blockThi
 
 ## 8. The admin/config MCP tools
 
-When `mcp__ObservePoint__*` tools are loaded, prefer the typed wrappers over `op_api_call` — they encode the schedule sanitization, two-step CMP import, and consent-assignment safety gates. All verified in `references/mcp-tools.md`; if no `mcp__ObservePoint__*` tools are present, the same setup is the UI click-path, with REST recipes in the `api-strategy` skill. Never invent a tool name.
+When `mcp__ObservePoint__*` tools are loaded, prefer the typed wrappers over `op_api_call` — they encode the schedule sanitization, two-step CMP import, and consent-assignment safety gates. All verified in `references/mcp-tools.md`; if no `mcp__ObservePoint__*` tools are present, the same setup is the UI click-path, with REST recipes in the `automation-and-testing` skill. Never invent a tool name.
 
 **Identity and impersonation (admin/CSM):**
 
@@ -175,7 +175,7 @@ The end-to-end shape for "set up `shop.example.com` for CCPA," as a CSM configur
 7. **Schedule and route.** `build_schedule(presetName="daily", …)` → `update_audit`; `create_alert` routing the consent-leak Rule to `#privacy-alerts`.
 8. **Label and hand off.** `set_audit_labels` with `ccpa` + `tier-1`; `stop_impersonation`.
 
-Without MCP this is the same sequence as a UI click-path; the REST equivalents live in the `api-strategy` skill.
+Without MCP this is the same sequence as a UI click-path; the REST equivalents live in the `automation-and-testing` skill.
 
 ---
 

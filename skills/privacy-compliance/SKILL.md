@@ -63,7 +63,7 @@ When `mcp__ObservePoint__*` tools are loaded, these do the compliance-evidence w
 - `mcp__ObservePoint__get_request_privacy_report` — the vendor / cross-border evidence artifact: who receives data and where it routes.
 - `mcp__ObservePoint__start_onetrust_consent_category_import` → `mcp__ObservePoint__poll_onetrust_consent_category_import` → `mcp__ObservePoint__sync_onetrust_consent_categories` — the three-step OneTrust category import, dryRun-first.
 
-If no `mcp__ObservePoint__*` tools are loaded in the session, the user doesn't have MCP access — fall back to the REST recipes (see the **api-strategy** skill and the shared `references/mcp-tools.md`). Never invent a tool name; only call tools that actually appear.
+If no `mcp__ObservePoint__*` tools are loaded in the session, the user doesn't have MCP access — fall back to the REST recipes (see the **automation-and-testing** skill and the shared `references/mcp-tools.md`). Never invent a tool name; only call tools that actually appear.
 
 ## Shared foundation
 
