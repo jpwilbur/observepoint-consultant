@@ -3,7 +3,7 @@
 
 Discovers every skills/*/SKILL.md. Validates each skill's frontmatter and body
 size, footers on every reference across all skills, the removed-tool guard and
-casing across all skills + commands, and cross-reference resolution that accepts
+casing across all skills, and cross-reference resolution that accepts
 either the owning skill's own references/ or the shared meta-skill references/.
 Exit 0 on success, 1 on any failure. --staleness-days N prints (does not fail)
 references older than N days.
