@@ -4,7 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.6.0] — 2026-06-10
+## [0.6.1] — 2026-06-10
+
+MCP tool-catalog refresh. No roster or skill-structure changes.
+
+### Changed
+
+- **Refreshed `references/mcp-tools.md`** (the shared MCP catalog) with newer live tools, each sourced from its real tool schema: **charting** (`add_report_chart`, `remove_report_chart`), **report templates** (`list_report_templates`, `create_report_from_template`), **bulk operations** (`bulk_create`/`update`/`delete`/`assign`/`describe`), **Site Census** scoping (admin: `start`/`size`/`sample_site_census_pages`/`list`/`create`/`update`/`delete_site_censuses`), the **HAR Analyzer** (`summarize_har_file`, `upload_har_file`, `create_har_config`, `update_har_config_rules`, `get_har_run_status`/`results`, `list_har_configs`), **account governance & event log** (`get_account_health`, `get_audits_status`, `query_user_events`, `review_account_access`, `get_user`), plus `reprocess_audit_rules`, `analyze_journey_failures`, `update_journey_rules`, `stop_journey`, `find_item`, and the admin-impersonation write-arming gate (`confirm_account_plan`) with an operating doctrine. Tool count note raised to 160+; new common-pattern recipes (reprocess-after-rule-change, mobile HAR validation, bulk-create, add-a-chart, Site Census sizing).
+- **Charting is now in the MCP** — corrected the previously-pending "charting is an extension point / not yet exposed" framing in `account-and-program`'s SKILL.md and `references/reporting-and-charting.md` to document `add_report_chart`/`remove_report_chart` (a chart rides an existing saved report's query; `get_saved_report` first; dashboards remain UI-composed).
+
+
 
 The "advisor consolidation" release. The 14 customer-facing specialists are consolidated into a hub plus **6 broad advisors**, and the plugin is now cleanly customer-facing and pricing-free.
 
