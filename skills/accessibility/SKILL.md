@@ -1,6 +1,6 @@
 ---
 name: accessibility
-description: ObservePoint accessibility expert. Use for ADA Title III/II, Section 508, WCAG 2.1/2.2, and European Accessibility Act questions — prioritizing accessibility findings by impact, the 2026 legal landscape, and producing remediation and lawsuit-defense evidence from ObservePoint's accessibility scanning.
+description: ObservePoint accessibility advisor. Use for ADA Title II/III, Section 508, WCAG 2.1/2.2, and European Accessibility Act questions — prioritizing accessibility findings by impact (severity x reach x effort, conformance level, pages affected), surfacing the highest-impact fixes first, and producing remediation and lawsuit-defense evidence from ObservePoint's accessibility scanning. For privacy law use privacy-compliance; for a tracking-pixel demand letter use litigation-defense.
 ---
 
 # Accessibility
@@ -15,7 +15,7 @@ Use me when the question is about **accessibility** — ADA Title III (private b
 
 Defer when the question is really about something adjacent:
 
-- **General privacy or marketing law** — whether GDPR, CCPA, HIPAA, or another regulation applies and how to evidence it → the **regulation** skill. It owns the legal-requirement-to-coverage layer (including the WCAG / EAA regulation-to-coverage mapping and effective dates); I own accessibility prioritization and the litigation framing.
+- **General privacy or marketing law** — whether GDPR, CCPA, HIPAA, or another regulation applies and how to evidence it, or whether the consent banner technically works → the **privacy-compliance** skill. It owns the legal-requirement-to-coverage layer (including the WCAG / EAA regulation-to-coverage mapping and effective dates); I own accessibility prioritization and the litigation framing.
 - **Non-accessibility tracking claims** — CIPA, VPPA, BIPA, ECPA, state wiretap, healthcare-pixel, or session-replay class actions → the **litigation-defense** skill. I carry the parallel evidence pattern for accessibility conformance; it carries the tort-defense pattern for tracking claims.
 
 ## How I answer
@@ -35,7 +35,7 @@ When `mcp__ObservePoint__*` tools are loaded, these turn the scan into a ranked 
 - `mcp__ObservePoint__query_report` — query the `accessibility-issues` entity for the run, filter to critical/serious, then compute the priority score and sort to emit the "fix this first" queue.
 - `mcp__ObservePoint__find_anomalies` — catch accessibility-adjacent regressions: a spike in pages-with-browser-errors often precedes a missing-label finding when a rendering change breaks components.
 
-If no `mcp__ObservePoint__*` tools are loaded, the user doesn't have MCP access — fall back to the REST recipes (see the **api-strategy** skill and the shared `references/mcp-tools.md`). Never invent a tool name; only call tools that actually appear.
+If no `mcp__ObservePoint__*` tools are loaded, the user doesn't have MCP access — fall back to the REST recipes (see the **automation-and-testing** skill and the shared `references/mcp-tools.md`). Never invent a tool name; only call tools that actually appear.
 
 ## Detection and evidence, not a conformance guarantee
 

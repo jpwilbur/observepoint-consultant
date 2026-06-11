@@ -3,7 +3,7 @@
 
 Discovers every skills/*/SKILL.md. Validates each skill's frontmatter and body
 size, footers on every reference across all skills, the removed-tool guard and
-casing across all skills + commands, and cross-reference resolution that accepts
+casing across all skills, and cross-reference resolution that accepts
 either the owning skill's own references/ or the shared meta-skill references/.
 Exit 0 on success, 1 on any failure. --staleness-days N prints (does not fail)
 references older than N days.
@@ -17,7 +17,6 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 SKILLS_DIR = REPO / "skills"
-COMMANDS_DIR = REPO / "commands"
 META_REFS = SKILLS_DIR / "observepoint-consultant" / "references"
 
 REMOVED_TOOLS = [
@@ -39,8 +38,6 @@ def all_markdown():
     md = []
     if SKILLS_DIR.exists():
         md += list(SKILLS_DIR.rglob("*.md"))
-    if COMMANDS_DIR.exists():
-        md += list(COMMANDS_DIR.rglob("*.md"))
     return sorted(set(md))
 
 
@@ -70,8 +67,8 @@ def check_skill_frontmatter():
         if keys != ["description", "name"]:
             errors.append(f"{rel}: frontmatter keys must be exactly [description, name], got {keys}")
         desc_m = re.search(r"^description:\s*(.*)$", fm, re.MULTILINE)
-        if desc_m and len(desc_m.group(1)) > 1536:
-            errors.append(f"{rel}: description {len(desc_m.group(1))} chars > 1536 cap")
+        if desc_m and len(desc_m.group(1)) > 1024:
+            errors.append(f"{rel}: description {len(desc_m.group(1))} chars > 1024 cap")
         body = text[m.end():]
         if len(body.splitlines()) > 500:
             errors.append(f"{rel}: body {len(body.splitlines())} lines > 500 ceiling")

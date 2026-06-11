@@ -6,7 +6,7 @@ Alphabetical. Cross-references in **bold**.
 
 ## A
 
-**AADC (Age Appropriate Design Code).** California law (2022) requiring default high-privacy settings for users likely under 18. Significant 9th Circuit injunction since 2024 has blocked enforcement of many provisions; partial revival in 2026. See the **regulation** skill.
+**AADC (Age Appropriate Design Code).** California law (2022) requiring default high-privacy settings for users likely under 18. Significant 9th Circuit injunction since 2024 has blocked enforcement of many provisions; partial revival in 2026. See the **privacy-compliance** skill.
 
 **Accessibility Highlight Report.** An ObservePoint report (new in 2026) that surfaces WCAG 2.1 AA violations by severity and type. Companion to the broader Accessibility Report.
 
@@ -40,7 +40,7 @@ Alphabetical. Cross-references in **bold**.
 
 **CIPA (California Invasion of Privacy Act).** Cal. Penal Code §§ 631, 632, 638.51. California's wiretap and pen-register statutes. Drives the dominant 2024-2026 tracking-pixel class-action wave (1,000+ filings annually) via the pen-register theory applied to session-replay vendors and chat-pixel handoffs. See the `litigation-defense` skill.
 
-**Churn.** The loss of a customer at or before renewal. In the CSM context, the outcome the account-health and renewal motions exist to prevent. The leading churn signal in a web-governance program is a healthy operation with no executive sponsor to defend it at budget time. See the `account-health` skill.
+**Churn.** The loss of a customer at or before renewal. In the CSM context, the outcome the program health and renewal motions exist to prevent. The leading churn signal in a web-governance program is a healthy operation with no executive sponsor to defend it at budget time. See the `account-and-program` skill.
 
 **CMP (Consent Management Platform).** The system that captures user consent and signals it to tags. Examples: OneTrust, Cookiebot, TrustArc, Didomi, Sourcepoint.
 
@@ -60,7 +60,7 @@ Alphabetical. Cross-references in **bold**.
 
 **Data Act (EU).** EU regulation, fully applicable September 12 2025. Primarily B2B — covers user access to data from connected products and cloud-switching protections. Limited website-tracking applicability.
 
-**Data downtime.** Borrowed from the data-observability field: the periods when data is missing, wrong, or untrustworthy — the analytics equivalent of system downtime. The cost web governance reduces by catching broken or misfiring tracking before it corrupts the reports. A useful framing for Chief Data Officers and in ROI narratives. See the `roi` skill.
+**Data downtime.** Borrowed from the data-observability field: the periods when data is missing, wrong, or untrustworthy — the analytics equivalent of system downtime. The cost web governance reduces by catching broken or misfiring tracking before it corrupts the reports. A useful framing for Chief Data Officers and in ROI narratives.
 
 **Data layer.** A standardized JavaScript object on a page that holds structured information about the user, the page, and events. Tag managers read from it. ObservePoint validates it.
 
@@ -172,7 +172,7 @@ Alphabetical. Cross-references in **bold**.
 
 ## Q
 
-**QBR (Quarterly Business Review).** The recurring strategic review between a CSM (or program owner) and the customer's executive sponsor — what the program caught and prevented, how fast it detected and resolved, where coverage expands next. The cadence that keeps a mature program executive-owned and renewal-ready. Template in `references/consulting-deliverables.md`; cadence in the `account-health` skill.
+**QBR (Quarterly Business Review).** The recurring strategic review between a CSM (or program owner) and the customer's executive sponsor — what the program caught and prevented, how fast it detected and resolved, where coverage expands next. The cadence that keeps a mature program executive-owned and renewal-ready. Template in `references/consulting-deliverables.md`; cadence in the `account-and-program` skill.
 
 **Quebec Law 25.** Quebec's modernized private-sector privacy law (fully effective September 2024). Stricter than federal PIPEDA on consent, transparency, and automated decision-making. Up to CAD $10M or 2% global turnover penalties.
 
@@ -204,7 +204,7 @@ Alphabetical. Cross-references in **bold**.
 
 **TCF (Transparency and Consent Framework).** The IAB's standard for encoding consent strings. **TCF 2.3** is the current version; non-compliant strings became invalid February 28, 2026.
 
-**TCO (total cost of ownership).** The full cost of a capability across people, tooling, and incident fallout — not just the line-item price. In a web-governance ROI narrative, the relevant comparison is the TCO of an undetected incident (lost conversion data, a reportable consent leak, an accessibility lawsuit) against the cost of catching it early. Used for value framing only; this skill does not discuss ObservePoint pricing. See the `roi` skill.
+**TCO (total cost of ownership).** The full cost of a capability across people, tooling, and incident fallout — not just the line-item price. In a web-governance ROI narrative, the relevant comparison is the TCO of an undetected incident (lost conversion data, a reportable consent leak, an accessibility lawsuit) against the cost of catching it early. Used for value framing only; this skill does not discuss ObservePoint pricing.
 
 **TMS (Tag Management System).** GTM, Tealium iQ, Adobe Launch, Ensighten, etc. ObservePoint is vendor-neutral across TMS choices.
 

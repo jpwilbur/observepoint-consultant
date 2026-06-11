@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0] — 2026-06-10
+
+The "advisor consolidation" release. The 14 customer-facing specialists are consolidated into a hub plus **6 broad advisors**, and the plugin is now cleanly customer-facing and pricing-free.
+
+### Changed — BREAKING
+
+- **14 specialists → 6 advisors.** `regulation` + `consent-cmp` → **`privacy-compliance`**; `tags` + `analytics-validation` + `martech` → **`tag-and-analytics-quality`**; `account-config` + `account-health` + `reporting-charting` → **`account-and-program`**; `api-strategy` + `journeys-testing` → **`automation-and-testing`**; `litigation-defense` and `accessibility` keep their names. Each advisor absorbs its predecessors' deep references as sub-sections. **The old specialist invocation names (`/observepoint-consultant:regulation`, `:martech`, `:tags`, `:account-config`, etc.) no longer exist.** Auto-trigger-by-description is unchanged, so users who never typed a specialist name are unaffected; the picker drops from 22 entries to 7.
+- **Removed `roi` and `content-creation`** from this plugin; they move to a separate internal revenue plugin. This plugin is now pricing-free and purely customer-facing.
+- **Removed the 7 `op-*` slash commands**; their MCP workflow recipes are folded into the matching advisors' references (e.g. the compliance quick-check into `privacy-compliance`, the evidence-pack workflow into `litigation-defense`, the account diagnostics into `account-and-program`).
+
+### Changed — standards
+
+- Validator (`scripts/quick_validate.py`) description ceiling tightened 1536 → 1024 chars (the skill-spec limit); the `commands/` directory and its validator plumbing are removed.
+- `evals/evals.json` remapped to the 6 advisors with new merge-boundary disambiguation cases.
+
 ## [0.5.2] — 2026-06-05
 
 Documentation correction. No skill content changes.

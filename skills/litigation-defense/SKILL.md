@@ -1,6 +1,6 @@
 ---
 name: litigation-defense
-description: ObservePoint tracking-litigation defense expert. Use when the user has received or is preparing for a class action or demand letter over website tracking — CIPA pen-register, VPPA video pixels, BIPA biometric, ECPA/federal Wiretap, state wiretap statutes, healthcare-pixel, or session-replay claims — and needs the technical evidence ObservePoint produces. Technical evidence, not legal advice; coordinate with counsel.
+description: ObservePoint tracking-litigation defense advisor. Use when the user has received or is preparing for a class action or demand letter over website tracking — CIPA pen-register, VPPA video pixels, BIPA biometric, ECPA / federal Wiretap, state wiretap statutes, healthcare-pixel, or session-replay claims — and needs the technical evidence ObservePoint produces (request and cookie data flows, video-pixel detection, PHI-bearing URLs, a defensible audit-history timeline). Technical findings to hand to counsel, not legal advice. For whether a privacy law applies in general use privacy-compliance; for accessibility lawsuits use accessibility.
 ---
 
 # Tracking-litigation defense
@@ -15,8 +15,7 @@ Use me when the user describes a **litigation scenario** rather than a complianc
 
 Defer when the question is really about something adjacent:
 
-- **What the law requires / whether it applies** (GDPR, CCPA, HIPAA as a compliance obligation, jurisdiction mapping) → the **regulation** skill. It owns the legal-requirement-to-coverage layer; I own the tort-defense evidence frame.
-- **Whether the consent banner technically works** (CMP detection, did Reject All actually suppress tags, banner wiring) → the **consent-cmp** skill. I cite consent as an evidentiary signal; consent-cmp proves the mechanics.
+- **What the law requires / whether it applies** (GDPR, CCPA, HIPAA as a compliance obligation, jurisdiction mapping, or whether the consent banner technically works) → the **privacy-compliance** skill. It owns the legal-requirement-to-coverage layer and the consent-mechanics layer; I own the tort-defense evidence frame.
 - **Accessibility / ADA Title III demand letters** → the **accessibility** skill. It carries the parallel tort-defense pattern for accessibility conformance evidence.
 
 ## How I answer
@@ -37,7 +36,7 @@ When `mcp__ObservePoint__*` tools are loaded, these produce the evidentiary sign
 - `mcp__ObservePoint__compare_consent_states` — the consent-state diff: which tags fire on default but not on opt-out, the central signal for pre-consent firing.
 - `mcp__ObservePoint__find_first_observed` — when a vendor first appeared in the audit history, for rebutting "you were tracking during period X" allegations.
 
-If no `mcp__ObservePoint__*` tools are loaded, the user doesn't have MCP access — fall back to the REST recipes (see the **api-strategy** skill and the shared `references/mcp-tools.md`). Never invent a tool name; only call tools that actually appear.
+If no `mcp__ObservePoint__*` tools are loaded, the user doesn't have MCP access — fall back to the REST recipes (see the **automation-and-testing** skill and the shared `references/mcp-tools.md`). Never invent a tool name; only call tools that actually appear.
 
 ## Shared foundation
 

@@ -62,7 +62,7 @@ EXPECT tag "Google Analytics 4" event "purchase" fires exactly once
 
 **ObservePoint approach.** REST API integration into CI/CD. A targeted audit on staging URLs runs as a release gate.
 
-**Recipe.** The `api-strategy` skill carries the working CI/CD gate recipe ("Recipe: CI/CD gate with GitHub Actions").
+**Recipe.** The `automation-and-testing` skill carries the working CI/CD gate recipe ("Recipe: CI/CD gate with GitHub Actions").
 
 **Alert routing.** Block the release. Fail the build.
 
@@ -313,7 +313,7 @@ When a customer has received a demand letter, class-action filing, or discovery 
 **ObservePoint approach.**
 
 1. Identify which states the customer operates in (where it processes residents' data) — this is a legal question, not a technical one. Ask counsel for the list.
-2. For each state, check the U.S. state matrix in the **regulation** skill — note whether GPC is required, opt-in vs. opt-out for sensitive data, and any distinctive features (e.g., NIST-aligned-program defense in Tennessee, MHMDA-style strict consent for health data in Washington).
+2. For each state, check the U.S. state matrix in the **privacy-compliance** skill — note whether GPC is required, opt-in vs. opt-out for sensitive data, and any distinctive features (e.g., NIST-aligned-program defense in Tennessee, MHMDA-style strict consent for health data in Washington).
 3. Use `setup_compliance_monitoring(regulation="ccpa", domain=...)` as the starting template — it produces the three-audit (default + opt-out + GPC) shape that fits most state laws. Adjust the consent banner copy and the opt-out path per state.
 4. For states without GPC recognition (Virginia, Utah, Iowa, Indiana, Kentucky), skip the GPC variant — just default + opt-out.
 5. Schedule weekly; route alerts per region to the responsible team.
@@ -390,7 +390,7 @@ For existing customers — reading whether the account is on track and building 
 
 **Persona.** Customer Success Manager or consultant.
 
-**ObservePoint approach.** Run the account-health diagnostic from the `account-health` skill: read breadth and usage (`get_usage_overview`, `get_usage_trends`, `list_audits`), whether what exists is working (`get_audit_health`), what's missing (`find_coverage_gaps`), and whether alerts and saved reports exist (`list_alerts`, `list_saved_reports`). Map the readings to a maturity stage (also in the `account-health` skill) and the stuck-pattern it implies.
+**ObservePoint approach.** Run the account-health diagnostic from the `account-and-program` skill: read breadth and usage (`get_usage_overview`, `get_usage_trends`, `list_audits`), whether what exists is working (`get_audit_health`), what's missing (`find_coverage_gaps`), and whether alerts and saved reports exist (`list_alerts`, `list_saved_reports`). Map the readings to a maturity stage (also in the `account-and-program` skill) and the stuck-pattern it implies.
 
 **Workflow.** Diagnose → identify the single biggest gap (most often "Rules but no alerts" or "program but no exec sponsor") → produce a prioritized action list, highest-leverage first.
 
@@ -404,7 +404,7 @@ For existing customers — reading whether the account is on track and building 
 
 **Persona.** Customer Success Manager, for the customer's budget owner / executive sponsor.
 
-**ObservePoint approach.** Assemble the value story with the `roi` skill: pull the period's incidents-caught, regressions-detected, vendors-inventoried, compliance-evidence, and accessibility-progress numbers (via `query_report`, `get_usage_trends`, run history), then frame them against a metric the budget owner already owns. Package as the Value Snapshot and Renewal Narrative from `references/consulting-deliverables.md`. No pricing.
+**ObservePoint approach.** Pull the period's incidents-caught, regressions-detected, vendors-inventoried, compliance-evidence, and accessibility-progress numbers (via `query_report`, `get_usage_trends`, run history), then frame them against a metric the budget owner already owns. Package as the Value Snapshot and Renewal Narrative from `references/consulting-deliverables.md`. No pricing.
 
 **Workflow.** Pull the numbers → frame in the budget owner's terms → produce the Value Snapshot (the numbers) and the Renewal Narrative (the before/after arc by maturity stage).
 

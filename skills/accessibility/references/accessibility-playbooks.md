@@ -2,7 +2,7 @@
 
 Load this file when the user needs to prioritize accessibility findings, asks about ADA / Section 508 / European Accessibility Act obligations, wants the "highest-impact fix first" on a site full of violations, or runs the `/op-accessibility-priorities` command. It also covers what to do when a customer receives an ADA Title III demand letter and needs technical evidence.
 
-This is the operational companion to the WCAG / European Accessibility Act entry in the **regulation** skill. That file carries the regulation-to-coverage mapping and the effective dates; this file carries the litigation framing, the impact-prioritization scoring, the violation-remediation catalog, and the MCP-tool workflows that turn a raw scan into a ranked work queue. Read both together; this file does not restate the dates.
+This is the operational companion to the WCAG / European Accessibility Act entry in the **privacy-compliance** skill. That file carries the regulation-to-coverage mapping and the effective dates; this file carries the litigation framing, the impact-prioritization scoring, the violation-remediation catalog, and the MCP-tool workflows that turn a raw scan into a ranked work queue. Read both together; this file does not restate the dates.
 
 The job is almost never "fix everything." A real site produces hundreds to thousands of automated findings, and they are not equal — a missing form label on the checkout button matters far more than a low-contrast caption on an archived blog post. The value this playbook adds is the ranking: severity times traffic-weighted exposure times affected-population impact, so the team works the queue in the order that reduces the most user harm and the most legal exposure per hour spent.
 
@@ -18,7 +18,7 @@ The job is almost never "fix everything." A real site produces hundreds to thous
 
 ## Accessibility legal landscape (2026)
 
-There is no single federal web-accessibility statute in the United States, yet web accessibility is one of the most-litigated areas of digital compliance. The pressure comes from several directions at once, and the through-line is WCAG: even where no law names it, courts and regulators treat WCAG 2.1 AA as the de-facto technical standard. For the conformance-level definitions and the European Accessibility Act effective date, see the WCAG / EAA entry in the **regulation** skill; the framing below is the litigation and enforcement layer that file does not cover.
+There is no single federal web-accessibility statute in the United States, yet web accessibility is one of the most-litigated areas of digital compliance. The pressure comes from several directions at once, and the through-line is WCAG: even where no law names it, courts and regulators treat WCAG 2.1 AA as the de-facto technical standard. For the conformance-level definitions and the European Accessibility Act effective date, see the WCAG / EAA entry in the **privacy-compliance** skill; the framing below is the litigation and enforcement layer that file does not cover.
 
 **ADA Title III (private businesses).** Title III of the Americans with Disabilities Act bars discrimination in places of "public accommodation." There is no federal regulation specifying a web standard, so courts have filled the gap by applying WCAG 2.1 AA as the measuring stick. The result is a sustained serial-litigation wave: thousands of demand letters and federal complaints filed every year, concentrated in a handful of plaintiff-friendly jurisdictions, often targeting retail, hospitality, and consumer-services sites. Many resolve as quick settlements because litigating is more expensive than remediating — which is exactly why a defensible remediation record matters.
 
@@ -26,7 +26,7 @@ There is no single federal web-accessibility statute in the United States, yet w
 
 **Section 508.** Section 508 of the Rehabilitation Act requires federal agencies' electronic and information technology to be accessible, incorporating WCAG 2.1 AA as the technical standard. It reaches federal agencies directly and flows down to contractors and vendors selling into the federal government through procurement requirements (the Accessibility Conformance Report / VPAT is the standard artifact). A vendor that wants federal business needs conformance evidence for its own product, not just the agency's site.
 
-**European Accessibility Act (EAA).** Effective June 28 2025, the EAA extends accessibility obligations across the EU to a defined set of products and services (e-commerce, banking, e-books, transport ticketing, and more), with WCAG-aligned technical requirements via the EN 301 549 standard. For the date and scope detail, cross-reference the **regulation** skill; the operational motion is the same WCAG scan, applied to in-scope EU services.
+**European Accessibility Act (EAA).** Effective June 28 2025, the EAA extends accessibility obligations across the EU to a defined set of products and services (e-commerce, banking, e-books, transport ticketing, and more), with WCAG-aligned technical requirements via the EN 301 549 standard. For the date and scope detail, cross-reference the **privacy-compliance** skill; the operational motion is the same WCAG scan, applied to in-scope EU services.
 
 **State laws amplifying the ADA.** Several states add statutory teeth on top of the federal ADA. California's Unruh Civil Rights Act is the most consequential: it ties to ADA violations and provides statutory minimum damages (per the statute, a floor per violation) plus attorney's fees, which is what makes California a hotspot for accessibility filings. New York's accessibility case law is similarly active under state and city human-rights provisions. The pattern: the ADA supplies the standard, the state law supplies the damages, and that combination drives the volume.
 
@@ -179,6 +179,52 @@ This section parallels the tort-defense pattern in the `litigation-defense` skil
 5. The manual-testing record (from the customer's accessibility team) that pairs with the automated scan — because automation alone does not prove conformance.
 
 **Frame it honestly.** The evidence shows a good-faith, documented, improving remediation program and the current technical state. It does not — and ObservePoint should never claim it does — prove WCAG or ADA *conformance*, guarantee a litigation outcome, or substitute for manual and assistive-technology testing. ObservePoint detects the machine-testable subset and produces the technical record; counsel and accessibility experts build the defense around it. The strongest position is the customer who can show they were already scanning, already prioritizing by impact, and already remediating before the letter arrived.
+
+## Workflow: impact-prioritizing accessibility findings
+
+Use this workflow when accessibility findings are available — either via the ObservePoint MCP server or from an existing report the user has opened. The goal is a ranked "fix this first" queue, not a flat dump of violations.
+
+**1. Discover the columns before querying.** Grid-report column names vary by entity type; guessing wastes a round trip. Run `get_report_schema` first:
+
+```
+mcp__ObservePoint__get_report_schema(entityType="accessibility-issues", search="severity")
+```
+
+Re-run with `search="page"` and `search="wcag"` to find the URL and criterion columns. Use the exact column names returned in all subsequent queries.
+
+**2. Pull the accessibility findings.** Query the `accessibility-issues` entity for the relevant audit run, filtering to critical and serious to keep the initial queue focused on findings that cause real user harm:
+
+```
+mcp__ObservePoint__query_report(
+  entityType="accessibility-issues",
+  auditId=<auditId>,
+  runId=<runId>,
+  columns=[<severity_col>, <wcagCriterion_col>, <pageUrl_col>, ...],
+  filters={ <severity_col> in ["critical", "serious"] }
+)
+```
+
+**3. Apply severity x reach x effort + WCAG conformance-level ranking.** For each finding, compute the priority score:
+
+```
+priority_score = severity_weight x page_exposure_weight x population_impact_weight
+```
+
+Weights per the Impact-prioritization framework above: severity (critical = 10, serious = 6, moderate = 3, minor = 1); page exposure (tier-1 templates = 5, tier-2 = 3, tier-3 = 1); population impact (blocks essential/transactional task = 3, important task = 2, informational = 1). When two items score close, break the tie by remediation effort — prefer the fix that removes user harm sooner. WCAG conformance level is a secondary ranking signal: Level A failures rank ahead of Level AA failures at the same priority score.
+
+**4. Return highest-impact fixes first.** Emit a ranked queue. Each row must carry:
+
+- The violation type
+- The WCAG success criterion (e.g., 4.1.2 Name, Role, Value — Level A)
+- The affected scope (which templates / how many pages)
+- The priority score (showing the `severity x exposure x population` math)
+- The remediation step
+
+Treat critical and serious findings on tier-1 templates (checkout, forms, primary navigation, sign-in) as the release gate; everything else becomes a managed backlog worked down over time.
+
+### If the ObservePoint MCP server is not connected
+
+Do not fabricate accessibility findings. Explain that pulling live issues requires the MCP server, then walk through the manual version: open the Accessibility Report (or Accessibility Highlight Report) in the ObservePoint UI, filter to critical and serious severity, group by page template, and apply the severity x reach x effort scoring manually to the rows visible in the report. The impact-prioritization framework in this file — severity weights, page-exposure tiers, population-impact weights, and the priority-score formula — applies identically whether the data comes from a live MCP query or a report the user has open in the app.
 
 ---
 

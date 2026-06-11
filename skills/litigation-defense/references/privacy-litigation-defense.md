@@ -33,7 +33,7 @@ Walk the user through:
 3. **How to assemble the evidence pack for counsel.** Audit configurations, Rule history, run history with timestamps, exception log, change log — see the [Producing the evidence pack for litigation](#producing-the-evidence-pack-for-litigation) section at the end.
 4. **What the evidence does and doesn't prove.** Honest framing — ObservePoint can produce strong "we detected and remediated" evidence, but it cannot defeat liability on its own.
 
-Cross-reference the **regulation** skill for the comprehensive privacy laws that may run parallel to a tort claim (e.g., CCPA / CPRA on top of CIPA), and `references/mcp-tools.md` for the specific MCP wrappers — especially `scan_audit_pii`, `scan_journey_pii`, `compare_consent_states`, `find_anomalies`, and `find_first_observed`.
+Cross-reference the **privacy-compliance** skill for the comprehensive privacy laws that may run parallel to a tort claim (e.g., CCPA / CPRA on top of CIPA) and for consent-banner evidence (did Reject-All actually block the pixel), and `references/mcp-tools.md` for the specific MCP wrappers — especially `scan_audit_pii`, `scan_journey_pii`, `compare_consent_states`, `find_anomalies`, and `find_first_observed`.
 
 ## CIPA — California Invasion of Privacy Act
 
@@ -165,7 +165,7 @@ EXPECT
 
 **The wave.** Hundreds of class actions filed against hospital systems, healthcare-adjacent retailers, telehealth platforms, and pharmacy chains since 2023. The pattern: Meta Pixel or Google Analytics on a patient-facing page (appointment booking, prescription refill, symptom checker, condition information, find-a-doctor) transmits the URL — which constitutes PHI when paired with an IP address — to the third party. OCR has issued substantial settlements; private litigation has produced multi-million-dollar settlements as well.
 
-**What ObservePoint detects.** This is the strongest current ObservePoint defensive use case. See the HIPAA section in the **regulation** skill for the audit setup. Additional litigation-specific signals:
+**What ObservePoint detects.** This is the strongest current ObservePoint defensive use case. See the HIPAA section in the **privacy-compliance** skill for the audit setup. Additional litigation-specific signals:
 
 - **Historical pixel firing.** Audit run history showing what fired on which patient-facing URLs on what date. When the complaint alleges a specific date range, this is the central rebuttal data.
 - **`scan_audit_pii` with healthcare-context customRegex.** Detect not just generic PII patterns but customer-specific identifiers (member IDs, MRNs, appointment confirmation numbers).
@@ -214,6 +214,28 @@ When counsel asks for the technical record, assemble:
 - A "reasonable practices" narrative (drafted by counsel, supported by the appendix) — how the customer's audit + remediation process compares to industry practice.
 
 The package goes to counsel. ObservePoint produces the technical record; counsel uses it as part of a broader litigation defense.
+
+## Workflow: assembling a technical evidence pack
+
+Use this workflow when the user states a specific statute or theory and a domain under scrutiny. Every artifact produced is technical findings for counsel — not a legal conclusion or outcome promise.
+
+**1. Identify the statute or theory.** From the user's description, locate the relevant section above (CIPA, VPPA, BIPA, ECPA, state wiretap, healthcare-pixel, or session-replay). Note the specific evidentiary signals that matter for that theory: pen-register / wiretap data flows for CIPA and state wiretap; video-pixel payload inspection for VPPA; biometric-vendor presence and capture evidence for BIPA; PHI-bearing URL detection for healthcare-pixel; session-replay vendor presence and form-field masking for session-replay claims.
+
+**2. Identify the evidentiary signals.** For the claimed statute, identify which ObservePoint outputs are most relevant:
+
+- **Data flows and vendor presence** — Domains & Geo Privacy Report from the relevant audit; `mcp__ObservePoint__compare_consent_states` for the pre-consent vs. post-consent diff.
+- **Video-pixel detection** — audit scoped to video-bearing URL patterns; `mcp__ObservePoint__get_page_requests` on those pages to surface the pixel payload.
+- **PHI-bearing URLs** — `mcp__ObservePoint__scan_audit_pii` with healthcare-context `customRegex` patterns; URL patterns that include condition names, appointment paths, or member identifiers.
+- **Timeline anchors** — `mcp__ObservePoint__find_first_observed` to date when the named vendor first appeared; audit run history to place the vendor's presence during the alleged period.
+
+**3. Determine which audits, Rules, Privacy Reports, and PII scans to run and export.**
+
+- Confirm a Web Audit covering the relevant URL scope is configured and has run history covering the alleged period. If not, set one up immediately and flag that historical evidence will only go back to when the audit starts running.
+- Attach `WHEN/EXPECT` Rules for the named vendor asserting no pre-consent firing (see statute-specific Rule templates above).
+- Run `mcp__ObservePoint__scan_audit_pii` (site-wide) and `mcp__ObservePoint__scan_journey_pii` (on the specific flows named in the complaint) for the relevant period.
+- Export via `mcp__ObservePoint__export_report`: the rule-summary entity for Rule pass/fail history; the network-requests entity for the named vendor's actual request payloads; the Domains & Geo Privacy Report for the vendor inventory.
+
+**4. Preserve audit history as a defensible timeline.** The run history is the defensible timeline — each run is timestamped and shows what fired, what Rules passed or failed, and when. Assemble the pack as described in [Producing the evidence pack for litigation](#producing-the-evidence-pack-for-litigation): audit definitions, Rules library, run history with pass/fail, exception log, change log, PII scan output, and vendor inventory. Frame every item as: "on date X, the audit detected Y; on date Z, remediation was applied." The "reasonable practices" narrative belongs to counsel; the technical record belongs to ObservePoint.
 
 ---
 

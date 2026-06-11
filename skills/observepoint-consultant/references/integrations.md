@@ -132,7 +132,7 @@ The shape of every entry: **what the integration does**, **the auth model**, **t
 
 ### GitHub Actions
 
-**What it does.** Run audits as a release gate. The `api-strategy` skill carries a working workflow ("Recipe: CI/CD gate with GitHub Actions").
+**What it does.** Run audits as a release gate. The `automation-and-testing` skill carries a working workflow ("Recipe: CI/CD gate with GitHub Actions").
 
 **Auth.** ObservePoint API key in a repository secret.
 

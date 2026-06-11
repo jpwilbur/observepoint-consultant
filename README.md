@@ -6,45 +6,23 @@ Type `/observepoint-consultant` in Claude Code (or any Claude Code-compatible cl
 
 ## What it knows
 
-The plugin ships as **a hub skill plus 14 focused specialists**. The `observepoint-consultant` hub is a thin router and shared foundation — when a question is squarely in one specialist's lane it hands off to that skill; when a question spans domains or sits above any single lane, the hub answers it directly. Each specialist owns its own deep reference; the shared foundation (~11 files: products, MCP tools, verbiage, limitations, glossary, competitive positioning, personas, consulting deliverables, solution playbooks, integrations, and the industries directory) lives under the hub and every specialist links back to it.
+The plugin ships as **a hub skill plus 6 focused advisors**. The `observepoint-consultant` hub is a thin router and shared foundation — when a question is squarely in one advisor's lane it hands off to that skill; when a question spans domains or sits above any single lane, the hub answers it directly. Each advisor owns its own deep reference; the shared foundation (~11 files: products, MCP tools, verbiage, limitations, glossary, competitive positioning, personas, consulting deliverables, solution playbooks, integrations, and the industries directory) lives under the hub and every advisor links back to it.
 
 ## Skills
 
-All 15 skills auto-trigger from their `description` whenever a question matches their lane — you usually don't need to invoke one by name. You can also call any of them explicitly with the slash command shown.
+All 7 skills auto-trigger from their `description` whenever a question matches their lane — you usually don't need to invoke one by name. You can also call any of them explicitly with the slash command shown.
 
 | Skill | Invoke | What it's for |
 |---|---|---|
-| **observepoint-consultant** (hub) | `/observepoint-consultant` | Router + general advisor + shared foundation. Answers cross-cutting questions and routes the rest to a specialist. |
-| regulation | `/observepoint-consultant:regulation` | Whether a privacy/marketing **law applies** to a site and how to evidence it — GDPR, CCPA/CPRA, the 19+ U.S. state laws, HIPAA, GLBA, China PIPL, and 30+ international regimes. |
-| litigation-defense | `/observepoint-consultant:litigation-defense` | A **demand letter or class action** under a tort/wiretap theory — CIPA, VPPA, BIPA, ECPA, state wiretap, healthcare-pixel, session-replay. Evidence packs for counsel. |
+| **observepoint-consultant** (hub) | `/observepoint-consultant` | Router + general advisor + shared foundation. Answers cross-cutting questions and routes the rest to an advisor. |
+| privacy-compliance | `/observepoint-consultant:privacy-compliance` | Whether a **privacy or marketing law applies** and how to evidence it, AND whether the **consent banner / CMP actually blocks tracking** — GDPR, CCPA/CPRA, 19+ U.S. state laws, HIPAA, GLBA, PIPL; Reject-All, Consent Mode v2, GPC, OneTrust/Cookiebot/TrustArc/Didomi. |
+| litigation-defense | `/observepoint-consultant:litigation-defense` | **Technical evidence for a tracking class action or demand letter** — CIPA, VPPA, BIPA, ECPA, state wiretap, healthcare-pixel, session-replay. Evidence packs for counsel. |
 | accessibility | `/observepoint-consultant:accessibility` | **Accessibility** law and prioritization — ADA Title II/III, Section 508, WCAG 2.1/2.2, EAA, highest-impact-fix sequencing, lawsuit-defense evidence. |
-| consent-cmp | `/observepoint-consultant:consent-cmp` | Whether the **consent banner / Consent Mode actually works** — does Reject-All block tracking, is Consent Mode v2 propagating, are tags firing pre-consent. |
-| account-config | `/observepoint-consultant:account-config` | How to **set up or structure the account** — audits, Tag & Variable Rules, consent categories, folders/labels, alerts, schedules, regulation→config blueprints. |
-| account-health | `/observepoint-consultant:account-health` | **What to focus on / program maturity / onboarding / "where do we go next."** |
-| roi | `/observepoint-consultant:roi` | **Value, ROI, or renewal** framing for a budget owner (no pricing). |
-| martech | `/observepoint-consultant:martech` | How an **adjacent MarTech platform is implemented** and what ObservePoint can see of it — GA4, Adobe, GTM, server-side GTM, Tealium, Consent Mode v2, CAPI, CDP, attribution, Privacy Sandbox. |
-| analytics-validation | `/observepoint-consultant:analytics-validation` | Whether the **analytics data is firing correctly** — GA4/Adobe events & variables, data-layer correctness, value integrity, duplicate/missing events, attribution-parameter survival. |
-| tags | `/observepoint-consultant:tags` | **What a tag/pixel is and whether it should be on a page** — vendor authorization, risk, classifying a tag inventory. |
-| journeys-testing | `/observepoint-consultant:journeys-testing` | Building, scripting, or **debugging a multi-step Journey** or funnel/login/form test — SPA Prevent Navigation, selector-evidence/journey-shape/watch-usage gates, LiveConnect, HAR Analyzer. |
-| reporting-charting | `/observepoint-consultant:reporting-charting` | Building a **saved report, grid report, dashboard, or chart** — entity types, report-schema column discovery, saved-report CRUD, the charting extension point. |
-| api-strategy | `/observepoint-consultant:api-strategy` | **REST or MCP automation** — writing Rules over the API, CI/CD audit gates, the deep REST reference, automation strategy. |
-| content-creation | `/observepoint-consultant:content-creation` | **Writing or improving external content** — a blog post, how-to guide, one-pager, thought-leadership piece, or feedback on a draft, in ObservePoint's voice. |
+| tag-and-analytics-quality | `/observepoint-consultant:tag-and-analytics-quality` | **What a tag is and whether it should be here** (vendor risk, authorization), AND **whether the analytics data is correct** — GA4/Adobe events, values, data-layer, attribution; how adjacent platforms are built and what ObservePoint sees (GA4, Adobe, GTM, sGTM, Tealium, Meta CAPI, CDPs, Privacy Sandbox). |
+| account-and-program | `/observepoint-consultant:account-and-program` | How to **set up or structure the account** (audits, Rules, consent categories, alerts, schedules) AND **program health / maturity / onboarding / "what's next"** — saved reports, dashboards, charts. |
+| automation-and-testing | `/observepoint-consultant:automation-and-testing` | **REST/MCP automation and CI/CD audit gates**, AND building or debugging **multi-step Journeys** — LiveConnect, HAR Analyzer, selector-evidence/journey-shape/watch-usage safety gates. |
 
-The four adjacent-but-distinct skills that collide most often: **tags** asks *should this tag be here?* (presence & governance), **analytics-validation** asks *is this tag's data correct?* (data integrity), **consent-cmp** asks *does Reject-All actually block this tag?* (consent mechanics), and **martech** asks *how is this platform built and what can ObservePoint see of it?* (implementation).
-
-## Slash commands
-
-The plugin also ships **7 slash commands** — focused entry points that route straight into a workflow. Each takes the argument hint shown:
-
-| Command | Argument hint | What it does |
-|---|---|---|
-| `/op-compliance-quickcheck` | `<url>` | Audit a URL for the privacy regulations applicable to its jurisdiction |
-| `/op-state-of-play` | `<domain>` | Summarize the current state of a domain — recent audits, issues, and changes |
-| `/op-onboarding-checklist` | `<industry> <domain>` | Build a Day-1 onboarding checklist for an industry and domain |
-| `/op-litigation-evidence-pack` | `<statute> <domain>` | Walk through assembling technical evidence for a tracking-pixel class action or demand letter |
-| `/op-account-strategy` | `[focus: privacy\|analytics\|accessibility\|performance]` | Diagnose an account's health and surface the biggest-bang-for-buck next actions |
-| `/op-value-snapshot` | `[period]` | Produce a quantified ObservePoint value summary for a budget owner |
-| `/op-accessibility-priorities` | _(none)_ | Rank accessibility findings by impact and surface the highest-impact fixes first |
+Two boundaries worth knowing: *does Reject-All actually block this tag?* → **privacy-compliance**; *is this tag's data correct?* → **tag-and-analytics-quality**.
 
 ## Who it's for
 
@@ -153,7 +131,6 @@ Invoke with any question. Examples that exercise different parts of the skill:
 /observepoint-consultant Set up the Consent Mode v2 wiring between OneTrust and GTM — what should ObservePoint check?
 /observepoint-consultant Server-side GTM — what can ObservePoint validate and what can't it?
 /observepoint-consultant What should I focus on in my ObservePoint account? Where's the biggest bang for buck?
-/observepoint-consultant Build me a value snapshot to justify our ObservePoint renewal.
 /observepoint-consultant From our accessibility data, what's the highest-impact fix to target first?
 /observepoint-consultant We got an ADA web-accessibility demand letter — what evidence can ObservePoint produce?
 ```
@@ -185,7 +162,7 @@ See [CHANGELOG.md](./CHANGELOG.md) for the release history.
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md). The easiest place to add value is in a skill's `references/` directory — the shared foundation lives under [skills/observepoint-consultant/references/](./skills/observepoint-consultant/references/), and each specialist owns its deep reference under `skills/<specialist>/references/`. Each file is self-contained markdown.
+See [CONTRIBUTING.md](./CONTRIBUTING.md). The easiest place to add value is in a skill's `references/` directory — the shared foundation lives under [skills/observepoint-consultant/references/](./skills/observepoint-consultant/references/), and each advisor owns its deep reference under `skills/<advisor>/references/`. Each file is self-contained markdown.
 
 Especially welcome:
 
