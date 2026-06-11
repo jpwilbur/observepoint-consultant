@@ -2,7 +2,7 @@
 
 Load this when the user is holding a tag and asking a *judgment* question: "what is this pixel," "should it be on this page," "is this vendor authorized or risky," or "classify my whole inventory." This is the presence-and-governance layer. It answers identity (what the tag is), classification (which category it belongs to), risk (how much it should worry a governance team), and the should-it-be-here verdict (does this tag belong on *this* page, under *this* consent state, against *this* approved-vendor list).
 
-The distinction that defines this skill: the sibling `martech` skill explains how a platform is *implemented* and `analytics-validation` proves whether its *data is correct*. Tag intelligence sits before both — it tells you what the thing on the wire actually is and whether it has any business being there. The authoritative catalog of tag *definitions* comes live from ObservePoint via `list_tags`; the value added here is the expert judgment layered on top.
+The distinction that defines this lane: the sibling lanes of this same advisor — the MarTech-implementation lane (`references/martech-adjacency.md`) explains how a platform is *implemented*, and the analytics-validation lane (`references/analytics-validation.md`) proves whether its *data is correct*. Tag intelligence sits before both — it tells you what the thing on the wire actually is and whether it has any business being there. The authoritative catalog of tag *definitions* comes live from ObservePoint via `list_tags`; the value added here is the expert judgment layered on top.
 
 ## Contents
 
@@ -163,8 +163,8 @@ The highest-impact and highest-risk vendors, grouped by category, with what each
 
 This skill answers identity, classification, risk, and should-it-be-here. It hands off when the question changes shape:
 
-- **Implementation** — "how is GA4 / GTM / sGTM / a CAPI actually built, and what can ObservePoint observe of it" → the `martech` skill. Tag intelligence says *what* a tag is; martech says *how* its platform works.
-- **Data correctness** — "is the `purchase` event carrying the right value, does this tag fire once on the right page, build me the validation Rules" → the `analytics-validation` skill. Tag intelligence says the tag *belongs*; analytics-validation proves its data is *sound*.
+- **Implementation** — "how is GA4 / GTM / sGTM / a CAPI actually built, and what can ObservePoint observe of it" → the MarTech-implementation lane of this advisor (`references/martech-adjacency.md`). Tag intelligence says *what* a tag is; that lane says *how* its platform works.
+- **Data correctness** — "is the `purchase` event carrying the right value, does this tag fire once on the right page, build me the validation Rules" → the analytics-validation lane of this advisor (`references/analytics-validation.md`). Tag intelligence says the tag *belongs*; that lane proves its data is *sound*.
 - **Consent wiring and regulation** — "does Reject-All actually block this tag, is the OneTrust/Cookiebot banner behaving, is Consent Mode v2 propagating, what does the law require" → the `privacy-compliance` skill. Tag intelligence flags that a high-risk tag *must* be consent-gated; privacy-compliance proves the gate works and maps the legal obligation.
 - **Litigation framing, scanner limits** — defend a pixel/session-replay claim → the `litigation-defense` skill; what the scanner structurally cannot see → the shared `references/limitations.md`.
 
