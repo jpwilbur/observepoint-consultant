@@ -270,7 +270,7 @@ The last four columns aren't from ObservePoint directly — they require human i
 
 ## Value Snapshot
 
-The screenshot-ready, one-page artifact a CSM or champion hands to a budget owner. It answers one question — "what did this program do for us this period?" — in numbers, not prose. Built for existing-customer value documentation, not prospecting. No pricing. See the `roi` skill for the framing logic behind each number.
+The screenshot-ready, one-page artifact a CSM or champion hands to a budget owner. It answers one question — "what did this program do for us this period?" — in numbers, not prose. Built for existing-customer value documentation, not prospecting. No pricing.
 
 ### Skeleton
 
@@ -305,7 +305,7 @@ Keep it to one page. The budget owner skims; the numbers carry the story. Pair i
 
 ## Renewal Narrative
 
-The before/after value story, organized by maturity stage. Where the Value Snapshot is the numbers, this is the arc — where the program started, where it is now, and what the next stage looks like. For an existing customer's renewal conversation, never for prospecting. See the `roi` skill.
+The before/after value story, organized by maturity stage. Where the Value Snapshot is the numbers, this is the arc — where the program started, where it is now, and what the next stage looks like. For an existing customer's renewal conversation, never for prospecting.
 
 ### Skeleton
 

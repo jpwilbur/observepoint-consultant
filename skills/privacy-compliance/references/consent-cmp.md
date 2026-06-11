@@ -2,7 +2,7 @@
 
 Load this when the question is whether a consent setup *works on the wire*, not what the law requires and not how a platform is wired. The recurring trigger shapes: **does Reject-All actually block tracking**, **is Google Consent Mode v2 propagating** from the CMP to the Google tags, **is the CMP banner behaving** (firing a default before tags load, honoring the user's choice), and **are non-essential tags firing before consent**. ObservePoint runs the page in a real Chromium browser under a chosen consent state and reads the result, so it is the truth-source for the does-it-work question that a CMP's own admin console can't answer.
 
-This layer sits between two siblings. The **regulation** skill owns what the law *requires* (GDPR, CCPA, the 19 U.S. state laws, GPC recognition, the TCF/GPP legal frameworks). The **tag-and-analytics-quality** skill owns how the platform is *implemented* (the Consent Mode v2 CMP-to-gtag wiring, the `gcs`/`gcd` parameters, server-side GTM). This file is the *technical validation* in the middle: prove, from the browser, that the banner does what it claims and the consent signal reaches the tags it's supposed to gate.
+This layer sits between two siblings. This advisor (`privacy-compliance`) owns both what the law *requires* (GDPR, CCPA, the 19 U.S. state laws, GPC recognition, the TCF/GPP legal frameworks) and this technical validation layer. The **tag-and-analytics-quality** skill owns how the platform is *implemented* (the Consent Mode v2 CMP-to-gtag wiring, the `gcs`/`gcd` parameters, server-side GTM). This file is the *technical validation* piece: prove, from the browser, that the banner does what it claims and the consent signal reaches the tags it's supposed to gate.
 
 ## Contents
 
@@ -27,7 +27,7 @@ A consent management platform is the source of truth for a visitor's choice: it 
 
 **Why native support is the load-bearing detail.** When a CMP is natively supported, you drive it with a `privacyoptout` pre-audit action and ObservePoint clicks Reject-All through the CMP's own SDK — stable across banner redesigns. When it isn't, you fall back to a scripted Journey that clicks the banner by selector, which breaks the moment the banner's markup changes. The first question on any consent engagement is therefore: *is this CMP on the supported list, or are we scripting the banner by hand?*
 
-**TCF / GPP-backed CMPs.** Many of these CMPs (Didomi, Sourcepoint, Cookiebot/Usercentrics, OneTrust) implement the IAB **TCF** (Transparency & Consent Framework) string and the **GPP** (Global Privacy Platform) string — the standardized consent payloads vendors read. Those frameworks are *legal/industry constructs*, owned by the **regulation** skill; what matters for validation is that a TCF/GPP CMP encodes the user's choice into a consent string that downstream tags are supposed to honor. ObservePoint's job is unchanged: prove that whatever the CMP encoded actually suppressed the tags on the wire. The consent string is a means; the firing behavior is the test.
+**TCF / GPP-backed CMPs.** Many of these CMPs (Didomi, Sourcepoint, Cookiebot/Usercentrics, OneTrust) implement the IAB **TCF** (Transparency & Consent Framework) string and the **GPP** (Global Privacy Platform) string — the standardized consent payloads vendors read. Those frameworks are *legal/industry constructs*, covered in `references/privacy-and-compliance.md`; what matters for validation is that a TCF/GPP CMP encodes the user's choice into a consent string that downstream tags are supposed to honor. ObservePoint's job is unchanged: prove that whatever the CMP encoded actually suppressed the tags on the wire. The consent string is a means; the firing behavior is the test.
 
 ## 2. The consent-state audit pattern
 
@@ -38,7 +38,7 @@ This is the core motion of the whole skill. A consent setup can only be validate
 - **Default** — the page loaded with no interaction (the pre-banner window). Nothing non-essential should fire here.
 - **Accept-All** — the user granted everything. This is the permissive baseline: it shows the *full* set of tags the site is capable of firing.
 - **Reject-All** — the user refused all non-essential processing. The opt-out audit. Drive it with a `privacyoptout` pre-audit action on a natively supported CMP.
-- **GPC** — the Global Privacy Control signal is asserted at the browser level (paired with third-party-cookie blocking). The machine-readable opt-out that 12 of the 19 U.S. state laws mandate honoring; the **regulation** skill owns *which* states require it.
+- **GPC** — the Global Privacy Control signal is asserted at the browser level (paired with third-party-cookie blocking). The machine-readable opt-out that 12 of the 19 U.S. state laws mandate honoring; see `references/privacy-and-compliance.md` for *which* states require it.
 
 The cleanest one-shot setup is `setup_compliance_monitoring(regulation="ccpa", domain=...)`, which builds the three-audit shape (Default + Opt-Out + GPC) designed for California and reused across most state laws. Never assign non-essential consent categories to the Opt-Out or GPC audits — those audits exist to prove non-essential tags *don't* fire.
 
@@ -161,7 +161,7 @@ The order matters: a pre-consent leak (step 2) is a worse finding than a Reject-
 
 This skill is the technical does-it-work layer. Three things it deliberately does not own:
 
-- **The legal requirement.** Whether your site *must* honor GPC in a given state, what counts as a "sale" or "share," which consent basis a regulation demands, the TCF/GPP legal frameworks — that's the **regulation** skill. This skill proves the technical signal works; the regulation skill says whether the law required it.
+- **The legal requirement.** Whether your site *must* honor GPC in a given state, what counts as a "sale" or "share," which consent basis a regulation demands, the TCF/GPP legal frameworks — see `references/privacy-and-compliance.md` for the per-regulation detail. This file proves the technical signal works; `privacy-and-compliance.md` says whether the law required it.
 - **The platform implementation architecture.** How the CMP is wired to the Google tags, what each bit of `gcs`/`gcd` means, advanced vs basic Consent Mode, server-side GTM consent propagation — that's the **tag-and-analytics-quality** skill. This skill validates the *output*; tag-and-analytics-quality explains the *wiring*.
 - **Whether a vendor is authorized to be there at all.** "Should this pixel exist on this page, is this vendor on our allowlist" — that's the tag-governance question. This skill asks whether a tag *respects consent*, not whether it's *supposed to be present*.
 

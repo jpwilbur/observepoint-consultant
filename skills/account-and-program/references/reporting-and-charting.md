@@ -2,7 +2,7 @@
 
 Load this when the user wants to **build a saved report, a grid report, a dashboard, or a chart** in ObservePoint — discovering which columns an entity exposes, querying grid data ad hoc, and assembling the saved artifacts a dashboard is made of. The grid is ObservePoint's cross-product reporting layer: one query surface that spans audit runs, journey runs, pages, cookies, tags, and more, so a question like "broken pages this week across every audit" is one report, not eleven.
 
-This file owns the *mechanics* of building the report — the entity types, the column-discovery step, the query and save calls, and how saved reports roll up into a dashboard. It does **not** decide *which* metrics deserve a dashboard (that judgment is `account-health`'s) or the specifics of the accessibility-issues report (that's `accessibility`). Build the report here; let those skills tell you what to put on it.
+This file owns the *mechanics* of building the report — the entity types, the column-discovery step, the query and save calls, and how saved reports roll up into a dashboard. It does **not** decide *which* metrics deserve a dashboard (that judgment comes from `references/account-health-and-strategy.md`) or the specifics of the accessibility-issues report (that's `accessibility`). Build the report here; let those references tell you what to put on it.
 
 One discipline to flag up front: **charting is a brand-new ObservePoint feature that is not yet exposed through the MCP server.** This file documents it as an extension point using the same pre-GA discipline the codebase applies everywhere else — describe the anticipated capability, build the underlying saved report with the real tools that exist today, and never invent a charting tool name. See section 4.
 

@@ -17,7 +17,6 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 SKILLS_DIR = REPO / "skills"
-COMMANDS_DIR = REPO / "commands"
 META_REFS = SKILLS_DIR / "observepoint-consultant" / "references"
 
 REMOVED_TOOLS = [
@@ -39,8 +38,6 @@ def all_markdown():
     md = []
     if SKILLS_DIR.exists():
         md += list(SKILLS_DIR.rglob("*.md"))
-    if COMMANDS_DIR.exists():
-        md += list(COMMANDS_DIR.rglob("*.md"))
     return sorted(set(md))
 
 

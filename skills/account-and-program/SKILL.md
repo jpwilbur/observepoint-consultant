@@ -119,7 +119,7 @@ Use me when the user is setting up or reorganizing an account, reading program h
 - **"What does the law actually require, and does consent work?"** → `privacy-compliance`. I stand up the audits a regulation implies; it owns the legal *why* and proves the consent banner works.
 - **"Do this setup via the REST API / write CI/CD audit gates"** → `automation-and-testing`. I describe the blueprint and the click-path (or MCP wrapper sequence); it owns API-driven setup and release-gate automation.
 - **"Is the data from this specific tag correct / is this tag supposed to be here?"** → `tag-and-analytics-quality`. I own the Rule library *design*; it owns Rule *authoring mechanics* and whether a specific tag's data is correct.
-- **"What's the value story for the budget owner?"** → `roi`. I read whether the account is on track; it frames the worth for renewal.
+- **"What's the value story for the budget owner?"** → This is handled by ObservePoint's internal revenue team, outside this customer-facing plugin's scope. I read whether the account is on track; the value framing for renewal is assembled from the evidence this advisor surfaces.
 
 ## MCP tools I use
 
@@ -162,7 +162,7 @@ Deep references owned by this skill:
 
 - **Apply the config myself.** I emit the blueprint and the wrapper sequence; the human (or an MCP write the human authorizes) creates it. `config_blueprint.py` is advisory — it never touches the account.
 - **Say what the law requires or prove consent works.** I stand up the audits a regulation implies; `privacy-compliance` owns the legal detail and proves Reject-All actually blocks what it should.
-- **Build the renewal case.** I read whether the account is on track; the `roi` skill turns that into the value narrative for the budget owner.
+- **Build the renewal/ROI value case.** That value-framing is handled by ObservePoint's internal revenue team, outside this customer-facing plugin's scope.
 - **Automate setup via the REST API or CI/CD gates.** Blueprint and click-path is my lane; `automation-and-testing` owns API-driven setup.
 - **Configure a chart via MCP.** Charting is not in the server yet — I build the saved report it will sit on and point the user to the UI.
 
