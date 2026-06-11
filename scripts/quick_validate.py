@@ -70,8 +70,8 @@ def check_skill_frontmatter():
         if keys != ["description", "name"]:
             errors.append(f"{rel}: frontmatter keys must be exactly [description, name], got {keys}")
         desc_m = re.search(r"^description:\s*(.*)$", fm, re.MULTILINE)
-        if desc_m and len(desc_m.group(1)) > 1536:
-            errors.append(f"{rel}: description {len(desc_m.group(1))} chars > 1536 cap")
+        if desc_m and len(desc_m.group(1)) > 1024:
+            errors.append(f"{rel}: description {len(desc_m.group(1))} chars > 1024 cap")
         body = text[m.end():]
         if len(body.splitlines()) > 500:
             errors.append(f"{rel}: body {len(body.splitlines())} lines > 500 ceiling")
