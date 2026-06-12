@@ -22,7 +22,7 @@ Every framework check maps to a report — and ObservePoint pre-built the report
 
 The path, every time:
 
-1. `list_report_templates` — search the library for the check you need. Filter by `search` (e.g. "broken google analytics", "data layer", "CIPA"), `gridEntityType` (`pages`, `tags`, `cookies`, `tag_variables`, `browser_logs`, `network_requests`, `links`), or `useCase` ("privacy", "tag governance", "page performance").
+1. `list_report_templates` — search the library for the check you need. Filter by `search` (e.g. "broken google analytics", "data layer", "CIPA"), `gridEntityType` (`pages`, `tags`, `cookies`, `tag_variables`, `browser_logs`, `network_requests`, `links`), or `useCase` ("privacy", "tag governance", "page performance"). (Report-template `gridEntityType` values are underscored — `tag_variables`, `web_audit_runs` — not the hyphenated `entityType` that `query_report` uses.)
 2. Match the template **by name** and confirm it in the returned list. Template IDs are assigned by the platform and change over time — **never assume an ID; read it from the live list.**
 3. `create_report_from_template` with the chosen template's id — clones it into the account as an editable saved report. Run `dryRun:true` first to preview; the report is created `private` by default. It's a WRITE — confirm with the user before committing.
 4. Customize / schedule / chart the cloned report — those mechanics live in `account-and-program`.
