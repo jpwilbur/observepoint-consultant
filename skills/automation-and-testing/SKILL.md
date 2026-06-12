@@ -27,6 +27,8 @@ The MCP tool catalog and the orchestration strategy that sits on top of REST liv
 
 **CI/CD gate.** Trigger an audit run from GitHub Actions (or any CI system that runs shell + `jq`), poll to completion, read the Rule failure count, exit non-zero if any Rules failed. Working workflow in `references/api-reference.md → "Recipe: CI/CD gate with GitHub Actions"`.
 
+**Framework cadence → CI/CD gate.** ObservePoint's governance frameworks recommend an "every deployment, 10–15% sample" audit run — that's a CI/CD gate, wired with the trigger → poll → fail-on-violation recipe this advisor owns. The framework context is in `references/governance-frameworks.md`.
+
 **Webhooks instead of polling.** ObservePoint can POST to a URL you control on run completion — lower latency and fewer API calls than a polling loop. Configure in-app or via the API.
 
 **Escape hatches.** Two exist for when no typed MCP wrapper fits:
@@ -107,6 +109,7 @@ These live in the meta-skill and stay linked by their plain `references/` filena
 - `references/mcp-tools.md` — the MCP tool catalog, the wrapper-vs-raw-REST decision, the safety-gate authoritative detail, and the knowledge-only fallback.
 - `references/limitations.md` — what the scanner cannot do; the API inherits every one (no native mobile, no server-side execution). The **no native mobile app testing** limitation is the reason HAR Analyzer on a device-captured HAR is the supported workaround.
 - `references/products-and-modules.md` — which module and Rule type an endpoint is automating, and the Journeys / LiveConnect / HAR Analyzer product descriptions and the Audit-vs-Journey routing.
+- `references/governance-frameworks.md` — the framework cadence whose every-deploy sample becomes a CI/CD gate.
 
 ## What I can't do
 

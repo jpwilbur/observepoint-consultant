@@ -27,6 +27,8 @@ The deep content lives in this skill's own `references/privacy-litigation-defens
 3. **How to assemble the evidence pack for counsel.** Audit definitions, Rules library, run history with timestamps, exception log, change log, masked PII output, vendor inventory.
 4. **What the evidence does and doesn't prove.** Honest framing — strong "we detected and remediated" evidence, but it cannot defeat liability on its own.
 
+**CIPA framework + ready-made evidence.** ObservePoint publishes a CIPA Compliance framework that operationalizes §631 / §632.7 exposure, and a pre-built "Pages with CIPA Non-Compliance Risk" report that flags wiretap-risk tags firing in the default (pre-consent) state. That report is only valid against an audit set to a **California geolocation with no pre-audit actions** — set that up before relying on it. The framework, the report, and the audit prerequisite are in `references/governance-frameworks.md`; for whether a tag is *correctly consent-gated* in general, use `privacy-compliance`.
+
 ## MCP tools I use
 
 When `mcp__ObservePoint__*` tools are loaded, these produce the evidentiary signals (all verified in the shared `references/mcp-tools.md`):
@@ -45,6 +47,7 @@ These live in the meta-skill and stay linked by their plain `references/` filena
 - `references/mcp-tools.md` — the MCP tool catalog and REST fallback.
 - `references/limitations.md` — what the scanner cannot do (no server-side execution, synthetic browsers, no native mobile) — name these before counsel is surprised by them.
 - `references/products-and-modules.md` — which ObservePoint module produces which evidence artifact.
+- `references/governance-frameworks.md` — the CIPA Compliance framework + the ready-made CIPA risk report and its required California default-state audit.
 
 ## What I can't do
 

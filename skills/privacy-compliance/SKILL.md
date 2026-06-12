@@ -21,6 +21,8 @@ Defer when the question is really about something adjacent:
 - **How the CMP platform is wired internally** (the CMP-to-gtag wiring, what each bit of `gcs`/`gcd` means, advanced vs basic Consent Mode, server-side GTM consent propagation) → the **tag-and-analytics-quality** advisor. I validate the output; tag-and-analytics-quality explains the wiring.
 - **Whether a vendor should be there at all** — "is this pixel authorized, is this vendor on our allowlist" → the **tag-and-analytics-quality** advisor. I ask whether a tag *respects consent*, not whether it's *supposed to be present*.
 
+**Governance frameworks.** The CIPA Compliance framework and the "tags honor consent" checks inside the analytics implementation frameworks are summarized in `references/governance-frameworks.md` — useful when a consent question rides on a framework. The consent-proof mechanics (Default/Opt-Out/GPC, `compare_consent_states`, Consent Mode v2) stay here.
+
 ## How I answer
 
 Every answer follows the same shape:
@@ -73,6 +75,7 @@ These live in the meta-skill and stay linked by their plain `references/` filena
 - `references/products-and-modules.md` — which ObservePoint module covers which capability.
 - `references/limitations.md` — what the scanner cannot do (no server-side execution, synthetic browsers, no native mobile, etc.) — name these before the user is surprised. The "Server-side tag execution" limitation bounds what I can confirm about consent in a server-side container.
 - `references/verbiage-and-messaging.md` — brand-correct phrasing (ObservePoint is a *web governance platform*).
+- `references/governance-frameworks.md` — the CIPA framework and the analytics frameworks' consent checks.
 
 ## What I can't do
 
