@@ -26,6 +26,8 @@ When a question genuinely spans advisors (e.g. "map CCPA to coverage **and** set
 
 The two boundaries worth holding: *does Reject-All block it* lives in `privacy-compliance`; *is the tag's data correct* lives in `tag-and-analytics-quality`.
 
+**Frameworks.** ObservePoint publishes expert-validated **Web Governance Frameworks** — opinionated checklists for a goal (GA/Adobe/AEP implementation, CIPA compliance; more coming) with a pre-built report per check. A framework question routes to the advisor that owns its domain (analytics implementation → `tag-and-analytics-quality`; CIPA → `litigation-defense`); the framework construct and the template-first report path are in `references/governance-frameworks.md`.
+
 ## Persona contract
 
 Hold yourself to this contract every time you respond:
@@ -82,6 +84,7 @@ These references live **here in the meta-skill** and are the shared foundation e
 | `references/solution-playbooks.md` | Pain-point and persona-led recipes |
 | `references/integrations.md` | Connecting to GTM, Tealium, OneTrust, Jira, Slack, etc. |
 | `references/industries/index.md` | Industry vertical playbooks (retail, financial services, healthcare, travel, media, government, education) |
+| `references/governance-frameworks.md` | Running an ObservePoint **governance framework** (GA/Adobe/AEP implementation, CIPA) and the template-first report path |
 
 Every deep domain reference (privacy regulations, litigation defense, accessibility playbooks, account health, lifecycle/maturity, MarTech adjacency, the REST API reference, tag intelligence, and the rest) lives inside its owning advisor skill — reach those by routing to the advisor by name, never by linking a file here.
 
@@ -99,4 +102,4 @@ If the request is multi-part, chain offers — "Want me to also draft the govern
 
 This skill is community-built. It is **not** an official ObservePoint product. All information reflects publicly documented ObservePoint capabilities as of the `Last verified` date below; verify against current [ObservePoint documentation](https://help.observepoint.com/) before procurement, compliance, or contractual decisions. "ObservePoint" and product names referenced here are trademarks of ObservePoint, LLC.
 
-*Last verified: 2026-06-04*
+*Last verified: 2026-06-12*

@@ -305,6 +305,8 @@ Custom dashboards built on the v3 grid-reporting API.
 | `list_report_templates` | List ObservePoint-published report "library" templates; filter by `search` / `gridEntityType` / `useCase`. |
 | `create_report_from_template` | Clone a template into the account as an editable saved report (`dryRun:true` first; created `private` by default). |
 
+The template library is large (100+ ObservePoint-managed templates, organized by use case) and includes the report sets behind the published **governance frameworks** (the GA / Adobe Analytics / AEP implementation suites and the CIPA risk report). **Reach for a template before building a report from scratch** — `list_report_templates` to find it, `create_report_from_template` to clone it. Match templates by name; IDs are platform-assigned and change, so read them from the live list. The framework→report mapping is in `references/governance-frameworks.md`.
+
 Entity types supported: `web-audit-runs`, `web-journey-runs`, `pages`, `cookies`, `tags`, `accessibility-issues`, `links`, `tag-variables`, `network-requests`, `browser-logs`, `rules`.
 
 When users say "reports," "grid reports," "custom reports," or "dashboards," they mean these.
@@ -644,4 +646,4 @@ Watch the changelog and the server's own `get_api_docs` for the source of truth.
 
 ---
 
-*Last verified: 2026-06-10*
+*Last verified: 2026-06-12*
