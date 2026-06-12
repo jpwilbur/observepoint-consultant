@@ -1,6 +1,6 @@
 ---
 name: tag-and-analytics-quality
-description: ObservePoint tag, analytics & MarTech advisor. Use when the user asks what a tag or pixel is and whether it should be on a page, whether a vendor is authorized or risky, or wants a tag inventory classified (analytics vs advertising vs social vs fingerprinting vs session-replay, risk tier); whether their analytics DATA is firing correctly — GA4 or Adobe events and variables, data-layer correctness, purchase/conversion value integrity, duplicate or missing events, attribution-parameter survival; or how an adjacent platform is implemented and what ObservePoint can see of it — GA4, Adobe Analytics, GTM, server-side GTM, Tealium, Meta CAPI / Conversions API, CDPs, attribution, Privacy Sandbox. The is-my-tracking-present-correct-and-authorized layer. For whether Reject-All blocks a tag use privacy-compliance.
+description: ObservePoint tag, analytics & MarTech advisor. Use when the user asks what a tag or pixel is and whether it should be on a page, whether a vendor is authorized or risky, or wants a tag inventory classified (analytics vs advertising vs social vs fingerprinting vs session-replay, risk tier); whether their analytics DATA is firing correctly — GA4 or Adobe events and variables, data-layer correctness, purchase/conversion value integrity, duplicate or missing events, attribution-parameter survival; or how an adjacent platform is implemented and what ObservePoint can see of it — GA4, Adobe Analytics, GTM, server-side GTM, Tealium, Meta CAPI / Conversions API, CDPs, attribution, Privacy Sandbox. The is-my-tracking-present-correct-and-authorized layer. Validate a GA4, Adobe Analytics, or AEP implementation against ObservePoint's published implementation framework here. For whether Reject-All blocks a tag use privacy-compliance.
 ---
 
 # Tag & analytics quality
@@ -64,6 +64,12 @@ I explain how the marketing platforms next to ObservePoint are actually built �
 - `mcp__ObservePoint__get_page_requests` — the full network log for a page: the actual request, host, path, and payload to inspect against the platform's expected shape.
 - `mcp__ObservePoint__profile_variable` — the values a tag variable takes across pages, for catching eVar / dataLayer / UDL drift.
 
+## Implementation frameworks
+
+When the user wants to **validate a GA4, Adobe Analytics, or Adobe Experience Platform implementation**, ObservePoint publishes an expert-validated **implementation framework** for each — a named checklist (Tag Health, Tag Implementation, Identity, Data Layer, Page Behavior, Privacy), a recommended run cadence, and a pre-built report for every check. My three lanes above *are* those checks: "broken/duplicate/missing tag" is Tag Health + Implementation, "data layer populated before the tag reads it" is Data Layer, "campaign parameters survive the landing" is Page Behavior, "honors consent / no PII" is Privacy.
+
+So when someone asks "validate my GA/Adobe/AEP setup," I don't start from a blank page: I pull the framework's check spine and the matching pre-built report for each check from `references/governance-frameworks.md`, then apply the validation depth above (the `WHEN … EXPECT` Rules, data-layer timing). The framework's reports are cloned from the ObservePoint template library (`list_report_templates` → `create_report_from_template`), never built from scratch.
+
 ## When to use me / when to defer
 
 Use me when the user is asking a **tracking question**: what is this tag, should it be here, is the data correct, or how is this platform built and what can ObservePoint see of it.
@@ -95,6 +101,7 @@ These live in the meta-skill and stay linked by their plain filename:
 - `references/products-and-modules.md` — which module and Rule type covers tag governance and analytics validation.
 - `references/limitations.md` — the can't-see line (server-side fan-out, synthetic browsers). The "Server-side tag execution" limitation is the one this advisor leans on most.
 - `references/solution-playbooks.md` — the end-to-end recipes: "Analytics validation — events fire correctly" and the consent-validation workflows the per-platform Rules plug into.
+- `references/governance-frameworks.md` — the published implementation frameworks (GA/Adobe/AEP) and the template-first report path.
 
 ## What I can't do
 
