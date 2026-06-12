@@ -40,6 +40,8 @@ shop.example.com — Privacy Sweep [Opt-Out]
 | Standard production | weekly | the default for most properties |
 | Stable / low-change | monthly | inventory + drift check |
 
+**Framework cadence.** ObservePoint's governance frameworks recommend a standard monitoring rhythm — daily on critical pages, every deployment on a 10–15% sample, quarterly on 100% — that maps directly onto audit schedules (the every-deploy run is a CI/CD gate, owned by `automation-and-testing`). See `references/governance-frameworks.md`.
+
 **Regulation → configuration mapping.** The legal *why* lives in `privacy-compliance`; this section is the *what to build*. `config_blueprint.py` (see below) emits these as JSON.
 
 - **CCPA / CPRA → three audits.** Default (baseline, all categories) + Opt-Out (CMP Reject-All, Strictly Necessary only) + GPC (`gpcEnabled` + `blockThirdPartyCookies`, Strictly Necessary only). Use `setup_compliance_monitoring(regulation="ccpa", domain=...)` — one call, all three, correct pre-audit actions and consent assignments.
@@ -150,6 +152,7 @@ These live in the meta-skill and stay linked by their plain filename:
 - `references/products-and-modules.md` — which module each configured surface belongs to.
 - `references/limitations.md` — what can't be configured around (server-side tags, synthetic browsers, SPA navigation).
 - `references/consulting-deliverables.md` — Account Health Check skeleton, QBR/evidence-pack templates.
+- `references/governance-frameworks.md` — Running an ObservePoint governance framework (GA/Adobe/AEP implementation, CIPA) and the template-first report path.
 
 Deep references owned by this skill:
 

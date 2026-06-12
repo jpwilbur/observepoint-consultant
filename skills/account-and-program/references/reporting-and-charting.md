@@ -65,11 +65,13 @@ A **saved report** is a grid query persisted with a name, its entity type, its c
 
 **Build order, every time:**
 
-1. `list_saved_reports` — does this report (or a near-match) already exist?
-2. `get_report_schema(entityType=..., search=...)` — confirm the exact column names.
-3. `query_report(...)` — sanity-check the filters return what you expect.
-4. `create_saved_report(...)` — persist it with a clear, human name.
-5. `get_saved_report(...)` — read it back to confirm the saved definition matches intent.
+1. `list_saved_reports` — does this report (or a near-match) already exist in the account? Don't duplicate it.
+2. `list_report_templates` — is there a pre-built OP template for this? The library has 100+ templates organized by use case (filter by `search` / `gridEntityType` / `useCase`), including the analytics-implementation and CIPA framework report sets. If one matches, **clone it instead of building**: `create_report_from_template(templateId)` (run `dryRun:true` first; created `private` by default — it's a WRITE, confirm first). Match by name and read the id from the live list; never assume one. This is the fast path for any framework check — see `references/governance-frameworks.md`.
+3. Only if no saved report and no template fits, build from scratch:
+   1. `get_report_schema(entityType=..., search=...)` — confirm the exact column names.
+   2. `query_report(...)` — sanity-check the filters return what you expect.
+   3. `create_saved_report(...)` — persist it with a clear, human name.
+   4. `get_saved_report(...)` — read it back to confirm the saved definition matches intent.
 
 Naming matters: a saved report's name is what shows up in the dashboard picker and in `list_saved_reports`, so name it for the question it answers ("Broken pages — all audits, last 7 days"), not for the entity ("pages report 3").
 
@@ -132,5 +134,6 @@ Because the tiles are saved reports, the dashboard stays live: re-running the un
 - **The accessibility-issues report specifics** → `accessibility`. The `accessibility-issues` entity is queryable here like any other, but which severities, WCAG criteria, and rules to surface — and how to prioritize them — is that skill's domain.
 - **Charting** → `add_report_chart` / `remove_report_chart` (section 4). A chart rides an existing saved report's query, so build/confirm the report first; assembling reports/charts into a dashboard layout remains a UI step (there's no `create_dashboard` tool).
 - **The MCP tool catalog and the never-invent-a-tool rule** → `references/mcp-tools.md` (shared). The grid/report/charting tools are listed there under "Grid reports"; that file is the authority on what's loaded, and the runtime tool list always overrides this doc.
+- **Which template maps to a framework check** → `references/governance-frameworks.md`. That file owns the framework→report mapping (by name + search hint); this file owns shaping, saving, scheduling, and charting whatever report you land on.
 
-*Last verified: 2026-06-10*
+*Last verified: 2026-06-12*

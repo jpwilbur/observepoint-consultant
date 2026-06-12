@@ -296,6 +296,46 @@
       "expected_output_summary": "Routes to account-and-program; runs the health diagnostic and returns a biggest-bang-for-buck prioritized next-action list.",
       "must_include": ["get_audit_health"],
       "must_not_include": ["pricing"]
+    },
+    {
+      "id": "framework-ga-implementation",
+      "area": "tag-and-analytics-quality",
+      "prompt": "How do I validate our Google Analytics implementation end to end?",
+      "expected_output_summary": "Routes to tag-and-analytics-quality; surfaces the GA implementation framework's check spine and operationalizes each check by cloning the matching pre-built report (list_report_templates -> create_report_from_template) rather than building from scratch.",
+      "must_include": ["framework", "create_report_from_template"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "framework-template-first-report",
+      "area": "account-and-program",
+      "prompt": "Build me a report of pages with broken Google Analytics tags.",
+      "expected_output_summary": "Routes to account-and-program; checks the OP template library first (list_report_templates) and clones the pre-built template instead of building the report from scratch.",
+      "must_include": ["list_report_templates", "create_report_from_template"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "framework-cipa-evidence",
+      "area": "litigation-defense",
+      "prompt": "We received a CIPA demand letter — what ObservePoint evidence proves wiretap-risk tags fire before consent?",
+      "expected_output_summary": "Routes to litigation-defense; surfaces the CIPA framework and the 'Pages with CIPA Non-Compliance Risk' report, notes it requires a California, no-pre-audit-action (default-state) audit, and frames findings for counsel.",
+      "must_include": ["CIPA", "California", "counsel"],
+      "must_not_include": ["pricing", "guarantee"]
+    },
+    {
+      "id": "framework-template-by-name-not-id",
+      "area": "account-and-program",
+      "prompt": "Clone the 'Pages missing Data Layer' template into our account.",
+      "expected_output_summary": "Routes to account-and-program; finds the template by name via list_report_templates and clones it with create_report_from_template, reading the id from the live list rather than asserting a fixed numeric template id.",
+      "must_include": ["list_report_templates", "create_report_from_template"],
+      "must_not_include": ["pricing", "template 1200", "ID 1200"]
+    },
+    {
+      "id": "framework-cadence",
+      "area": "account-and-program",
+      "prompt": "How often should we run our analytics-validation audits?",
+      "expected_output_summary": "Routes to account-and-program; gives the framework cadence — daily on critical pages, every deployment on a 10-15% sample, quarterly on 100% — and maps it to audit schedules (and a CI/CD gate for the deploy run).",
+      "must_include": ["daily", "quarterly"],
+      "must_not_include": ["pricing"]
     }
   ]
 }
