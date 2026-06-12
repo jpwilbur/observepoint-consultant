@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0] — 2026-06-12
+
+### Added
+
+- **Web Governance Frameworks integration.** New shared reference `skills/observepoint-consultant/references/governance-frameworks.md` documenting ObservePoint's published frameworks (Google Analytics, Adobe Analytics, Adobe Experience Platform implementation, and CIPA Compliance) and the **template-first reporting path** — clone a pre-built report from the 100+ ObservePoint-managed template library (`list_report_templates` → `create_report_from_template`) instead of building from scratch. Templates referenced by name, never by ID (drift-safe).
+- Advisor wiring: `tag-and-analytics-quality` gains an Implementation frameworks section + description trigger; `litigation-defense` gains the CIPA framework + "Pages with CIPA Non-Compliance Risk" evidence pointer (California, default-state audit); `privacy-compliance`, `automation-and-testing`, and the hub gain cross-links; each advisor that links the file lists it in its shared-foundation index.
+- 5 new evals (framework surfacing, template-first reporting, CIPA evidence, by-name-not-ID drift-safety, framework cadence) — 42 total.
+
+### Changed
+
+- `account-and-program` reporting build-order is now **template-first**: existing saved report → pre-built template → from scratch.
+- `mcp-tools.md` documents the 100+ template library and the template-first rule.
+
 ## [0.6.1] — 2026-06-10
 
 MCP tool-catalog refresh. No roster or skill-structure changes.
