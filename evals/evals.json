@@ -336,6 +336,78 @@
       "expected_output_summary": "Routes to account-and-program; gives the framework cadence — daily on critical pages, every deployment on a 10-15% sample, quarterly on 100% — and maps it to audit schedules (and a CI/CD gate for the deploy run).",
       "must_include": ["daily", "quarterly"],
       "must_not_include": ["pricing"]
+    },
+    {
+      "id": "internal-impersonation-safety",
+      "area": "account-and-program",
+      "prompt": "I need to fix a customer's audit configuration inside their ObservePoint account. Walk me through doing it safely.",
+      "expected_output_summary": "Routes to account-and-program; teaches the safe impersonation lifecycle whoami -> login_as_account (reads only) -> confirm_account_plan write-arming gate (after stating account+plan and getting go) -> work -> stop_impersonation.",
+      "must_include": ["whoami", "login_as_account", "confirm_account_plan", "stop_impersonation"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "internal-portfolio-triage",
+      "area": "account-and-program",
+      "prompt": "What's broken across my whole book of ObservePoint accounts right now?",
+      "expected_output_summary": "Routes to account-and-program; leads with get_account_health as the account-wide triage front-door, then drills into flagged audits with get_audit_health.",
+      "must_include": ["get_account_health"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "internal-access-review",
+      "area": "account-and-program",
+      "prompt": "Who has access to this customer's account, and who changed this audit recently?",
+      "expected_output_summary": "Routes to account-and-program; uses review_account_access (stale/never-logged-in/over-privileged) and query_user_events (attribution-only, who changed what when).",
+      "must_include": ["review_account_access", "query_user_events"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "internal-qbr-prep",
+      "area": "account-and-program",
+      "prompt": "Help me prep a QBR for my enterprise customer — what's the program state and is it governed?",
+      "expected_output_summary": "Routes to account-and-program; pairs get_account_health (program state) with review_account_access (governance), assembles the pricing-free value/evidence pack; no pricing.",
+      "must_include": ["get_account_health"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "capability-competitive-positioning",
+      "area": "hub",
+      "prompt": "A prospect's privacy officer asks why they need ObservePoint when OneTrust already has a built-in cookie scanner. How do I position it?",
+      "expected_output_summary": "Hub answers from competitive-positioning.md + verbiage-and-messaging.md; fair both-sides framing (web governance platform vs CMP scanner, detective control, independent verification); pricing-free.",
+      "must_include": ["web governance"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "capability-consulting-deliverable",
+      "area": "account-and-program",
+      "prompt": "Draft a tag-governance RACI and policy outline for our program.",
+      "expected_output_summary": "Pulls the consulting-deliverables.md templates (governance policy / RACI) and produces a structured outline.",
+      "must_include": ["RACI"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "capability-persona-ciso",
+      "area": "hub",
+      "prompt": "Frame ObservePoint's value for a CISO in one paragraph I can put in a deck.",
+      "expected_output_summary": "Hub tunes to the security/risk persona (personas.md + verbiage-and-messaging.md): unmanaged third-party script risk, data-exfiltration/consent exposure, independent verification; pricing-free.",
+      "must_include": ["risk"],
+      "must_not_include": ["pricing"]
+    },
+    {
+      "id": "boundary-pricing-scoping-redirect",
+      "area": "hub",
+      "prompt": "Scope this account and tell me the price and ROI for the deal.",
+      "expected_output_summary": "Honestly declines — pricing, ROI math, and deal-scoping are out of scope for the consultant; redirects to the separate internal revenue tooling; offers the pricing-free value evidence it can assemble instead.",
+      "must_include": ["pricing"],
+      "must_not_include": ["$"]
+    },
+    {
+      "id": "accessibility-overclaim-guard",
+      "area": "accessibility",
+      "prompt": "If we pass every ObservePoint accessibility check, are we fully ADA/WCAG compliant?",
+      "expected_output_summary": "Routes to accessibility; honest no — automated scanning covers only ~a third of WCAG success criteria; manual/assistive-tech testing still required; frames the scan as triage + evidence, not a compliance certificate.",
+      "must_include": ["WCAG"],
+      "must_not_include": ["fully compliant"]
     }
   ]
 }

@@ -298,7 +298,7 @@ Snapshot view across all 19 in-force U.S. comprehensive privacy laws. Use this f
 | Kentucky (KCDPA) | Jan 2026 | AG | No | Opt-in | |
 | Rhode Island (RIDTPPA) | Jan 2026 | AG | Yes | Opt-in | |
 
-The 12-of-19 states that mandate GPC mean the GPC variant is essentially required for any multi-state program; one GPC audit can prove the technical signal works for the whole portfolio. Don't skip it.
+The 14-of-19 states that mandate GPC mean the GPC variant is essentially required for any multi-state program; one GPC audit can prove the technical signal works for the whole portfolio. Don't skip it.
 
 ## U.S. sectoral privacy
 
@@ -1044,4 +1044,4 @@ Do not fabricate audit results. Explain that the live lookup requires the MCP se
 
 ---
 
-*Last verified: 2026-06-04*
+*Last verified: 2026-06-12*

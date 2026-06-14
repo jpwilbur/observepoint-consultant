@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.0] — 2026-06-12
+
+### Added
+- **Internal-enablement layer.** New `account-and-program/references/internal-operations.md` documents the across-a-book-of-accounts CSM/solutions motion: portfolio triage (`get_account_health`), account access & change review (`review_account_access`, `query_user_events`, `get_user`), and the safe account-impersonation lifecycle with the `confirm_account_plan` write-arming gate.
+- Hub **internal-reader mode** (serves CSM/solutions/support directly), a **value-narrative / competitive-positioning router row**, and a "what can you do" discovery tour.
+- **HAR / mobile-app tag-validation** workflow in tag-and-analytics-quality (`summarize_har_file` → `upload_har_file` → `get_har_run_results`).
+- Account-wide `get_account_health` triage front-door and an Account governance & access review subsection in account-and-program.
+- 9 new evals (internal scenarios, shared-foundation capabilities, a revenue-boundary redirect, an accessibility over-claim guard) — 51 total.
+
+### Fixed
+- account-config.md impersonation walkthrough now includes the `confirm_account_plan` write-arming gate it previously omitted.
+- Reconciled the pricing-free value/renewal narrative (it ships in `consulting-deliverables.md`) — removed the account-and-program self-contradiction that disowned it.
+- Hub tool count `115+` → `160+` (matches the catalog); reframed the removed `/op-accessibility-priorities` command references; removed stale "planned v0.6.0 / later release" forward-promises; reconciled the self-contradicting GPC state count (now 14 of 19) across privacy-and-compliance.md, consent-cmp.md, and the privacy SKILL.
+
 ## [0.7.0] — 2026-06-12
 
 ### Added

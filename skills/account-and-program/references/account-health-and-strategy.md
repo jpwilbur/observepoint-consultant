@@ -64,6 +64,8 @@ The order isn't rigid — a regulated-industry account with active litigation ex
 
 The concrete tool sequences that produce the health read. Each is a sequence, what it teaches you, and the action it points to. Run the ones that target the dimensions scoring lowest in the framework above.
 
+**Start account-wide, then drill in.** `get_account_health` is the weighted-severity "what's broken right now" digest across the whole account (or a scoped folder) — run it FIRST to surface the audits that deserve attention, then drop into `list_audits` + `get_audit_health(auditId)` only on the ones it flags. Looping `get_audit_health` over every audit does not scale; `get_account_health` is the front door, `get_audit_health` is the per-audit detail (it also distinguishes "failed to run" from "ran and caught problems"). `get_audits_status` is the run-status companion.
+
 **Account audit — score the whole account.**
 ```
 list_audits                        // full inventory of audits
@@ -147,9 +149,19 @@ The health read becomes a deliverable. The structures live in `references/consul
 
 - **Account Health Check.** Frame the diagnostic as a short, ranked artifact: the seven-dimension scores up top, then the prioritized fix list from the bang-for-buck rubric, each fix tied to the tool-call evidence that proves the gap. Borrow the **Tag Audit Report** skeleton's discipline from `references/consulting-deliverables.md` — executive summary, top three findings ranked by severity, recommendations split into immediate / near-term / strategic. Two pages, numbers before prose, dated and signed.
 - **Tie it to the maturity arc.** Pair the health check with the stage diagnosis and the relevant transition checklist from `references/lifecycle-and-maturity.md` so the customer sees not just the gaps but the path out of them.
-- **Value framing.** Translating "we caught 23 undocumented vendors" or "Reject All leaks 4 tags" into a business case the sponsor acts on is the job of the ROI and renewal framing (a dedicated reference is planned for a later release). Until then, frame value in prose: lead with the risk retired (litigation exposure, ad-spend waste, regulator inquiry avoided) and the time-to-detect improvement, anchored to the numbers the diagnostic surfaced.
+- **Value framing.** Translating "we caught 23 undocumented vendors" or "Reject All leaks 4 tags" into a business case the sponsor acts on is the job of the ROI and renewal framing. The pricing-free Value Snapshot and Renewal Narrative templates ship in `references/consulting-deliverables.md`; only pricing and ROI math are out of scope (those live in `observepoint-revenue`). Frame value in prose: lead with the risk retired (litigation exposure, ad-spend waste, regulator inquiry avoided) and the time-to-detect improvement, anchored to the numbers the diagnostic surfaced.
 
 Deliver the ranked fix list, not the raw scores. The scores justify the ranking; the ranking is what the customer acts on.
+
+## Account governance & access review
+
+Who can reach the account, and who changed what — the governance reads behind onboarding hygiene, QBR prep, security review, and "who broke this audit." Workflows, not a tool dump:
+
+- **Onboarding / access hygiene** — `review_account_access` lists everyone with access; flag never-logged-in, stale (>90 days), and over-privileged admins, then `get_user` for detail on a flagged account.
+- **Change attribution** — `query_user_events` returns the activity log filtered by item or time window: who did what, when. It is **attribution-only — not a before/after config diff**; pair with `get_file_changes` / `compare_audit_runs` for the actual delta.
+- **QBR / security review** — pair `get_account_health` (is it working) with `review_account_access` (is it governed) to walk in with both pictures.
+
+The across-the-book version of this motion (multi-account triage + the safe impersonation lifecycle) lives in `references/internal-operations.md`.
 
 ---
 
@@ -212,4 +224,4 @@ Return an ordered Day-1 checklist with each item's owner, the ObservePoint setup
 
 ---
 
-*Last verified: 2026-06-10*
+*Last verified: 2026-06-12*

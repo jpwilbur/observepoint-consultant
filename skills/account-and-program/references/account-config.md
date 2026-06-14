@@ -133,12 +133,13 @@ When `mcp__ObservePoint__*` tools are loaded, prefer the typed wrappers over `op
 - `whoami` — confirm which account/identity the session is acting as **before** you configure anything. Always the first call when impersonation is in play.
 - `find_account` — locate a customer account by name/URL.
 - `login_as_account` — impersonate into that account to configure on the customer's behalf.
+- `confirm_account_plan` — the WRITE-ARMING gate. After `login_as_account`, reads work but writes are BLOCKED until you state the account + your plan to the user, get their "proceed," and call this. Re-confirm per distinct piece of work.
 - `stop_impersonation` — return to your own identity when done. Pair every `login_as_account` with this.
 - `get_account` — account-level info, plan tier, usage caps (does the plan allow the audit count this blueprint implies?).
 
 **Structure and config wrappers** (covered in their sections above): `create_folder` / `create_subfolder`, `create_label` / `set_audit_labels`, `create_audit` / `update_audit`, `create_rule` / `update_audit_rules`, `create_consent_category` / `set_audit_consent_categories`, `create_alert`, `build_schedule`, and the one-shot `setup_compliance_monitoring`.
 
-The disciplined sequence: `whoami` → (`find_account` → `login_as_account` if CSM) → `get_account` to confirm the plan → build the structure → attach Rules and consent categories → schedule → route alerts → `stop_impersonation`.
+The disciplined sequence: `whoami` → (`find_account` → `login_as_account` if CSM) → `get_account` to confirm the plan tier → **`confirm_account_plan` to arm writes (after telling the user the account + plan and getting their go)** → build the structure → attach Rules and consent categories → schedule → route alerts → `stop_impersonation`. Reads work the moment you impersonate; the first WRITE fails until `confirm_account_plan` is called.
 
 ## 9. The config_blueprint.py workflow
 
@@ -166,7 +167,9 @@ Each example names the audit it attaches to, the consent state it assumes, and t
 
 The end-to-end shape for "set up `shop.example.com` for CCPA," as a CSM configuring on the customer's behalf:
 
-1. **Confirm identity and plan.** `whoami`; if impersonating, `find_account` → `login_as_account` → `whoami` again to confirm. `get_account` to check the plan allows three new audits.
+(For the across-the-book CSM motion — portfolio triage and access review — see `references/internal-operations.md`.)
+
+1. **Confirm identity and plan.** `whoami`; if impersonating, `find_account` → `login_as_account` → `whoami` again to confirm. `get_account` to check the plan allows three new audits. Then `confirm_account_plan({plan: "set up shop.example.com for CCPA"})` to arm writes — state the account and plan to the user and get their "proceed" first; until you do, every create call below is blocked.
 2. **Anchor on the blueprint.** `python3 scripts/config_blueprint.py ccpa shop.example.com` — the JSON names the three audits, the Strictly-Necessary-only consent rule for Opt-Out/GPC, and the rule themes.
 3. **Build the structure.** `create_folder("Retail-NA")` → `create_subfolder` for `shop.example.com`.
 4. **Create the audits.** `setup_compliance_monitoring(regulation="ccpa", domain="shop.example.com")` builds all three with the correct pre-audit actions and consent assignments in one call — preferred over three hand-built `create_audit` calls.
@@ -179,4 +182,4 @@ Without MCP this is the same sequence as a UI click-path; the REST equivalents l
 
 ---
 
-*Last verified: 2026-06-04*
+*Last verified: 2026-06-12*

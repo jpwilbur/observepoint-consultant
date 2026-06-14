@@ -1,6 +1,6 @@
 # Accessibility playbooks — prioritizing and defending WCAG conformance work
 
-Load this file when the user needs to prioritize accessibility findings, asks about ADA / Section 508 / European Accessibility Act obligations, wants the "highest-impact fix first" on a site full of violations, or runs the `/op-accessibility-priorities` command. It also covers what to do when a customer receives an ADA Title III demand letter and needs technical evidence.
+Load this file when the user needs to prioritize accessibility findings, asks about ADA / Section 508 / European Accessibility Act obligations, wants the "highest-impact fix first" on a site full of violations, or invokes the impact-prioritization workflow. It also covers what to do when a customer receives an ADA Title III demand letter and needs technical evidence.
 
 This is the operational companion to the WCAG / European Accessibility Act entry in the **privacy-compliance** skill. That file carries the regulation-to-coverage mapping and the effective dates; this file carries the litigation framing, the impact-prioritization scoring, the violation-remediation catalog, and the MCP-tool workflows that turn a raw scan into a ranked work queue. Read both together; this file does not restate the dates.
 
@@ -69,7 +69,7 @@ A worked example. A missing form label (critical, weight 10) on the checkout but
 
 **The "fix this first" output.** Sort the violations by `priority_score` descending and present the top items as a ranked work queue. Each row carries: the violation, the WCAG success criterion, the affected scope (which templates / how many pages / estimated traffic), the priority score, and the remediation step. A practical refinement: when two items score close, break the tie by remediation effort — a one-line `alt` attribute fix that clears a tier-1 critical beats a deep custom-widget rebuild of equal score, because it removes user harm sooner. Track the running total of cleared critical/serious findings on tier-1 templates as the headline metric; that trajectory is also what the lawsuit-defense section below relies on.
 
-A ranked queue for a retail site looks like this — the exact shape the `/op-accessibility-priorities` command should emit:
+A ranked queue for a retail site looks like this — the exact shape the impact-prioritization workflow should emit:
 
 | Rank | Violation | WCAG SC | Scope | Sev x Exp x Pop | Score | Fix |
 |---|---|---|---|---|---|---|
@@ -104,7 +104,7 @@ These ten cover the bulk of what an automated scan returns. The first five (alt 
 
 ## MCP-tool workflows for accessibility
 
-Concrete tool sequences that turn the accessibility scan into a ranked queue and a monitoring posture. The `accessibility-issues` entity type is a real grid-report entity (see the grid-report entity list in `references/mcp-tools.md`). Only the tool names below are real — verify any tool against `references/mcp-tools.md` before using it. These sequences power the `/op-accessibility-priorities` command.
+Concrete tool sequences that turn the accessibility scan into a ranked queue and a monitoring posture. The `accessibility-issues` entity type is a real grid-report entity (see the grid-report entity list in `references/mcp-tools.md`). Only the tool names below are real — verify any tool against `references/mcp-tools.md` before using it. These sequences implement the impact-prioritization workflow.
 
 **1. Discover the columns before you query.** Always start here — grid-report column names vary by entity type, and guessing wastes a round trip.
 
@@ -228,6 +228,6 @@ Do not fabricate accessibility findings. Explain that pulling live issues requir
 
 ---
 
-*Last verified: 2026-06-04*
+*Last verified: 2026-06-12*
 
 *This describes technical detection and evidence, not legal advice or a conformance guarantee. Automated scanning catches a subset of WCAG criteria; pair with manual and assistive-technology testing. Coordinate with accessibility and legal experts.*

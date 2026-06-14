@@ -2,10 +2,10 @@
 
 Load this file when the conversation is about *where a customer is and where they go next*, not about a single technical task. The triggers: maturity questions ("how mature is our program?", "are we doing this right?"), onboarding ("we just bought ObservePoint — now what?"), expansion ("we have audits running, what's the next level?"), and the open-ended "where do we go from here?" The shape here is a maturity model plus the operational rhythms that move a customer up it. It pairs with the "Build a Web Governance program from scratch" playbook in `references/solution-playbooks.md` — that playbook is the month-by-month build sequence; this file is the diagnostic and the longer arc around it.
 
-> **Starter content.** This file establishes the framework. Customer-size-aware
-> timelines (SMB vs. mid-market vs. enterprise) and ObservePoint's actual internal
-> program processes need a dedicated working session to integrate — that's a planned
-> v0.6.0 follow-up. Treat the timelines here as illustrative defaults, not commitments.
+> **Scope note.** This file establishes the framework. The pricing-free Value Snapshot
+> and Renewal Narrative templates ship in `references/consulting-deliverables.md`;
+> pricing and ROI math live in the separate internal `observepoint-revenue` tooling.
+> Treat the timelines here as illustrative defaults that scale with customer size.
 
 ## Web Governance Maturity Model
 
@@ -105,4 +105,4 @@ Concrete transition plans, one per stage gap. **Timelines scale with customer si
 
 ---
 
-*Last verified: 2026-06-04*
+*Last verified: 2026-06-12*
