@@ -77,6 +77,8 @@ Read the bands off the account — the self-report and the data disagree more of
 
 **Eight underuse patterns** (each with a detection tool and what fixing it unlocks): (1) single-folder organization at scale — `list_folders` returns one while `list_audits` returns many; (2) audits without Rules attached — `get_audit_rules` empty on running audits; (3) Rules without alerts — `analyze_rule_results` shows failures but `list_alerts` empty; (4) alerts to one person's email — bus-factor risk, fix with `update_alert`; (5) no PII scanning — `scan_audit_pii` never run; (6) no consent-state coverage — `get_audit_consent_categories` shows default-only; (7) no anomaly detection — `find_anomalies` never used; (8) no labels or saved reports — `list_saved_reports` and `list_labels` empty. Full detection calls and unlock rationale in `references/account-health-and-strategy.md`.
 
+**Across a book of accounts?** The internal multi-account motion — portfolio triage with `get_account_health`, access/change review, and the safe impersonation lifecycle — is in `references/internal-operations.md`.
+
 **Biggest-bang-for-buck rubric.** Prioritize by impact × effort. Work the high-impact / low-effort quadrant first: wire alerts on existing Rules (#3), re-route single-recipient alerts (#4), schedule a `scan_audit_pii` sweep (#5), run `find_anomalies` monthly (#7). A regulated-industry account with active litigation exposure promotes the PII sweep and consent coverage above everything else regardless of effort.
 
 **Maturity model (crawl → walk → run → fly).** Diagnose the stage off the account data, not the customer's self-report.
@@ -121,13 +123,13 @@ Use me when the user is setting up or reorganizing an account, reading program h
 - **"What does the law actually require, and does consent work?"** → `privacy-compliance`. I stand up the audits a regulation implies; it owns the legal *why* and proves the consent banner works.
 - **"Do this setup via the REST API / write CI/CD audit gates"** → `automation-and-testing`. I describe the blueprint and the click-path (or MCP wrapper sequence); it owns API-driven setup and release-gate automation.
 - **"Is the data from this specific tag correct / is this tag supposed to be here?"** → `tag-and-analytics-quality`. I own the Rule library *design*; it owns Rule *authoring mechanics* and whether a specific tag's data is correct.
-- **"What's the value story for the budget owner?"** → This is handled by ObservePoint's internal revenue team, outside this customer-facing plugin's scope. I read whether the account is on track; the value framing for renewal is assembled from the evidence this advisor surfaces.
+- **"What's the value story for the budget owner / the renewal narrative?"** → I assemble the **pricing-free** value story from the program evidence I surface — the Value Snapshot and Renewal Narrative templates in `references/consulting-deliverables.md`, framed for the persona in `references/personas.md`. Only **pricing, ROI math, and deal-scoping** are out of scope here; those live in the separate internal `observepoint-revenue` tooling.
 
 ## MCP tools I use
 
 When `mcp__ObservePoint__*` tools are loaded, prefer these typed wrappers over `op_api_call` — they encode schedule sanitization, the two-step CMP import, and consent-assignment safety gates. All verified in the shared `references/mcp-tools.md`:
 
-**Identity / impersonation (admin/CSM):** `whoami`, `find_account`, `login_as_account`, `stop_impersonation`, `get_account`.
+**Identity / impersonation / governance (admin/CSM):** `whoami`, `find_account`, `login_as_account`, `confirm_account_plan`, `stop_impersonation`, `get_account`, `review_account_access`, `query_user_events`, `get_user`.
 
 **Account structure:** `create_folder`, `create_subfolder`, `create_label`, `set_audit_labels`, `get_audit_labels`.
 
@@ -137,7 +139,7 @@ When `mcp__ObservePoint__*` tools are loaded, prefer these typed wrappers over `
 
 **Alerts & schedules:** `create_alert`, `update_alert`, `list_alerts`, `get_alert_metric_types`, `build_schedule`, `list_schedule_presets`, `get_schedule_calendar`.
 
-**Health diagnostics:** `get_audit_health`, `get_usage_overview`, `get_usage_summary`, `get_usage_trends`, `find_coverage_gaps`, `find_anomalies`, `get_inventory`, `get_metric_trend`, `find_first_observed`, `analyze_rule_results`, `scan_audit_pii`.
+**Health diagnostics:** `get_account_health`, `get_audits_status`, `get_audit_health`, `get_usage_overview`, `get_usage_summary`, `get_usage_trends`, `find_coverage_gaps`, `find_anomalies`, `get_inventory`, `get_metric_trend`, `find_first_observed`, `analyze_rule_results`, `scan_audit_pii`.
 
 **Reporting:** `get_report_schema`, `query_report`, `list_saved_reports`, `get_saved_report`, `create_saved_report`, `update_saved_report`, `delete_saved_report`, `get_saved_report_labels`, `set_saved_report_labels`.
 
@@ -157,6 +159,7 @@ These live in the meta-skill and stay linked by their plain filename:
 Deep references owned by this skill:
 
 - `references/account-config.md` — folder/label taxonomy, naming convention, rule-library themes, consent-category design, alert routing, schedule-cadence table, full regulation→configuration mapping, WHEN/EXPECT examples, end-to-end configuration walkthrough.
+- `references/internal-operations.md` — the internal across-the-book CSM/solutions motion: portfolio triage (`get_account_health`), account access & change review (`review_account_access`, `query_user_events`), and the safe account-impersonation lifecycle with the `confirm_account_plan` write-arming gate.
 - `references/account-health-and-strategy.md` — seven-dimension diagnostic framework, eight underuse patterns, bang-for-buck rubric, MCP diagnostic workflows, stage-keyed next-action templates, and the Workflows section (account strategy diagnostic, state-of-play for a domain, Day-1 onboarding checklist).
 - `references/lifecycle-and-maturity.md` — crawl→walk→run→fly maturity model, onboarding milestone arc, CSM cadences, common stuck-patterns with break-through plays, maturity-driven roadmap.
 - `references/reporting-and-charting.md` — grid entity types, `get_report_schema` discovery, `query_report` → `create_saved_report` build order, dashboards, charting (`add_report_chart`/`remove_report_chart`), worked examples.
@@ -165,8 +168,8 @@ Deep references owned by this skill:
 
 - **Apply the config myself.** I emit the blueprint and the wrapper sequence; the human (or an MCP write the human authorizes) creates it. `config_blueprint.py` is advisory — it never touches the account.
 - **Say what the law requires or prove consent works.** I stand up the audits a regulation implies; `privacy-compliance` owns the legal detail and proves Reject-All actually blocks what it should.
-- **Build the renewal/ROI value case.** That value-framing is handled by ObservePoint's internal revenue team, outside this customer-facing plugin's scope.
+- **Do pricing, ROI math, or deal-scoping.** Those live in the separate internal `observepoint-revenue` tooling. I DO assemble the pricing-free value/renewal narrative from the program evidence I surface (`references/consulting-deliverables.md`).
 - **Automate setup via the REST API or CI/CD gates.** Blueprint and click-path is my lane; `automation-and-testing` owns API-driven setup.
 - **Configure a chart via MCP.** Charting is not in the server yet — I build the saved report it will sit on and point the user to the UI.
 
-*Last verified: 2026-06-10*
+*Last verified: 2026-06-12*
