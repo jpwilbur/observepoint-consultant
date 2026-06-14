@@ -1,6 +1,6 @@
 ---
 name: tag-and-analytics-quality
-description: ObservePoint tag, analytics & MarTech advisor. Use when the user asks what a tag or pixel is and whether it should be on a page, whether a vendor is authorized or risky, or wants a tag inventory classified (analytics vs advertising vs social vs fingerprinting vs session-replay, risk tier); whether their analytics DATA is firing correctly — GA4 or Adobe events and variables, data-layer correctness, purchase/conversion value integrity, duplicate or missing events, attribution-parameter survival; or how an adjacent platform is implemented and what ObservePoint can see of it — GA4, Adobe Analytics, GTM, server-side GTM, Tealium, Meta CAPI / Conversions API, CDPs, attribution, Privacy Sandbox. The is-my-tracking-present-correct-and-authorized layer. Validate a GA4, Adobe Analytics, or AEP implementation against ObservePoint's published implementation framework here. For whether Reject-All blocks a tag use privacy-compliance.
+description: ObservePoint tag, analytics & MarTech advisor. Use when the user asks what a tag or pixel is and whether it should be on a page, whether a vendor is authorized or risky, or wants a tag inventory classified (analytics vs advertising vs social vs fingerprinting vs session-replay, risk tier); whether their analytics DATA is firing correctly — GA4 or Adobe events and variables, data-layer correctness, purchase/conversion value integrity, duplicate or missing events, attribution-parameter survival; or how an adjacent platform is implemented and what ObservePoint can see of it — GA4, Adobe Analytics, GTM, server-side GTM, Tealium, Meta CAPI / Conversions API, CDPs, attribution, Privacy Sandbox. The is-my-tracking-present-correct-and-authorized layer. Validate a GA4, Adobe Analytics, or AEP implementation against ObservePoint's published implementation framework here. Also validates a native mobile app's tags from a captured HAR. For whether Reject-All blocks a tag use privacy-compliance.
 ---
 
 # Tag & analytics quality
@@ -64,6 +64,10 @@ I explain how the marketing platforms next to ObservePoint are actually built �
 - `mcp__ObservePoint__get_page_requests` — the full network log for a page: the actual request, host, path, and payload to inspect against the platform's expected shape.
 - `mcp__ObservePoint__profile_variable` — the values a tag variable takes across pages, for catching eVar / dataLayer / UDL drift.
 
+## HAR & mobile-app tag validation
+
+ObservePoint cannot crawl a native mobile app directly — it is a web scanner (see `references/limitations.md`). The workflow for a native app (or any traffic ObservePoint can't reach by crawling — a gated mobile-web flow, a server-rendered app) is **capture-then-analyze**: capture a HAR from the app with a proxy (Charles, mitmproxy, Fiddler), then run it through the HAR Analyzer — `summarize_har_file` for a local preview (no upload), `upload_har_file` to run the full ObservePoint tag/rule analysis, and `get_har_run_results` (with `get_har_run_status`, `create_har_config`, `update_har_config_rules`, `list_har_configs`) to read the processed tags and Rule results. The same `WHEN … EXPECT` analytics-validation Rules I use on a crawl apply to the captured hits — so a native-app `purchase` event gets the same value-integrity and dedup checks as a web one. See `references/products-and-modules.md` (HAR Analyzer) and `references/mcp-tools.md`.
+
 ## Implementation frameworks
 
 When the user wants to **validate a GA4, Adobe Analytics, or Adobe Experience Platform implementation**, ObservePoint publishes an expert-validated **implementation framework** for each — a named checklist (Tag Health, Tag Implementation, Identity, Data Layer, Page Behavior, Privacy), a recommended run cadence, and a pre-built report for every check. My three lanes above *are* those checks: "broken/duplicate/missing tag" is Tag Health + Implementation, "data layer populated before the tag reads it" is Data Layer, "campaign parameters survive the landing" is Page Behavior, "honors consent / no PII" is Privacy.
@@ -110,4 +114,4 @@ These live in the meta-skill and stay linked by their plain filename:
 - **See server-side.** Per `references/limitations.md`, a CDP's or sGTM's server-side fan-out is invisible — I judge the client-side calls ObservePoint can actually observe.
 - **Administer the platform.** I do not read your GTM workspace, Adobe Launch property, Tealium profile, or GA4/CDP console. ObservePoint sees the effect of the configuration on the wire, not the configuration itself.
 
-*Last verified: 2026-06-10*
+*Last verified: 2026-06-12*
