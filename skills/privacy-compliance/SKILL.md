@@ -45,7 +45,7 @@ The technical validation question is always the same regardless of CMP vendor: *
 
 **`compare_consent_states` — the core diagnostic.** Diffs the tag set between two consent-state audits on the same domain. Anything in the Accept-All / Reject-All delta is a tag the opt-out was supposed to suppress and didn't — the literal definition of a consent leak. Back it with `get_cookie_privacy_report` and `get_request_privacy_report` for cookie-level and vendor-level evidence artifacts.
 
-**Reject-All vs GPC — run both.** They are not redundant. Reject-All exercises the CMP's own opt-out path; GPC exercises a browser-level signal the site must detect and honor independently. A site can pass Reject-All and fail GPC or vice versa. Twelve of the 19 U.S. state laws mandate GPC — one GPC audit proves the technical signal works for the whole portfolio.
+**Reject-All vs GPC — run both.** They are not redundant. Reject-All exercises the CMP's own opt-out path; GPC exercises a browser-level signal the site must detect and honor independently. A site can pass Reject-All and fail GPC or vice versa. Fourteen of the 19 U.S. state laws mandate GPC — one GPC audit proves the technical signal works for the whole portfolio.
 
 **Pre-consent firing.** The most consequential finding: a non-essential tag firing in the Default window, before the user has interacted with the banner at all. This is the literal regulatory violation under ePrivacy / PECR and the technical fact behind most consent-leak class actions. Validate with a Default-state audit and a Rule asserting nothing non-essential fires — pass rate must be 100%.
 

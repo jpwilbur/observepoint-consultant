@@ -38,7 +38,7 @@ This is the core motion of the whole skill. A consent setup can only be validate
 - **Default** — the page loaded with no interaction (the pre-banner window). Nothing non-essential should fire here.
 - **Accept-All** — the user granted everything. This is the permissive baseline: it shows the *full* set of tags the site is capable of firing.
 - **Reject-All** — the user refused all non-essential processing. The opt-out audit. Drive it with a `privacyoptout` pre-audit action on a natively supported CMP.
-- **GPC** — the Global Privacy Control signal is asserted at the browser level (paired with third-party-cookie blocking). The machine-readable opt-out that 12 of the 19 U.S. state laws mandate honoring; see `references/privacy-and-compliance.md` for *which* states require it.
+- **GPC** — the Global Privacy Control signal is asserted at the browser level (paired with third-party-cookie blocking). The machine-readable opt-out that 14 of the 19 U.S. state laws mandate honoring; see `references/privacy-and-compliance.md` for *which* states require it.
 
 The cleanest one-shot setup is `setup_compliance_monitoring(regulation="ccpa", domain=...)`, which builds the three-audit shape (Default + Opt-Out + GPC) designed for California and reused across most state laws. Never assign non-essential consent categories to the Opt-Out or GPC audits — those audits exist to prove non-essential tags *don't* fire.
 
@@ -53,7 +53,7 @@ It auto-discovers the audit pair by domain and state name (it recognizes the nam
 
 The discipline: **counting requests is the wrong test.** Under denied consent, well-behaved Google tags still fire — as cookieless pings (section 3). The right test is the *delta in identified tag behavior* between states, which is exactly what `compare_consent_states` surfaces.
 
-**Reject-All vs GPC — why you run both.** They are not redundant. Reject-All exercises the **CMP's own opt-out path** (the user clicked "Reject All" in the banner), proving the banner's reject button is wired through to the tags. GPC exercises a **browser-level signal** asserted before the banner is even touched (paired with third-party-cookie blocking), proving the site detects and honors a machine-readable opt-out a privacy-conscious browser sends automatically. A site can pass Reject-All and fail GPC (it honors the button but ignores the header) or vice versa. For a multi-state U.S. program the GPC audit is effectively mandatory because 12 of the 19 state laws require honoring it — one GPC audit proves the technical signal works for the whole portfolio.
+**Reject-All vs GPC — why you run both.** They are not redundant. Reject-All exercises the **CMP's own opt-out path** (the user clicked "Reject All" in the banner), proving the banner's reject button is wired through to the tags. GPC exercises a **browser-level signal** asserted before the banner is even touched (paired with third-party-cookie blocking), proving the site detects and honors a machine-readable opt-out a privacy-conscious browser sends automatically. A site can pass Reject-All and fail GPC (it honors the button but ignores the header) or vice versa. For a multi-state U.S. program the GPC audit is effectively mandatory because 14 of the 19 state laws require honoring it — one GPC audit proves the technical signal works for the whole portfolio.
 
 **Antipatterns this audit pattern catches.**
 
@@ -167,4 +167,4 @@ This skill is the technical does-it-work layer. Three things it deliberately doe
 
 And the standard ObservePoint boundary applies throughout: ObservePoint sees the browser, and only the browser. It reads the consent signal the CMP put on the wire and the tag behavior that resulted — it cannot read the CMP's internal consent-record database, and it cannot confirm what a server-side container did with a consent signal after the client-to-server hop. Pair it with the CMP's own logs and the vendors' debug tools for the server side.
 
-*Last verified: 2026-06-04*
+*Last verified: 2026-06-12*
