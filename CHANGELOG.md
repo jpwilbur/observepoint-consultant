@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.1] — 2026-06-17
+
+Journey repair-playbook docs patch (PM journey-611275).
+
+### Added
+- **Screenshot-first / walk-the-flow debug discipline.** `automation-and-testing` §4 and `SKILL.md` debug-path now front-load: on first failure, pull `firstFailure.screenshotUrl` from `get_run_action_outcomes` and walk the live flow once before mutating — batch all fixes into a single `update_journey_actions` call rather than discovering defects one re-run at a time.
+- **Guarded-`execute` warning.** §1 action vocabulary and §4 failure-modes list now document that `execute` JS must throw on unexpected state; an `if(el){…}` guard silently no-ops a missing element, the step passes, and the gap is later misattributed to a Rules failure. Correct form documented.
+- **Wrapper-element text-selector pitfall.** §1 selector note and §4 failure-modes list now document that bare `//*[normalize-space()='X']` / `selectorType:"text"` selectors hit the outermost ancestor (often a `<div>`/`<span>`), not the interactive `<button>`/`<a>` — step passes, nothing navigates, expected tag never fires. Fix: scope to the element type.
+
 ## [0.8.0] — 2026-06-12
 
 ### Added

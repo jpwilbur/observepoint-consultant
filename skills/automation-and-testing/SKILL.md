@@ -62,7 +62,7 @@ The journey-mutation wrappers enforce three constraints the raw REST API does no
 
 **SPA "Prevent Navigation" flag.** Single-page apps (React, Vue, Angular, Svelte) change the route without a full page reload. Set `Prevent Navigation = true` on the click actions that trigger in-app route changes, and the engine captures every tag firing across the route changes. This is the single most common reason an SPA funnel Journey "loses" its events.
 
-**Debug path.** `diagnose_journey` for the interpreted verdict → `get_run_action_outcomes` to pin the failing step → `get_journey_console_errors` to explain why → re-verify the selector with `verify_selectors` → patch with `update_journey_actions` (fresh evidence only on selectors that actually changed) → `run_journey` to confirm.
+**Debug path.** On first failure, before touching anything: pull `firstFailure.screenshotUrl` from `get_run_action_outcomes` and walk the live flow once to catch every stale element in a single pass. Then: `diagnose_journey` for the interpreted verdict → `get_run_action_outcomes` to pin the failing step → `get_journey_console_errors` to explain why → re-verify suspect selectors with `verify_selectors` → batch all fixes into one `update_journey_actions` call (fresh evidence only on selectors that actually changed) → `run_journey` to confirm.
 
 **LiveConnect vs HAR Analyzer.** LiveConnect is the live device feed — connect a real device over Wi-Fi and watch traffic in real time. HAR Analyzer is the recorded path — upload a `.har` (Chrome DevTools, Charles, Fiddler, or a device proxy) and run Tag & Variable Rules against it. Neither replaces a Journey for scheduled monitoring with alert routing.
 

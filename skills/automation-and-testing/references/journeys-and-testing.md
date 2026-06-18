@@ -26,7 +26,7 @@ A Journey is an ordered list of **actions** the synthetic Chromium browser repla
 | `maskedinput` | Type a value that is **masked in the run record** — credentials, payment fields, any PII. Always prefer this for sensitive data so the literal never lands in the stored run. |
 | `select` | Choose an option in a `<select>` dropdown. |
 | `check` / `uncheck` | Toggle a checkbox or radio (consent boxes, terms acceptance, opt-ins). |
-| `execute` | Run a snippet of JavaScript in page context — for state the UI can't express (set a variable, dispatch a custom event, clear storage). |
+| `execute` | Run a snippet of JavaScript in page context — for state the UI can't express (set a variable, dispatch a custom event, clear storage). The snippet **must throw on unexpected state** — do not guard with `if(el){…}`. A guarded snippet silently no-ops when the element is missing, the step passes, nothing happens, and the missing tag is later misattributed to a Rules failure. Correct form: `const el = document.querySelector('…'); if(!el) throw new Error('not found'); el.click();` |
 | `watch` | Wait on video playback or side-loading content. **Not** a generic timer (see the watch-usage gate). |
 | `enteriframe` / `exitiframe` | Step the action context into and back out of an `<iframe>` — required for embedded checkout, third-party payment frames, embedded widgets whose elements aren't in the top document. |
 | `actionset` | Invoke a reusable named sequence (an **action-set**) inline — e.g. a shared login block referenced from many Journeys. |
@@ -34,7 +34,7 @@ A Journey is an ordered list of **actions** the synthetic Chromium browser repla
 Two properties matter on nearly every action:
 
 - **`waitDuration`** — a per-action buffer (the action waits N ms before/after it runs). This is the *correct* way to absorb between-step latency. Every action supports it. Reach for `waitDuration`, never a `watch` step, when you just need the page to settle.
-- **The selector** — for the selector-bearing actions (`click`, `input`, `maskedinput`, `select`, `check`, `uncheck`, `enteriframe`), how the element is located: `css`, `id`, or `xpath`. The MCP wrappers also accept `text`, `ariaLabel`, and `name` and transparently rewrite them to css/xpath, but the backend stores only the three native types.
+- **The selector** — for the selector-bearing actions (`click`, `input`, `maskedinput`, `select`, `check`, `uncheck`, `enteriframe`), how the element is located: `css`, `id`, or `xpath`. The MCP wrappers also accept `text`, `ariaLabel`, and `name` and transparently rewrite them to css/xpath, but the backend stores only the three native types. **Text-selector pitfall:** a bare text selector (`//*[normalize-space()='X']` or `selectorType:"text"`) matches the *first* element containing that text — often a wrapper `<div>` or `<span>`, not the interactive `<button>` or `<a>`. The click lands on the non-interactive ancestor, the step passes, nothing navigates, and the expected tag never fires. Scope to the element type instead: `//button[normalize-space()='X']` or `//a[normalize-space()='X']`.
 
 **Multi-step flows.** Order is everything: a `purchase` event won't fire until the steps before it (add-to-cart, fill the form, submit) have actually run. Build the flow as the human would walk it, attach Rules at the steps where the assertion belongs (section 6), and the run produces the hits in the same order a real session would. Two principles keep a multi-step flow from rotting:
 
@@ -76,7 +76,9 @@ When `mcp__ObservePoint__*` tools are loaded (all verified in the shared `refere
 
 ## 4. Debugging a Journey
 
-When a Journey fails, the question is *which step broke and why*. The diagnostic path, in order:
+When a Journey fails, the question is *which step broke and why*. **Before you mutate anything on the first failure:** (a) pull the screenshot for the failed action — `get_run_action_outcomes` compact mode returns `firstFailure.screenshotUrl`; the screenshot shows exactly what the browser saw when the step errored. (b) Walk the full live flow once (in a browser or via `verify_selectors` per action) so you spot every stale element in one pass. Re-runs cost minutes each; discovering defects one-re-run-at-a-time wastes runs. Batch all fixes and ship a single `update_journey_actions` call.
+
+The diagnostic path, in order:
 
 - `mcp__ObservePoint__diagnose_journey` — the smart-diagnosis wrapper. Start here: it interprets the failure rather than dumping raw data.
 - `mcp__ObservePoint__get_journey_runs` — the run history; pick the failing run.
@@ -91,8 +93,10 @@ The most common failure modes and where they show up:
 - **SPA route miss** — steps all pass but the expected tag never fired on a post-navigation route. Fix: set `Prevent Navigation` on the route-changing click.
 - **Iframe context** — the element lives in an `<iframe>` (embedded payment, third-party widget) and the action can't reach it. Fix: wrap the interaction in `enteriframe` … `exitiframe`.
 - **Page JS error** — `get_journey_console_errors` surfaces an exception that broke the page mid-flow.
+- **Guarded `execute` snippet** — an `if(el){…}` guard silently no-ops when the element is absent; the step passes, nothing executes, and the missing tag is later misattributed to a Rules failure. Every `execute` snippet must throw on unexpected state (see §1).
+- **Wrapper-element text selector** — a bare `//*[normalize-space()='X']` or `selectorType:"text"` click hits the outermost ancestor containing that text (often a `<div>` or `<span>`), not the `<button>` or `<a>`. Step passes; nothing navigates; expected tag never fires. Scope selectors to the interactive element type: `//button[normalize-space()='X']` (see §1).
 
-A disciplined debug pass: `diagnose_journey` for the interpreted verdict → `get_run_action_outcomes` to pin the failing step → `get_journey_console_errors` to explain *why* that step failed → re-verify the suspect selector with `verify_selectors` → patch with `update_journey_actions` (fresh evidence only on the selectors that actually changed) → re-run with `run_journey` and confirm with `get_journey_run_rule_results`. Resist editing several steps at once; change one thing, re-run, confirm — a Journey that fails for two reasons looks identical to one that fails for one until you isolate them.
+A disciplined debug pass: `diagnose_journey` for the interpreted verdict → `get_run_action_outcomes` to pin the failing step (grab `firstFailure.screenshotUrl`) → walk the live flow to spot every stale element in one pass → `get_journey_console_errors` to explain *why* that step failed → re-verify suspect selectors with `verify_selectors` → patch everything found in one `update_journey_actions` call (fresh evidence only on selectors that actually changed) → re-run with `run_journey` and confirm with `get_journey_run_rule_results`. Resist editing several steps at once; change one thing, re-run, confirm — a Journey that fails for two reasons looks identical to one that fails for one until you isolate them.
 
 ## 5. LiveConnect and the HAR Analyzer
 
