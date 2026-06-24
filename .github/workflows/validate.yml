@@ -21,7 +21,7 @@ jobs:
       - name: Install test deps
         run: pip install pytest
       - name: Release-tooling tests
-        run: python3 -m pytest scripts/test_publish_to_drive.py scripts/test_check_plugin_meta.py -q
+        run: python3 -m pytest scripts/test_publish_to_drive.py scripts/test_check_plugin_meta.py scripts/test_notify_slack.py -q
       - name: Plugin metadata (Cowork upload rules)
         run: python3 scripts/check_plugin_meta.py .
 

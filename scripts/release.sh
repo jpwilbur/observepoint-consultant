@@ -11,6 +11,8 @@ cd "$ROOT"
 
 PLUGIN_SUBDIR="${PLUGIN_SUBDIR:-}"
 DRIVE_FOLDER="${OP_PLUGIN_DRIVE_FOLDER:-ObservePoint Consultant}"
+SLACK_NAME="${OP_RELEASE_DISPLAY_NAME:-ObservePoint Consultant}"
+SLACK_FOLDER_URL="${OP_RELEASE_FOLDER_URL:-https://drive.google.com/drive/folders/1dxAAaaqFaQK2JCfZ_AMMsXPlmMeF65-e}"
 
 DRY=""; FORCE=""
 for a in "$@"; do
@@ -33,5 +35,6 @@ NAME="$("$PYTHON" -c "import json;print(json.load(open('$MANIFEST'))['name'])")"
 VERSION="$("$PYTHON" -c "import json;print(json.load(open('$MANIFEST')).get('version','0.0.0'))")"
 ARTIFACT="$ROOT/dist/${NAME}-${VERSION}.plugin"
 
-# 3. Publish to the shared drive.
-"$PYTHON" "$ROOT/scripts/publish_to_drive.py" "$ARTIFACT" --folder "$DRIVE_FOLDER" $DRY $FORCE
+# 3. Publish to the shared drive (and announce on Slack on a real publish).
+"$PYTHON" "$ROOT/scripts/publish_to_drive.py" "$ARTIFACT" --folder "$DRIVE_FOLDER" \
+  --notify --name "$SLACK_NAME" --folder-url "$SLACK_FOLDER_URL" $DRY $FORCE
