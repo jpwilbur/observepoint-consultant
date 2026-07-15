@@ -408,6 +408,14 @@
       "expected_output_summary": "Routes to accessibility; honest no — automated scanning covers only ~a third of WCAG success criteria; manual/assistive-tech testing still required; frames the scan as triage + evidence, not a compliance certificate.",
       "must_include": ["WCAG"],
       "must_not_include": ["fully compliant"]
+    },
+    {
+      "id": "pii-leak-detection-engagement",
+      "area": "pii-leak-detection",
+      "prompt": "We need to prove our checkout flow isn't leaking customer PII to third-party ad vendors, and set up ongoing detection.",
+      "expected_output_summary": "Routes to the pii-leak-detection advisor; recommends canary personas + a canary journey, names scan_journey_pii, and describes leaving scheduled detection behind.",
+      "must_include": ["pii-leak-detection", "scan_journey_pii", "canary"],
+      "must_not_include": ["pricing"]
     }
   ]
 }
