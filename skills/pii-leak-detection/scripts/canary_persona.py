@@ -39,7 +39,7 @@ def build_persona(flow, index, seed, base_local, base_domain, mode):
     name = NAMES[pick]
     # E.164 fictional: +1 (555-01xx block is reserved for fictional use). Line number varies by
     # index so digits are unique per flow; area code fixed at 202.
-    phone = f"+1202555{100 + index:02d}"
+    phone = f"+1202555{100 + index:04d}"
     address = f"{1400 + index * 7} {STREETS[index % len(STREETS)]}, Cedar Junction, MT 59000"
     account_id = f"OPCANARY-{seed:03d}-{index:03d}"
     if mode == "shared":
