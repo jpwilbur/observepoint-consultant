@@ -56,3 +56,5 @@ The adoption blocker is "now I maintain 50 journeys." Mitigate: tier ruthlessly 
 
 ## Production side-effects & etiquette
 Canary journeys submit real forms — they create real leads, orders, and emails. Coordinate with the customer: use a provisioned TEST account for Tier 1, agree on CRM hygiene and suppression lists, and confirm who owns cleanup. The canary values are synthetic, but the submissions are real events in the customer's systems.
+
+*Last verified: 2026-07-14*
